@@ -1,0 +1,6 @@
+@WanderKiwi.API_HostAddress = http://localhost:5208
+
+GET {{WanderKiwi.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
