@@ -1,0 +1,22 @@
+<section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Featured Itineraries</h2>
+        </div>
+        <a href="#" class="view-all">View all itineraries →</a>
+      </div>
+
+      <div class="itineraries-grid">
+        <div *ngFor="let item of itineraries" class="itinerary-card">
+          <img [src]="item.imageUrl" [alt]="item.title" />
+          <div class="card-body">
+            <h3>{{ item.title }}</h3>
+            <div class="itinerary-meta">
+              <span>⏱️ {{ item.duration }}</span>
+              <span>🏷️ {{ item.tag }}</span>
+            </div>
+            <a href="#" class="view-trip">View Trip →</a>
+          </div>
+        </div>
+      </div>
+    </section>

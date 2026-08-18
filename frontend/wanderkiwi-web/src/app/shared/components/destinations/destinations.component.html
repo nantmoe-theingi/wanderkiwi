@@ -1,0 +1,26 @@
+<section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Popular Destinations</h2>
+          <p>Explore New Zealand's most loved places</p>
+        </div>
+        <a href="#" class="view-all">View all destinations →</a>
+      </div>
+
+      <div class="destinations-grid">
+        <div *ngFor="let item of destinations" class="destination-card">
+          <div class="image-wrapper">
+            <img [src]="item.imageUrl" [alt]="item.name" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span>{{ item.region }}</span>
+              <span class="rating">⭐ {{ item.rating }}</span>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+            <a href="#" class="explore-link">Explore →</a>
+          </div>
+        </div>
+      </div>
+    </section>

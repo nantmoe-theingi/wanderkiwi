@@ -1,0 +1,9 @@
+<section class="section categories-section">
+      <h2>Explore by Category</h2>
+      <div class="categories-row">
+        <div *ngFor="let cat of categories" class="category-pill">
+          <span class="icon">{{ cat.icon }}</span>
+          <span>{{ cat.name }}</span>
+        </div>
+      </div>
+    </section>
