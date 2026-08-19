@@ -1,35 +1,7 @@
-<div class="hero-section">
-      <h1>Welcome to WanderKiwi</h1>
-      <p>Discover amazing places across New Zealand.</p>
-      
-      <!-- Search and Filter Controls -->
-      <div class="search-bar">
-        <input 
-          type="text" 
-          [(ngModel)]="searchTerm" 
-          placeholder="Search attractions..." 
-          (keyup.enter)="loadAttractions()"
-        />
-        <input 
-          type="text" 
-          [(ngModel)]="regionFilter" 
-          placeholder="Filter by region (e.g. Canterbury)" 
-          (keyup.enter)="loadAttractions()"
-        />
-        <button (click)="loadAttractions()">Explore</button>
-      </div>
-    </div>
-
-    <!-- Destination Explorer Grid -->
-    <div class="attractions-container">
-      <h2>Featured Destinations</h2>
-      <div class="grid">
-        <div *ngFor="let attraction of attractions" class="card">
-          <div class="card-content">
-            <h3>{{ attraction.name }}</h3>
-            <span class="badge">{{ attraction.region }}</span>
-            <p>{{ attraction.description }}</p>
-          </div>
-        </div>
-      </div>
+<div class="home-container">
+      <app-hero></app-hero>
+      <app-destinations></app-destinations>
+      <app-categories></app-categories>
+      <app-itineraries></app-itineraries>
+      <app-why-us></app-why-us>
     </div>

@@ -1,49 +1,67 @@
 <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-col brand-col">
-          <div class="logo">🥝 WanderKiwi</div>
-          <p>AI-powered travel planning for unforgettable journeys across New Zealand.</p>
-          <div class="socials">
-            <a href="#">f</a> <a href="#">ig</a> <a href="#">yt</a>
-          </div>
-        </div>
-        
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <a href="#">Home</a>
-          <a href="#">Destinations</a>
-          <a href="#">Trip Planner</a>
-          <a href="#">Articles</a>
-          <a href="#">About Us</a>
-        </div>
-
-        <div class="footer-col">
-          <h4>Information</h4>
-          <a href="#">About WanderKiwi</a>
-          <a href="#">How It Works</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Contact Us</a>
-        </div>
-
-        <div class="footer-col">
-          <h4>Support</h4>
-          <a href="#">Help Center</a>
-          <a href="#">FAQs</a>
-          <a href="#">Travel Tips</a>
-          <a href="#">Community</a>
-        </div>
-
-        <div class="footer-col newsletter-col">
-          <h4>Newsletter</h4>
-          <p>Get travel inspiration and tips delivered to your inbox.</p>
-          <div class="newsletter-input">
-            <input type="email" [(ngModel)]="email" placeholder="Enter your email" />
-            <button (click)="subscribe()">Subscribe</button>
-          </div>
-        </div>
+  <div class="footer-container">
+    <!-- Brand Column -->
+    <div class="footer-col brand-col">
+      <div class="logo">
+        <img
+          class="logo-icon"
+          src="assets/images/wanderkiwi-logo.png"
+          alt="WanderKiwi Logo"
+        />
+        <span class="logo-text">WanderKiwi</span>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 WanderKiwi. All rights reserved.</p>
+
+      <p>
+        AI-powered travel planning for unforgettable journeys across New
+        Zealand.
+      </p>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="YouTube">yt</a>
       </div>
-    </footer>
+    </div>
+
+    <!-- Quick Links (Dynamically looped) -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a *ngFor="let item of quickLinks" [routerLink]="[item.route]">
+        {{ item.label }}
+      </a>
+    </div>
+
+    <!-- Information Links (Dynamically looped) -->
+    <div class="footer-col">
+      <h4>Information</h4>
+      <a *ngFor="let item of informationLinks" [routerLink]="[item.route]">
+        {{ item.label }}
+      </a>
+    </div>
+
+    <!-- Support Links (Dynamically looped) -->
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a *ngFor="let item of supportLinks" [routerLink]="[item.route]">
+        {{ item.label }}
+      </a>
+    </div>
+
+    <!-- Newsletter Column -->
+    <div class="footer-col newsletter-col">
+      <h4>Newsletter</h4>
+      <p>Get travel inspiration and tips delivered to your inbox.</p>
+      <div class="newsletter-input">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+        />
+        <button (click)="subscribe()">Subscribe</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 WanderKiwi. All rights reserved.</p>
+  </div>
+</footer>

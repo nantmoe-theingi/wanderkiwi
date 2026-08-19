@@ -18,6 +18,11 @@
     font-size: 20px;
 }
 
+.logo-icon {
+  height: 42px; 
+  width: auto;
+}
+
 .nav-links {
     display: flex;
     gap: 24px;
@@ -42,11 +47,44 @@
     gap: 16px;
 }
 
+// .wishlist-btn {
+//     background: none;
+//     border: none;
+//     font-size: 18px;
+//     cursor: pointer;
+//     position: relative;
+//     color: white;
+// }
+
 .wishlist-btn {
     background: none;
     border: none;
-    font-size: 18px;
     cursor: pointer;
+    position: relative;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.wishlist-btn:hover {
+    color: white;
+}
+
+.bookmark-icon {
+    stroke: currentColor;
+}
+
+.badge {
+    background: #0ea5e9;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    font-weight: bold;
 }
 
 .cta-btn {

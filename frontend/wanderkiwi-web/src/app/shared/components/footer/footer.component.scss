@@ -1,7 +1,7 @@
 .footer {
     background: #0b0f19;
     color: #94a3b8;
-    padding: 60px 20px 20px 20px;
+    padding: 40px 20px 20px 20px;
     font-size: 13px;
 }
 
@@ -11,14 +11,22 @@
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
+
+
 .logo {
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.logo-icon {
+    height: 42px;
+    width: auto;
 }
 
 .brand-col p {
@@ -29,19 +37,22 @@
 .socials {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
-.socials a {
-    background: #1e293b;
-    color: white;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    text-decoration: none;
-    font-weight: bold;
+
+.socials a { 
+  background: #1e293b; 
+  color: white; 
+  width: 32px; 
+  height: 32px; 
+  display: flex; 
+  align-content: center;      /* Centers vertically */
+  border-radius: 50%; 
+  text-decoration: none; 
+  font-weight: bold; 
+  font-size: 12px; 
+  transition: background 0.2s; 
 }
 
 .footer-col h4 {
@@ -87,6 +98,11 @@
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s;
+}
+
+.newsletter-input button:hover {
+    background: #0284c7;
 }
 
 .footer-bottom {
@@ -96,4 +112,10 @@
     padding-top: 20px;
     text-align: center;
     font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

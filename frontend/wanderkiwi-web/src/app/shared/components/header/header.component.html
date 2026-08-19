@@ -1,19 +1,44 @@
 <header class="header">
-      <div class="logo-container">
-        <span class="logo-icon">🥝</span>
-        <span class="logo-text">WanderKiwi</span>
-      </div>
-      <nav class="nav-links">
-        <a routerLink="/">Home</a>
-        <a routerLink="/all-destinations">Destinations</a>
-        <a routerLink="/trip-planner">
-            Trip Planner
+  <div class="logo-container">
+    <img class="logo-icon" src="assets/images/wanderkiwi-logo.png" alt="WanderKiwi Logo">
+    <span class="logo-text">WanderKiwi</span>
+  </div>
+
+  <nav class="nav-links">
+        <a *ngFor="let item of navItems" 
+           [routerLink]="[item.route]" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{ exact: item.exactMatch || false }">
+          {{ item.label }}
         </a>
-        <a routerLink="/articles">Articles</a>
-        <a routerLink="/about-us">About Us</a>
       </nav>
-      <div class="header-actions">
-        <button class="wishlist-btn" title="Saved Favourites">❤️</button>
+  <!-- <div class="header-actions">
+        
+        <button class="wishlist-btn" title="Saved Favourites">
+          ❤️ <span class="badge" *ngIf="(wishlistCount$ | async)! > 0">{{ wishlistCount$ | async }}</span>
+        </button>
         <button class="cta-btn">Start Planning</button>
-      </div>
-    </header>
+      </div> -->
+
+  <div class="header-actions">
+    <button class="cta-btn">Start Planning</button>
+    <button class="wishlist-btn" title="Saved Destinations">
+      <!-- Bookmark Icon using SVG for a clean, modern look -->
+      <!-- Wishlist count connected via the async pipe from WishlistService -->
+      <svg
+        class="bookmark-icon"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span class="badge" *ngIf="(wishlistCount$ | async)! > 0">{{
+        wishlistCount$ | async
+      }}</span>
+    </button>
+  </div>
+</header>
