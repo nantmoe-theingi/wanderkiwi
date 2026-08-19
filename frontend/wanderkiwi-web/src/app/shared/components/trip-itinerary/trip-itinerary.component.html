@@ -1,0 +1,87 @@
+<div class="itinerary-display-area" *ngIf="tripPlan; else loadingTemplate">
+  <!-- Itinerary Header Actions Bar -->
+  <div class="itinerary-action-bar">
+    <div class="itinerary-meta-badges">
+      <span class="badge">📅 {{ tripPlan.durationLabel }}</span>
+      <span class="badge">📍 {{ tripPlan.locationLabel }}</span>
+    </div>
+    <div class="action-buttons">
+      <button class="action-btn">❤️ Save Trip</button>
+      <button class="action-btn">🔗 Share</button>
+      <button class="action-btn primary">📥 Download PDF</button>
+    </div>
+  </div>
+
+  <!-- Split View: Day List + Interactive Map Mock -->
+  <div class="itinerary-split-grid">
+    <!-- Days Column -->
+    <div class="days-list">
+      <div *ngFor="let day of tripPlan.days" class="day-card">
+        <img [src]="day.imageUrl" [alt]="day.title" />
+        <div class="day-content">
+          <div class="day-number">Day {{ day.dayNumber }}</div>
+          <h4>{{ day.title }}</h4>
+          <p>{{ day.description }}</p>
+          <span class="tag">{{ day.tag }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Mockup Column -->
+    <div class="map-card-wrapper">
+      <div class="map-overlay-badge">
+        <h4>Trip Highlights</h4>
+        <ul>
+          <li *ngFor="let highlight of tripPlan.highlights">
+            ✓ {{ highlight }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Trip Insights Footer Bar -->
+  <div class="ai-insights-footer">
+    <div class="insight-title">
+      <span>✨</span>
+      <strong>AI Trip Insights</strong>
+    </div>
+    <p class="insight-sub">
+      Our AI has analysed thousands of trips to create your perfect itinerary.
+    </p>
+
+    <div class="insights-grid">
+      <div class="insight-item">
+        <span class="icon">☀️</span>
+        <div>
+          <strong>Best time to visit</strong>
+          <p>{{ tripPlan.bestTimeToVisit }}</p>
+        </div>
+      </div>
+      <div class="insight-item">
+        <span class="icon">⛅</span>
+        <div>
+          <strong>Weather outlook</strong>
+          <p>{{ tripPlan.weatherOutlook }}</p>
+        </div>
+      </div>
+      <div class="insight-item">
+        <span class="icon">💡</span>
+        <div>
+          <strong>Travel tip</strong>
+          <p>{{ tripPlan.travelTip }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Empty/Loading State Template -->
+<ng-template #loadingTemplate>
+  <div class="empty-state">
+    <p>
+      ✨ Fill out your preferences on the left and click
+      <strong>Generate My Trip</strong> to see your custom itinerary.
+    </p>
+  </div>
+</ng-template>

@@ -1,0 +1,84 @@
+<div class="planner-form-card">
+  <div class="form-header">
+    <span class="sparkle">✨</span>
+    <h3>Plan Your Trip</h3>
+  </div>
+  <p class="form-sub">
+    Tell us your preferences and we'll craft the perfect itinerary for you.
+  </p>
+
+  <div class="input-group">
+    <label>Where are you going?</label>
+    <div class="input-with-icon">
+      <span>📍</span>
+      <input
+        type="text"
+        [(ngModel)]="request.destination"
+        placeholder="Queenstown, New Zealand"
+      />
+    </div>
+  </div>
+
+  <div class="date-row">
+    <div class="input-group">
+      <label>Start date</label>
+      <div class="input-with-icon">
+        <span>📅</span>
+        <input type="date" [(ngModel)]="request.startDate" />
+      </div>
+    </div>
+    <div class="input-group">
+      <label>End date</label>
+      <div class="input-with-icon">
+        <span>📅</span>
+        <input type="date" [(ngModel)]="request.endDate" />
+      </div>
+    </div>
+  </div>
+
+  <div class="date-row">
+    <div class="input-group">
+      <label>Travelers</label>
+      <select [(ngModel)]="request.travelers">
+        <option value="2 Adults">2 Adults</option>
+        <option value="1 Adult">1 Adult</option>
+        <option value="Family">Family (3+)</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Trip style</label>
+      <select [(ngModel)]="request.tripStyle">
+        <option value="Adventure">Adventure</option>
+        <option value="Relaxation">Relaxation</option>
+        <option value="Road Trip">Road Trip</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Interests (select up to 3)</label>
+    <div class="interests-grid">
+      <button
+        *ngFor="let interest of availableInterests"
+        [class.active]="isInterestSelected(interest)"
+        (click)="toggleInterest(interest)"
+      >
+        {{ interest }}
+      </button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Budget range</label>
+    <select [(ngModel)]="request.budgetRange">
+      <option value="Mid-range">💰 Mid-range</option>
+      <option value="Budget">💰 Budget</option>
+      <option value="Luxury">💰 Luxury</option>
+    </select>
+  </div>
+
+  <button class="generate-btn" (click)="onSubmit()">✨ Generate My Trip</button>
+  <small class="ai-note"
+    >Our AI will create a personalised itinerary just for you.</small
+  >
+</div>
