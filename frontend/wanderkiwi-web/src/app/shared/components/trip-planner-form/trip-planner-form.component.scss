@@ -1,0 +1,124 @@
+.planner-form-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    height: fit-content;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.form-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.sparkle {
+    color: #0ea5e9;
+    font-size: 16px;
+}
+
+.form-sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.input-with-icon {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0 10px;
+    background: white;
+}
+
+.input-with-icon span {
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.input-with-icon input,
+.input-group select {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    font-size: 13px;
+    outline: none;
+    background: transparent;
+}
+
+.date-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.interests-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.interests-grid button {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    color: #475569;
+    transition: all 0.2s;
+}
+
+.interests-grid button.active {
+    background: #0ea5e9;
+    color: white;
+    border-color: #0ea5e9;
+}
+
+.generate-btn {
+    width: 100%;
+    background: #15803d;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+
+.generate-btn:hover {
+    background: #166534;
+}
+
+.ai-note {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 8px;
+}

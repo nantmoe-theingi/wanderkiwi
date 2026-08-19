@@ -1,0 +1,52 @@
+.trip-planner-page {
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+}
+
+.planner-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('/assets/images/background-photo.png') center/cover;
+
+    padding: 40px 20px;
+    color: white;
+    border-bottom: 1px solid #1e293b;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 60px auto;
+}
+
+.planner-container {
+    width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 30px;
+}
+
+
+.pre-title {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #22c55e;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.planner-hero h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: white;
+    letter-spacing: -0.5px;
+}
+
+.planner-hero p {
+    margin: 0;
+    font-size: 18px;
+    color: #e2e8f0;
+}
