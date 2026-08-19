@@ -1,0 +1,103 @@
+<div class="destinations-page">
+  <!-- Reused Consistent Hero Component -->
+  <app-hero
+    title="Destinations"
+    subtitle="Explore the best places New Zealand has to offer."
+    [showPopularTags]="false"
+    [searchQuery]="searchQuery"
+  >
+  </app-hero>
+
+  <!-- Main Content Layout -->
+  <div class="main-container">
+    <!-- Left Sidebar Filters -->
+    <aside class="filters-sidebar">
+      <div class="filters-header">
+        <h3>Filters</h3>
+        <button class="clear-all" (click)="clearFilters()">Clear all</button>
+      </div>
+
+      <!-- Region Filter -->
+      <div class="filter-group">
+        <label>Region</label>
+        <select [(ngModel)]="selectedRegion">
+          <option value="">All Regions</option>
+          <option value="Otago">Otago</option>
+          <option value="Southland">Southland</option>
+          <option value="Waikato">Waikato</option>
+          <option value="Bay of Plenty">Bay of Plenty</option>
+        </select>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <label>Category</label>
+        <div class="pill-filters">
+          <button
+            *ngFor="let cat of categories"
+            [class.active]="selectedCategory === cat"
+            (click)="selectedCategory = cat"
+          >
+            {{ cat }}
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Content Section -->
+    <main class="content-area">
+      <div class="results-header">
+        <div>
+          <h2>
+            {{
+              searchQuery
+                ? 'Showing results for "' + searchQuery + '"'
+                : "Popular Destinations"
+            }}
+          </h2>
+          <p>{{ filteredDestinations.length }} destinations found</p>
+        </div>
+
+        <div class="sort-wrapper">
+          <span>Sort by:</span>
+          <select [(ngModel)]="sortBy">
+            <option value="recommended">Recommended</option>
+            <option value="rating">Highest Rated</option>
+            <option value="name">Name (A-Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Destinations Grid -->
+      <div class="destinations-grid">
+        <div *ngFor="let item of filteredDestinations" class="destination-card">
+          <div class="image-wrapper">
+            <img [src]="item.imageUrl" [alt]="item.name" />
+            <span class="popular-tag" *ngIf="item.isPopular">Popular</span>
+            <button class="bookmark-btn" aria-label="Save">❤️</button>
+          </div>
+          <div class="card-body">
+            <div class="location-row">
+              <span>📍 {{ item.region }}</span>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+
+            <div class="category-tags">
+              <span *ngFor="let tag of item.categories" class="cat-tag">{{
+                tag
+              }}</span>
+            </div>
+
+            <div class="card-footer">
+              <span class="rating"
+                >⭐ {{ item.rating }}
+                <small>({{ item.reviewsCount }})</small></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

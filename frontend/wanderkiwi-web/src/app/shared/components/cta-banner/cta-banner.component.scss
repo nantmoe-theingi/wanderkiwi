@@ -1,0 +1,51 @@
+.cta-banner {
+    background: 
+        url('/assets/images/cta-banner.jpg') center/cover;
+    padding: 50px 40px;
+}
+
+.cta-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: white;
+}
+
+.cta-text h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.cta-text p {
+    font-size: 15px;
+    color: #cbd5e1;
+    margin: 0;
+}
+
+.start-planning-btn {
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.start-planning-btn:hover {
+    background: #0284c7;
+}
+
+@media (max-width: 900px) {
+    .cta-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

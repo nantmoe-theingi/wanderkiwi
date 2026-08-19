@@ -1,0 +1,121 @@
+.footer {
+    background: #0b0f19;
+    color: #94a3b8;
+    padding: 40px 20px 20px 20px;
+    font-size: 13px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.logo-icon {
+    height: 42px;
+    width: auto;
+}
+
+.brand-col p {
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.socials {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+.socials a { 
+  background: #1e293b; 
+  color: white; 
+  width: 32px; 
+  height: 32px; 
+  display: flex; 
+  align-content: center;      /* Centers vertically */
+  border-radius: 50%; 
+  text-decoration: none; 
+  font-weight: bold; 
+  font-size: 12px; 
+  transition: background 0.2s; 
+}
+
+.footer-col h4 {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.footer-col a {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+.newsletter-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.newsletter-input input {
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+}
+
+.newsletter-input button {
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.newsletter-input button:hover {
+    background: #0284c7;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid #1e293b;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,45 @@
+.category-wrapper {
+      background-color: #f0f9ff; /* Light blue accent background */
+      padding: 20px 0;
+      width: 100%;
+    }
+
+    .categories-section { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+.categories-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 30px;
+}
+
+.categories-row {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+}
+
+.category-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 10px 20px;
+    border-radius: 30px;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s;
+}
+
+.category-pill:hover {
+    border-color: #0ea5e9;
+    background: #f0f9ff;
+}
+
+.icon {
+    font-size: 16px;
+}

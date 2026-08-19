@@ -1,12 +1,33 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Observable } from 'rxjs';
+import { WishlistService } from '../../../core/services/wishlist.service';
+import { NavItem } from '../../../models/navigation.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  // Use the NavItem model for strict typing
+  navItems: NavItem[] = [
+    { label: 'Home', route: '/', exactMatch: true },
+    { label: 'Destinations', route: '/all-destinations' },
+    { label: 'Trip Planner', route: '/trip-planner' },
+    { label: 'Articles', route: '/articles' },
+    { label: 'About Us', route: '/about-us' }
+  ];
 
+  // Observable for tracking the wishlist count reactively
+  wishlistCount$!: Observable<number>;
+
+  constructor(private wishlistService: WishlistService) {}
+
+  ngOnInit(): void {
+    // Connect to the wishlist service stream
+    this.wishlistCount$ = this.wishlistService.favoritesCount$;
+  }
 }
