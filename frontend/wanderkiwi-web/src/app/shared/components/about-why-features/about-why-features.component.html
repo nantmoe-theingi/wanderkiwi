@@ -1,0 +1,14 @@
+<div class="why-wrapper">
+  <div class="why-container">
+    <span class="sub-tag">WHY WANDER KIWI?</span>
+    <h2>Everything you need for the perfect trip</h2>
+
+    <div class="features-grid">
+      <div *ngFor="let f of features" class="feature-card">
+        <span class="f-icon">{{ f.icon }}</span>
+        <h4>{{ f.title }}</h4>
+        <p>{{ f.desc }}</p>
+      </div>
+    </div>
+  </div>
+</div>

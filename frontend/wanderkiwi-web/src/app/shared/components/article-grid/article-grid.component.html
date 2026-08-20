@@ -1,0 +1,53 @@
+<div class="content-area">
+  <!-- Sort Header -->
+  <div class="results-header">
+    <div>
+      <h2>All Articles</h2>
+      <span class="count-label">{{ articles.length }} articles</span>
+    </div>
+    <div class="sort-box">
+      <span>Sort by:</span>
+      <select [(ngModel)]="sortBy">
+        <option value="latest">Latest</option>
+        <option value="popular">Most Popular</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Article Grid -->
+  <div class="article-grid">
+    <div *ngFor="let article of articles" class="article-card">
+      <div class="card-img-wrapper">
+        <img [src]="article.imageUrl" [alt]="article.title" />
+        <span class="category-badge">{{ article.category }}</span>
+        <button class="bookmark-btn" aria-label="Save">🔖</button>
+      </div>
+      <div class="card-body">
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.description }}</p>
+
+        <div class="card-meta">
+          <div class="author">
+            <img [src]="article.authorAvatar" [alt]="article.authorName" />
+            <span>{{ article.authorName }}</span>
+          </div>
+          <div class="date-read">
+            <span>{{ article.date }}</span> •
+            <span>{{ article.readTime }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Footer -->
+  <div class="pagination">
+    <button class="page-arrow">←</button>
+    <button class="page-num active">1</button>
+    <button class="page-num">2</button>
+    <button class="page-num">3</button>
+    <button class="page-num">4</button>
+    <button class="page-num">5</button>
+    <button class="page-arrow">→</button>
+  </div>
+</div>

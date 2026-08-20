@@ -1,0 +1,33 @@
+.about-hero {
+    background: linear-gradient(rgba(11, 15, 25, 0.65), rgba(11, 15, 25, 0.75)),
+        url('https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1600&q=80') center/cover;
+    padding: 70px 40px;
+    color: white;
+    border-bottom: 1px solid #1e293b;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-hero h1 {
+    font-size: 38px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+}
+
+.green-tagline {
+    font-size: 16px;
+    font-weight: 600;
+    color: #22c55e;
+    margin: 0 0 16px 0;
+}
+
+.hero-desc {
+    font-size: 14px;
+    color: #cbd5e1;
+    max-width: 550px;
+    line-height: 1.5;
+    margin: 0;
+}

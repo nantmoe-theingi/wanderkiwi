@@ -1,0 +1,48 @@
+<aside class="sidebar">
+  <!-- Categories list -->
+  <div class="sidebar-section">
+    <h3>Categories</h3>
+    <ul class="category-list">
+      <li
+        *ngFor="let cat of categories"
+        [class.active]="selectedCategory === cat.name"
+        (click)="selectCategory(cat.name)"
+      >
+        <span class="cat-label"
+          ><span class="icon">{{ cat.icon }}</span> {{ cat.name }}</span
+        >
+        <span class="count" *ngIf="cat.name !== 'All Articles'">{{
+          cat.count
+        }}</span>
+        <span class="count total" *ngIf="cat.name === 'All Articles'">56</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Popular Topics -->
+  <div class="sidebar-section">
+    <h3>Popular Topics</h3>
+    <div class="pill-grid">
+      <button
+        *ngFor="let topic of popularTopics"
+        [class.active]="selectedTopic === topic"
+        (click)="selectTopic(topic)"
+      >
+        {{ topic }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Newsletter Box -->
+  <div class="sidebar-section newsletter-box">
+    <div class="nl-header">
+      <span>✉️</span>
+      <h3>Get travel inspiration</h3>
+    </div>
+    <p>
+      Subscribe to our newsletter for the latest guides, tips and travel ideas.
+    </p>
+    <input type="email" [(ngModel)]="email" placeholder="Enter your email" />
+    <button class="subscribe-btn" (click)="subscribe()">Subscribe</button>
+  </div>
+</aside>

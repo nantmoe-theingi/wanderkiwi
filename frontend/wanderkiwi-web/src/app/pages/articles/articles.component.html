@@ -1,1 +1,17 @@
-<p>articles works!</p>
+<div class="articles-page">
+  <!-- 1. Top Hero Component -->
+  <app-article-hero (searchChange)="onSearch($event)"></app-article-hero>
+
+  <!-- Main Container Grid -->
+  <div class="page-container">
+    <!-- 2. Left Sidebar Component -->
+    <app-article-sidebar
+      [categories]="categories"
+      (categoryChange)="onCategoryFilter($event)"
+    >
+    </app-article-sidebar>
+
+    <!-- 3. Right Content Grid Component -->
+    <app-article-grid [articles]="filteredArticles"></app-article-grid>
+  </div>
+</div>

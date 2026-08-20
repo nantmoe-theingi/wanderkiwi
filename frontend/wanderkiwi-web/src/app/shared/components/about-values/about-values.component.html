@@ -1,0 +1,12 @@
+<div class="values-container">
+  <span class="sub-tag">OUR VALUES</span>
+
+  <div class="values-grid">
+    <div *ngFor="let v of values" class="value-item">
+      <span class="v-icon">{{ v.icon }}</span>
+      <h4>{{ v.title }}</h4>
+      <p>{{ v.desc }}</p>
+    </div>
+  </div>
+
+</div>
