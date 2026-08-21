@@ -2,10 +2,12 @@ export interface DestinationItem {
   id: number;
   name: string;
   region: string;
+  subLocation?: string;
   rating: number;
-  reviewsCount: string;
+  reviewCount: string;
   description: string;
   imageUrl: string;
   categories: string[];
+  bestTimeToVisit: string;
   isPopular?: boolean;
 }
