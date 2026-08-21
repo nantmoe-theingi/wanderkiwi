@@ -5,6 +5,7 @@
     subtitle="Explore the best places New Zealand has to offer."
     [showPopularTags]="false"
     [searchQuery]="searchQuery"
+    (searchSubmitted)="onHeroSearch($event)"
   >
   </app-hero>
 
@@ -20,7 +21,7 @@
       <!-- Region Filter -->
       <div class="filter-group">
         <label>Region</label>
-        <select [(ngModel)]="selectedRegion">
+        <select [(ngModel)]="selectedRegion" (change)="onFilterChange()">
           <option value="">All Regions</option>
           <option value="Otago">Otago</option>
           <option value="Southland">Southland</option>
@@ -36,7 +37,7 @@
           <button
             *ngFor="let cat of categories"
             [class.active]="selectedCategory === cat"
-            (click)="selectedCategory = cat"
+            (click)="selectCategory(cat)"
           >
             {{ cat }}
           </button>
@@ -60,7 +61,7 @@
 
         <div class="sort-wrapper">
           <span>Sort by:</span>
-          <select [(ngModel)]="sortBy">
+          <select [(ngModel)]="sortBy" (change)="onSortChange()">
             <option value="recommended">Recommended</option>
             <option value="rating">Highest Rated</option>
             <option value="name">Name (A-Z)</option>
@@ -74,26 +75,38 @@
           <div class="image-wrapper">
             <img [src]="item.imageUrl" [alt]="item.name" />
             <span class="popular-tag" *ngIf="item.isPopular">Popular</span>
-            <button class="bookmark-btn" aria-label="Save">❤️</button>
+            <button class="bookmark-btn" aria-label="Save">
+              <i class="far fa-heart"></i>
+            </button>
           </div>
+          <!-- Card Body Content -->
           <div class="card-body">
+            <!-- Sub-location / Location Row -->
             <div class="location-row">
-              <span>📍 {{ item.region }}</span>
+              <span>📍 {{ item.subLocation || item.region }}</span>
             </div>
             <h3>{{ item.name }}</h3>
             <p>{{ item.description }}</p>
 
+            <!-- Category Tags -->
             <div class="category-tags">
-              <span *ngFor="let tag of item.categories" class="cat-tag">{{
-                tag
-              }}</span>
+              <span *ngFor="let tag of item.categories" class="cat-tag">
+                {{ tag }}
+              </span>
             </div>
 
+            <!-- Card Footer: Rating & Best Time -->
             <div class="card-footer">
-              <span class="rating"
-                >⭐ {{ item.rating }}
-                <small>({{ item.reviewsCount }})</small></span
-              >
+              <div class="rating-row">
+                <span class="rating">⭐ {{ item.rating }}</span>
+                <span class="reviews"
+                  >({{ item.reviewCount || "0" }} reviews)</span
+                >
+              </div>
+
+              <div class="best-time-row" *ngIf="item.bestTimeToVisit">
+                <span>📅 Best time: {{ item.bestTimeToVisit }}</span>
+              </div>
             </div>
           </div>
         </div>

@@ -18,9 +18,10 @@
     font-size: 20px;
 }
 
-.logo-icon {
-  height: 42px; 
-  width: auto;
+.logo-img {
+  height: 40px;       /* Forces the rendered height to 40px */
+  width: auto;        /* Keeps the proportions correct */
+  object-fit: contain;
 }
 
 .nav-links {

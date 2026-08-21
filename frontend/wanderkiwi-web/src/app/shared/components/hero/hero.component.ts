@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchService } from '../../../services/search.service';
 import { SearchFilter } from '../../../models/search-filter.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DestinationService } from '../../../services/destination.service';
 
 @Component({
   selector: 'app-hero',
@@ -11,29 +12,51 @@ import { Router } from '@angular/router';
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss'
 })
-export class HeroComponent {
+export class HeroComponent implements OnInit {
   @Input() title: string = 'Discover New Zealand';
   @Input() subtitle: string = 'Your next adventure starts here. AI-powered trip planning made easy.';
   @Input() placeholderText: string = 'Search destinations, places, activities...';
   @Input() showPopularTags: boolean = true;
   @Input() searchQuery: string = '';
+  destinations: any[] = [];
 
   @Output() searchSubmitted = new EventEmitter<string>();
 
   popularTags = ['Queenstown', 'Milford Sound', 'Hobbiton', 'Rotorua', 'Wanaka'];
   
-  constructor(private searchService: SearchService, private router: Router) {}
+  constructor(private searchService: SearchService, private route: ActivatedRoute,
+    private router: Router, private destinationService: DestinationService) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.searchQuery = params['search'] || '';
+      this.fetchFilteredDestinations(this.searchQuery);
+    });
+  }
 
   onSearch() {
-    if (this.searchQuery.trim()) {
-      this.router.navigate(['/destinations'], { queryParams: { search: this.searchQuery } });
-    } else {
-      this.router.navigate(['/destinations']);
-    }
+    const trimmedQuery = this.searchQuery ? this.searchQuery.trim() : '';
     
-    const filter: SearchFilter = { keyword: this.searchQuery };
+    // 1. Update the route with query parameters so the URL matches
+    this.router.navigate(['/all-destinations'], { queryParams: { search: trimmedQuery } });
+    
+    // 2. Emit the search to the parent AllDestinationsComponent
+    this.searchSubmitted.emit(trimmedQuery);
+    
+    const filter: SearchFilter = { keyword: trimmedQuery };
     this.searchService.updateSearch(filter);
-    this.searchSubmitted.emit(this.searchQuery);
+  }
+
+  private fetchFilteredDestinations(keyword: string) {
+    this.destinationService.getFilteredDestinations(keyword).subscribe({
+      next: (data) => {
+        this.destinations = data;
+        console.log('Fetched destinations from backend:', this.destinations);
+      },
+      error: (err) => {
+        console.error('Error fetching search results from backend', err);
+      }
+    });
   }
 
   selectTag(tag: string) {
@@ -41,7 +64,12 @@ export class HeroComponent {
     const filter: SearchFilter = { keyword: tag };
     this.searchService.updateSearch(filter);
     
-    this.router.navigate(['/destinations'], { queryParams: { search: tag } });
+    if (this.router.url.includes('/all-destinations')) {
+      this.fetchFilteredDestinations(tag);
+    } else {
+      this.router.navigate(['/all-destinations'], { queryParams: { search: tag } });
+    }
+    
     this.searchSubmitted.emit(tag);
   }
 }
