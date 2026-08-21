@@ -16,29 +16,24 @@ public class AttractionsController : ControllerBase
         _attractionService = attractionService;
     }
 
-    // GET: api/attractions?search=mountain&region=canterbury
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAttractions([FromQuery] string? search, [FromQuery] string? region)
+    public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAll()
     {
-        var attractions = await _attractionService.SearchAttractionsAsync(search, region);
+        var attractions = await _attractionService.GetAllAsync();
 
-        // Returns HTTP 200 OK with the list of DTOs
         return Ok(attractions);
     }
 
-    // GET: api/attractions/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<AttractionDto>> GetAttraction(int id)
+    public async Task<ActionResult<AttractionDto>> GetById(int id)
     {
-        var attraction = await _attractionService.GetAttractionByIdAsync(id);
+        var attraction = await _attractionService.GetByIdAsync(id);
 
         if (attraction == null)
         {
-            // Returns HTTP 404 Not Found if the attraction doesn't exist
             return NotFound();
         }
 
-        // Returns HTTP 200 OK with the specific attraction details
         return Ok(attraction);
     }
 
@@ -46,8 +41,8 @@ public class AttractionsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<AttractionDto>> CreateAttraction(AttractionDto attractionDto)
     {
-        var createdAttraction = await _attractionService.CreateAttractionAsync(attractionDto);
-        return CreatedAtAction(nameof(GetAttraction), new { id = createdAttraction.Id }, createdAttraction);
+        var createdAttraction = await _attractionService.CreateAsync(attractionDto);
+        return CreatedAtAction(nameof(GetById), new { id = createdAttraction.Id }, createdAttraction);
     }
 
     // PUT: api/attractions/5
@@ -59,7 +54,7 @@ public class AttractionsController : ControllerBase
             return BadRequest();
         }
 
-        var result = await _attractionService.UpdateAttractionAsync(id, attractionDto);
+        var result = await _attractionService.UpdateAsync(id, attractionDto);
 
         if (!result)
         {
@@ -73,7 +68,7 @@ public class AttractionsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAttraction(int id)
     {
-        var result = await _attractionService.DeleteAttractionAsync(id);
+        var result = await _attractionService.DeleteAsync(id);
 
         if (!result)
         {
@@ -81,5 +76,19 @@ public class AttractionsController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpGet("search")]
+    public async Task<ActionResult<IEnumerable<AttractionDto>>> Search(
+        [FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return BadRequest("Search query cannot be empty.");
+        }
+
+        var attractions = await _attractionService.SearchAsync(query);
+
+        return Ok(attractions);
     }
 }

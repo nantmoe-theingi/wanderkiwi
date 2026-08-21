@@ -1,6 +1,6 @@
 namespace WanderKiwi.Application.DTOs;
 
-public class AttractionDto
+public class DestinationDto
 {
     public int Id { get; set; }
 
@@ -10,22 +10,11 @@ public class AttractionDto
 
     public string ImageUrl { get; set; } = string.Empty;
 
-    public double Latitude { get; set; }
-
-    public double Longitude { get; set; }
-
     public decimal Rating { get; set; }
 
     public int ReviewCount { get; set; }
 
-    public string BestTime { get; set; } = string.Empty;
-
-    public string RecommendedDuration { get; set; } = string.Empty;
-
-    // Destination information
-    public int DestinationId { get; set; }
-
-    public string DestinationName { get; set; } = string.Empty;
+    public bool IsPopular { get; set; }
 
     // Region information
     public int RegionId { get; set; }
@@ -39,4 +28,7 @@ public class AttractionDto
 
     // Categories
     public List<string> Categories { get; set; } = new();
+
+    // Attractions
+    public List<AttractionSummaryDto> Attractions { get; set; } = new();
 }
