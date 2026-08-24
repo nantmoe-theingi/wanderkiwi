@@ -115,6 +115,11 @@
     background: #166534;
 }
 
+.generate-btn:disabled {
+    background: #94a3b8;
+    cursor: wait;
+}
+
 .ai-note {
     display: block;
     text-align: center;

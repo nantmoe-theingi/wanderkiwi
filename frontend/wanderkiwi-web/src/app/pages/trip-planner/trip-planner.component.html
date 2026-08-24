@@ -12,10 +12,13 @@
 
   <div class="planner-container">
     <!-- Left Form -->
-    <app-trip-planner-form (formSubmitted)="onGenerateTrip($event)">
+    <app-trip-planner-form
+      [isSubmitting]="isSubmitting"
+      (formSubmitted)="onGenerateTrip($event)">
     </app-trip-planner-form>
 
     <!-- Right Itinerary Results & Map -->
+    <p *ngIf="errorMessage" class="planner-error" role="alert">{{ errorMessage }}</p>
     <app-trip-itinerary [tripPlan]="tripPlan"> </app-trip-itinerary>
   </div>
 </div>

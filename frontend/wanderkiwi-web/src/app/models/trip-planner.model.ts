@@ -8,20 +8,30 @@ export interface TripPlanRequest {
   budgetRange: string;
 }
 
+export interface TripStop {
+  id: number;
+  attractionId: number | null;
+  name: string;
+  imageUrl: string | null;
+  sortOrder: number;
+  plannedDurationMinutes: number | null;
+  notes: string | null;
+}
+
 export interface ItineraryDay {
+  id: number;
   dayNumber: number;
-  title: string;
-  description: string;
-  tag: string;
-  imageUrl: string;
+  date: string;
+  stops: TripStop[];
 }
 
 export interface TripPlanResponse {
-  durationLabel: string;
-  locationLabel: string;
+  id: number;
+  ownerId: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  budgetRange: string;
+  tripStyle: string;
   days: ItineraryDay[];
-  highlights: string[];
-  bestTimeToVisit: string;
-  weatherOutlook: string;
-  travelTip: string;
 }

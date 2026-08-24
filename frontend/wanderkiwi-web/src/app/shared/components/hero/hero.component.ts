@@ -48,7 +48,7 @@ export class HeroComponent implements OnInit {
   }
 
   private fetchFilteredDestinations(keyword: string) {
-    this.destinationService.getFilteredDestinations(keyword).subscribe({
+    this.destinationService.searchAttractions(keyword).subscribe({
       next: (data) => {
         this.destinations = data;
         console.log('Fetched destinations from backend:', this.destinations);

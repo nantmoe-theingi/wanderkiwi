@@ -8,7 +8,7 @@
       (click)="selectCategory(cat)"
     >
       <span class="icon">{{ cat.icon }}</span>
-      <span>{{ cat.name }}</span>
+      <span [routerLink]="['/all-destinations']" [queryParams]="{ search: cat.name }">{{ cat.name }}</span>
     </div>
   </div>
 </section>

@@ -1,159 +1,239 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { DestinationItem } from '../../models/destination-item.model';
-import { HeroComponent } from '../../shared/components/hero/hero.component';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DestinationService } from '../../services/destination.service';
+import { DestinationItem, RegionItem } from '../../models/destination-item.model';
+import { HeroComponent } from '../../shared/components/hero/hero.component';
+import { DestinationResultsComponent } from '../../shared/components/destination-results/destination-results.component';
+import { NEW_ZEALAND_ISLANDS } from '../../shared/constants/island.constant';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-all-destinations',
-  imports: [CommonModule, FormsModule, HeroComponent],
+  imports: [CommonModule, FormsModule, HeroComponent, RouterModule, DestinationResultsComponent],
   templateUrl: './all-destinations.component.html',
   styleUrl: './all-destinations.component.scss',
 })
 export class AllDestinationsComponent implements OnInit {
-  // destinations: DestinationItem[] = [
-  //   {
-  //     id: 1,
-  //     name: 'Queenstown',
-  //     region: 'Otago',
-  //     rating: 4.8,
-  //     reviewsCount: '1.2k reviews',
-  //     description:
-  //       'Adventure capital of the world. Bungy jumping, skiing, and breathtaking landscapes.',
-  //     imageUrl: 'assets/images/queenstown.png',
-  //     categories: ['Adventure', 'Nature', 'Sightseeing'],
-  //     isPopular: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Milford Sound',
-  //     region: 'Southland',
-  //     rating: 4.9,
-  //     reviewsCount: '980 reviews',
-  //     description:
-  //       'Stunning fjord with waterfalls, rainforest, and incredible boat cruises.',
-  //     imageUrl: 'assets/images/milford.png',
-  //     categories: ['Nature', 'Sightseeing'],
-  //     isPopular: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Rotorua',
-  //     region: 'Bay of Plenty',
-  //     rating: 4.6,
-  //     reviewsCount: '760 reviews',
-  //     description:
-  //       'Geothermal wonders, Maori culture, and relaxing hot springs.',
-  //     imageUrl: 'assets/images/rotorua.jpg',
-  //     categories: ['Culture', 'Nature', 'Adventure'],
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Hobbiton™ Movie Set',
-  //     region: 'Waikato',
-  //     rating: 4.7,
-  //     reviewsCount: '850 reviews',
-  //     description:
-  //       'Step into the world of Middle-earth. A must-visit for LOTR fans.',
-  //     imageUrl: 'assets/images/hobbiton.jpg',
-  //     categories: ['Culture', 'Sightseeing'],
-  //   },
-  // ];
-
   searchQuery = '';
-  selectedRegion = '';
-  selectedCategory = 'All';
-  sortBy = 'recommended';
+  isSearching = false;
+  isFavoritesView: boolean = false;
+ 
 
-  categories = [
-    'All',
-    'Nature',
-    'Adventure',
-    'Sightseeing',
-    'Culture',
-    'Food & Wine',
-  ];
-  destinations: DestinationItem[] = [];
+  // Landing page data structures matching your backend response
+  popularDestinations: DestinationItem[] = [];
+  regions: RegionItem[] = [];
+  featuredAttractions: DestinationItem[] = [];
+
+  selectedWeather: string = 'Any';
+  selectedBestTime: string = 'Any time';
+  selectedActivityLevel: string = 'Any';
+  selectedRegion: string = '';
+  selectedCategory: string = 'All';
+  sortBy: string = 'recommended';
+    // Master copy of search results
+  allSearchResults: DestinationItem[] = [];
+  // Filtered / Search results view
+  searchResults: DestinationItem[] = [];
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private destinationService: DestinationService,
+    private favoritesService: FavoritesService
   ) {}
 
   ngOnInit() {
-    // Listen to query parameters so if someone searches from the hero, it updates automatically
-    this.route.queryParams.subscribe((params) => {
-      this.searchQuery = params['search'] || '';
-      // Load destinations right away on init (and whenever params change)
-      this.loadDestinations();
+    // Listen to query parameters changing (e.g. searching vs clicking favorites)
+    this.route.queryParams.subscribe(params => {
+      if (params['mode'] === 'favorites' || params['search'] === 'favorites') {
+        this.isFavoritesView = true;
+        this.isSearching = true;
+        this.searchQuery = 'Your Favorite Attractions';
+        this.loadFavoriteDestinations();
+      } else if (params['search']) {
+        this.isSearching = true;
+        this.isFavoritesView = false;
+        this.searchQuery = params['search'];
+        this.performSearch(this.searchQuery);
+      } else {
+        this.isFavoritesView = false;
+        this.isSearching = false;
+        this.loadLandingData();
+      
+      }
+    });
+  
+
+    
+    // this.route.queryParams.subscribe((params) => {
+    //   this.searchQuery = params['search'] || '';
+
+    //   if (this.searchQuery.trim()) {
+    //     this.isSearching = true;
+    //     this.performSearch(this.searchQuery);
+    //   } else {
+    //     this.isSearching = false;
+    //     this.loadLandingData();
+    //   }
+    // });
+
+    // Sync initial bookmark state from localStorage when results load
+    this.searchResults.forEach(attraction => {
+      attraction.isBookmarked = this.favoritesService.isBookmarked(attraction.id);
+    });
+
+    
+  }
+
+  // Load initial landing data (Popular destinations, regions, attractions)
+  loadLandingData() {
+    this.destinationService.getLandingPageData().subscribe({
+      next: (data) => {
+      
+        this.popularDestinations = data.popularDestinations;
+        this.regions = data.regions;
+
+          // 1. Loop through data and check localStorage for each item's ID
+      data.featuredAttractions.forEach(item => {
+        item.isBookmarked = this.favoritesService.isBookmarked(item.id);
+      });
+        this.featuredAttractions = data.featuredAttractions;
+      },
+      error: (err) => console.error('Error loading landing page data', err)
     });
   }
 
-  // Calls your .NET Core backend API with the search term, region, and category
-  loadDestinations() {
-    this.destinationService
-      .getFilteredDestinations(
-        this.searchQuery,
-        this.selectedRegion,
-        this.selectedCategory,
-      )
-      .subscribe({
-        next: (data) => {
-          this.destinations = data;
-          this.sortDestinations(); // Apply sorting after fetching
-        },
-        error: (err) => {
-          console.error('Failed to load destinations from backend', err);
-        },
+  // Calls backend search endpoint
+  performSearch(query: string) {
+
+    this.destinationService.searchAttractions(query).subscribe({
+    next: (data) => {
+      // 1. Loop through data and check localStorage for each item's ID
+      data.forEach(item => {
+        item.isBookmarked = this.favoritesService.isBookmarked(item.id);
       });
+
+      this.allSearchResults = data;    // Save the original list
+      this.searchResults = [...data]; // Initialize display list
+    },
+    error: (err) => console.error('Error performing search', err)
+  });
   }
 
-  // Triggered when users change the sidebar dropdown filters or categories
-  onFilterChange() {
-    this.loadDestinations();
+  onToggleBookmark(attraction: DestinationItem, event: Event) {
+    event.stopPropagation(); // Prevents bubbling if card is clicked
+    this.favoritesService.toggleBookmark(attraction);
   }
 
-  // Triggered when clicking a category pill
-  selectCategory(cat: string) {
-    this.selectedCategory = cat;
-    this.loadDestinations();
-  }
-
-  // Triggered when sort dropdown changes
-  onSortChange() {
-    this.sortDestinations();
-  }
-
-  // Sorts the current destinations array locally
-  sortDestinations() {
-    if (this.sortBy === 'rating') {
-      this.destinations.sort((a, b) => b.rating - a.rating);
-    } else if (this.sortBy === 'name') {
-      this.destinations.sort((a, b) => a.name.localeCompare(b.name));
+  // Triggered when user searches from Hero component
+  onHeroSearch(query: string) {
+    if (query.trim()) {
+      this.router.navigate(['/all-destinations'], { queryParams: { search: query } });
     } else {
-      // Default recommended sorting (e.g., by ID or default order)
-      this.destinations.sort((a, b) => a.id - b.id);
+      this.router.navigate(['/all-destinations']);
     }
   }
 
-  clearFilters() {
+  get northIslandRegions() {
+    return this.regions.filter(r => r.islandName === 'North Island');
+  }
+
+  get southIslandRegions() {
+    return this.regions.filter(r => r.islandName === 'South Island');
+  }
+
+  // Returns only regions that belong to the currently searched island
+  get filteredRegions(): RegionItem[] {
+    if (this.searchQuery === NEW_ZEALAND_ISLANDS.NORTH) {
+      return this.regions.filter(r => r.islandName === 'North Island');
+    } else if (this.searchQuery === NEW_ZEALAND_ISLANDS.SOUTH) {
+      return this.regions.filter(r => r.islandName === 'South Island');
+    }
+    return this.regions;
+  }
+
+  // Triggered when clicking North or South Island buttons
+  onSelectIsland(islandName: string) {
+    this.router.navigate(['/all-destinations'], { queryParams: { search: islandName } });
+  }
+
+  onParentFilterChange(filters: any) {
+    this.selectedRegion = filters.region;
+    this.selectedCategory = filters.category;
+    this.selectedWeather = filters.weather;
+    this.selectedBestTime = filters.bestTime;
+    this.selectedActivityLevel = filters.activityLevel;
+    this.sortBy = filters.sort;
+
+    let tempResults = [...this.allSearchResults];
+
+    // 1. Region Filter
+    if (this.selectedRegion && this.selectedRegion !== 'All Regions') {
+      tempResults = tempResults.filter(item => item.regionName === this.selectedRegion);
+    }
+
+    // 2. Category Filter
+    if (this.selectedCategory && this.selectedCategory !== 'All') {
+      tempResults = tempResults.filter(item => 
+        item.categories && item.categories.includes(this.selectedCategory)
+      );
+    }
+
+    // 3. Best Time Filter
+    if (this.selectedBestTime && this.selectedBestTime !== 'Any time') {
+      tempResults = tempResults.filter(item => item.bestTime === this.selectedBestTime);
+    }
+
+    // 4. Sorting logic
+    if (this.sortBy === 'rating') {
+      tempResults.sort((a, b) => b.rating - a.rating);
+    } else if (this.sortBy === 'name') {
+      tempResults.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    this.searchResults = tempResults;
+  }
+
+  onParentClearFilters() {
     this.selectedRegion = '';
     this.selectedCategory = 'All';
-    this.searchQuery = '';
+    this.selectedWeather = 'Any';
+    this.selectedBestTime = 'Any time';
+    this.selectedActivityLevel = 'Any';
     this.sortBy = 'recommended';
-    this.loadDestinations(); // Reload default popular/all items after clearing
+
+    if (this.isFavoritesView) {
+    this.loadFavoriteDestinations(); // Reloads fresh favorites
+  } else {
+    this.searchResults = [...this.allSearchResults];
+  }
+    
   }
 
-  // Changed from a getter to a simple property/method to stop infinite HTTP loops
-  get filteredDestinations() {
-    return this.destinations;
+  loadFavoriteDestinations() {
+    const savedIds = this.favoritesService.getStoredBookmarks();
+
+    // this.destinationService.searchAttractions().subscribe({
+    //   next: (destinations) => {
+    //     // Filter destinations to only include saved ones
+    //     const favoriteItems = destinations.filter(d => {
+    //       d.isBookmarked = savedIds.includes(d.id);
+    //       return d.isBookmarked;
+    //     });
+
+    //     this.allSearchResults = favoriteItems;
+    //     this.searchResults = [...favoriteItems];
+    //     this.isSearching = true;
+    //   },
+    //   error: (err) => console.error('Error loading favorites', err)
+    // });
   }
 
-  // Catch the emitted search text from the Hero component
-  onHeroSearch(query: string) {
-    this.searchQuery = query;
-    this.loadDestinations();
-  }
+
+  get isIslandSearch(): boolean {
+  return this.searchQuery === NEW_ZEALAND_ISLANDS.NORTH || 
+         this.searchQuery === NEW_ZEALAND_ISLANDS.SOUTH;
+}
 }

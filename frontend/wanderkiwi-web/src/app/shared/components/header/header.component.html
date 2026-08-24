@@ -24,7 +24,7 @@
 
   <div class="header-actions">
     <button class="cta-btn">Start Planning</button>
-    <button class="wishlist-btn" title="Saved Destinations">
+    <button (click)="onClickBookmark()" class="wishlist-btn" title="Saved Destinations">
       <!-- Bookmark Icon using SVG for a clean, modern look -->
       <!-- Wishlist count connected via the async pipe from WishlistService -->
       <svg
@@ -32,7 +32,7 @@
         viewBox="0 0 24 24"
         width="20"
         height="20"
-        fill="none"
+        fill="none" 
         stroke="currentColor"
         stroke-width="2"
       >

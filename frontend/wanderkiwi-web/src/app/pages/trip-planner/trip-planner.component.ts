@@ -13,12 +13,24 @@ import { TripItineraryComponent } from '../../shared/components/trip-itinerary/t
 })
 export class TripPlannerComponent {
   tripPlan: TripPlanResponse | null = null;
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(private tripPlannerService: TripPlannerService) {}
 
   onGenerateTrip(request: TripPlanRequest) {
-    this.tripPlannerService.generateTrip(request).subscribe(response => {
-      this.tripPlan = response;
+    this.isSubmitting = true;
+    this.errorMessage = '';
+
+    this.tripPlannerService.createTrip(request).subscribe({
+      next: (response) => {
+        this.tripPlan = response;
+        this.isSubmitting = false;
+      },
+      error: (error) => {
+        this.errorMessage = error.error || 'We could not save your trip. Please try again.';
+        this.isSubmitting = false;
+      }
     });
   }
 }

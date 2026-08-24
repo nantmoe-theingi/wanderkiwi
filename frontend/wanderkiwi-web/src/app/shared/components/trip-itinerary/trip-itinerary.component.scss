@@ -19,6 +19,12 @@
     gap: 12px;
 }
 
+.saved-status {
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 700;
+}
+
 .badge {
     background: #f1f5f9;
     padding: 6px 12px;
@@ -73,17 +79,24 @@
     padding: 16px;
 }
 
-.day-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
 .day-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.stops-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.stop-detail {
+    display: block;
+    margin-top: 3px;
+    color: #64748b;
 }
 
 .day-number {

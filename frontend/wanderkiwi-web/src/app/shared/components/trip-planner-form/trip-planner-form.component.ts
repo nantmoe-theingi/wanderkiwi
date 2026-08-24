@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TripPlanRequest } from '../../../models/trip-planner.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './trip-planner-form.component.scss',
 })
 export class TripPlannerFormComponent {
+  @Input() isSubmitting = false;
   availableInterests = [
     'Nature',
     'Adventure',
@@ -23,8 +24,8 @@ export class TripPlannerFormComponent {
 
   request: TripPlanRequest = {
     destination: 'Queenstown, New Zealand',
-    startDate: '2025-05-25',
-    endDate: '2025-05-31',
+    startDate: '',
+    endDate: '',
     travelers: '2 Adults',
     tripStyle: 'Adventure',
     interests: ['Nature', 'Adventure'],
@@ -47,6 +48,9 @@ export class TripPlannerFormComponent {
   }
 
   onSubmit() {
+    if (!this.request.destination.trim() || !this.request.startDate || !this.request.endDate) {
+      return;
+    }
     this.formSubmitted.emit(this.request);
   }
 }

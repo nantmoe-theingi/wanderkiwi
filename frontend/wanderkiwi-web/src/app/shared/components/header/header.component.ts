@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Observable } from 'rxjs';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { NavItem } from '../../../models/navigation.model';
@@ -24,10 +24,15 @@ export class HeaderComponent implements OnInit {
   // Observable for tracking the wishlist count reactively
   wishlistCount$!: Observable<number>;
 
-  constructor(private wishlistService: WishlistService) {}
+  constructor(private wishlistService: WishlistService, private router: Router) {}
 
   ngOnInit(): void {
     // Connect to the wishlist service stream
     this.wishlistCount$ = this.wishlistService.favoritesCount$;
+  }
+
+  onClickBookmark() {
+    // Navigate to the wishlist page when the bookmark button is clicked  
+  this.router.navigate(['/all-destinations'], { queryParams: { mode: 'favorites' } });
   }
 }
