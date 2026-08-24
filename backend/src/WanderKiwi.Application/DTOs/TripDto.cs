@@ -30,3 +30,5 @@ public class TripStopDto
     public int? PlannedDurationMinutes { get; set; }
     public string? Notes { get; set; }
 }
+
+

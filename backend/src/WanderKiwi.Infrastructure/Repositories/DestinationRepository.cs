@@ -1,20 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using WanderKiwi.Application.Interfaces;
 using WanderKiwi.Application.Models;
+using WanderKiwi.Domain.Entities;
 using WanderKiwi.Infrastructure.Data;
 
 namespace WanderKiwi.Infrastructure.Repositories;
 
 public class DestinationRepository : IDestinationRepository
+{
+    private readonly WanderKiwiDbContext _context;
+
+    public DestinationRepository(WanderKiwiDbContext context)
     {
-        private readonly WanderKiwiDbContext _context;
+        _context = context;
+    }
 
-        public DestinationRepository(WanderKiwiDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<DestinationPageData> GetDestinationPageAsync()
+    public async Task<DestinationPageData> GetDestinationPageAsync()
     {
         var popularDestinations = await _context.Destinations
             .AsNoTracking()
@@ -52,4 +53,14 @@ public class DestinationRepository : IDestinationRepository
             FeaturedAttractions = featuredAttractions
         };
     }
+
+    public async Task<Destination> GetByIdAsync(int id)
+    {
+        return await _context.Destinations
+                .Include(a => a.Region)
+                    .ThenInclude(r => r.Island)
+            .Include(a => a.DestinationCategories)
+                .ThenInclude(ac => ac.Category)
+            .FirstAsync(a => a.Id == id);
     }
+}
