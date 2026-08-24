@@ -1,6 +1,7 @@
 using WanderKiwi.Application.DTOs;
 using WanderKiwi.Application.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
+using WanderKiwi.Domain.Entities;
 
 namespace WanderKiwi.Application.Services;
 
@@ -76,27 +77,38 @@ public class TripGenerationService : ITripGenerationService
         // 4. Allocate stops per day (2-3 stops per day depending on duration)
         for (int dayIndex = 0; dayIndex < totalDays; dayIndex++)
         {
-            var currentDate = request.StartDate.AddDays(dayIndex);
             var dayDto = new TripDayItineraryDto
             {
                 DayNumber = dayIndex + 1,
-                Date = currentDate,
-                Theme = GetDayTheme(dayIndex, request.TripStyle),
+                Date = request.StartDate.AddDays(dayIndex),
+                Theme = $"Day {dayIndex + 1} Highlights",
                 Stops = new List<TripStopItineraryDto>()
             };
 
-            // Limit to max 3 attractions per day
             int stopsForToday = Math.Min(3, availableQueue.Count);
             var todayAttractions = availableQueue.Take(stopsForToday).ToList();
-
-            // Remove assigned spots from available queue
             availableQueue.RemoveRange(0, stopsForToday);
 
-            string[] defaultTimeSlots = { "09:30 AM - 11:30 AM", "01:00 PM - 03:30 PM", "04:00 PM - 06:30 PM" };
+            // Start the day at 9:30 AM
+            DateTime currentStartTime = request.StartDate.AddDays(dayIndex).AddHours(9).AddMinutes(30);
 
             for (int i = 0; i < todayAttractions.Count; i++)
             {
                 var attr = todayAttractions[i];
+                
+                // Parse recommended duration (e.g., "2 hours", "2.5 hours", "30 minutes")
+                double durationHours = ParseDuration(attr.RecommendedDuration);
+                DateTime currentEndTime = currentStartTime.AddHours(durationHours);
+
+                int driveTimeMinutes = 0;
+
+                // If there is a next stop, calculate driving time to it
+                if (i < todayAttractions.Count - 1)
+                {
+                    var nextAttr = todayAttractions[i + 1];
+                    driveTimeMinutes = await GetCachedDriveTimeAsync(attr, nextAttr);
+                }
+
                 dayDto.Stops.Add(new TripStopItineraryDto
                 {
                     Order = i + 1,
@@ -106,18 +118,22 @@ public class TripGenerationService : ITripGenerationService
                     Description = attr.Description,
                     RecommendedDuration = attr.RecommendedDuration,
                     BestTime = attr.BestTime,
-                    TimeSlot = defaultTimeSlots[Math.Min(i, defaultTimeSlots.Length - 1)],
+                    TimeSlot = $"{currentStartTime:hh:mm tt} - {currentEndTime:hh:mm tt}",
+                    DriveTimeToNextMinutes = driveTimeMinutes,
                     OpeningHoursNote = attr.OpeningHoursNote,
                     BookingNote = attr.BookingNote,
                     AvailabilityNote = attr.AvailabilityNote,
                     Latitude = attr.Latitude,
                     Longitude = attr.Longitude
                 });
+
+                // Set start time for the next attraction (Current End Time + Drive Time + 15 min buffer)
+                currentStartTime = currentEndTime.AddMinutes(driveTimeMinutes + 15);
             }
 
             response.Days.Add(dayDto);
 
-            // Re-fill queue from full pool if multi-day itinerary runs out of unassigned spots
+            // Refill queue if it's a multi-day trip and we run out of unique stops
             if (!availableQueue.Any() && candidateAttractions.Any())
             {
                 availableQueue = candidateAttractions.OrderBy(a => Guid.NewGuid()).ToList();
@@ -127,14 +143,57 @@ public class TripGenerationService : ITripGenerationService
         return response;
     }
 
-    private static string GetDayTheme(int dayIndex, string tripStyle)
+    /// <summary>
+    /// Wrapper for IRouteService that caches the API response.
+    /// </summary>
+    private async Task<int> GetCachedDriveTimeAsync(Attraction origin, Attraction destination)
     {
-        return dayIndex switch
+        // Create a unique cache key based on the two attraction IDs
+        string cacheKey = $"DriveTime_{origin.Id}_{destination.Id}";
+
+        // Try to get from cache; if it doesn't exist, call OpenRouteService
+        if (!_cache.TryGetValue(cacheKey, out int driveMinutes))
         {
-            0 => $"{tripStyle} Highlights & Scenic Views",
-            1 => "Local Exploration & Hidden Gems",
-            2 => "Outdoor Excursions & Nature Walk",
-            _ => $"Day {dayIndex + 1} Exploration"
-        };
+            try
+            {
+                driveMinutes = await _routeService.GetDrivingMinutesAsync(
+                    origin.Latitude, origin.Longitude,
+                    destination.Latitude, destination.Longitude
+                );
+
+                // Store in cache for 7 days (since static locations rarely change drive times)
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromDays(7));
+                
+                _cache.Set(cacheKey, driveMinutes, cacheOptions);
+            }
+            catch
+            {
+                // Fallback: If ORS API fails or rate limits, assume 15 minutes of driving
+                return 15;
+            }
+        }
+
+        return driveMinutes;
+    }
+
+    /// <summary>
+    /// Helper to convert strings like "2 hours" or "45 mins" into double hours.
+    /// </summary>
+    private static double ParseDuration(string durationString)
+    {
+        if (string.IsNullOrWhiteSpace(durationString)) return 1.0; // Default 1 hour
+        
+        string lower = durationString.ToLower();
+        double multiplier = lower.Contains("min") ? 1.0 / 60.0 : 1.0;
+        
+        // Extract the first number found in the string
+        var match = System.Text.RegularExpressions.Regex.Match(durationString, @"[\d\.]+");
+        if (match.Success && double.TryParse(match.Value, out double parsedValue))
+        {
+            return parsedValue * multiplier;
+        }
+
+        return 2.0; // Default 2 hours if parsing fails
     }
 }
