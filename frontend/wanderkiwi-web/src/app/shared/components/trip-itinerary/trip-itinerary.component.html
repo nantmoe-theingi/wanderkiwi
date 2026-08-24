@@ -1,76 +1,37 @@
 <div class="itinerary-display-area" *ngIf="tripPlan; else loadingTemplate">
-  <!-- Itinerary Header Actions Bar -->
   <div class="itinerary-action-bar">
     <div class="itinerary-meta-badges">
-      <span class="badge">📅 {{ tripPlan.durationLabel }}</span>
-      <span class="badge">📍 {{ tripPlan.locationLabel }}</span>
+      <span class="badge">📅 {{ tripPlan.startDate | date:'d MMM y' }} – {{ tripPlan.endDate | date:'d MMM y' }}</span>
+      <span class="badge">🚗 {{ tripPlan.tripStyle || 'Flexible trip' }}</span>
+      <span class="badge">💰 {{ tripPlan.budgetRange || 'Budget to be decided' }}</span>
     </div>
-    <div class="action-buttons">
-      <button class="action-btn">❤️ Save Trip</button>
-      <button class="action-btn">🔗 Share</button>
-      <button class="action-btn primary">📥 Download PDF</button>
-    </div>
+    <span class="saved-status">✓ Saved</span>
   </div>
 
-  <!-- Split View: Day List + Interactive Map Mock -->
   <div class="itinerary-split-grid">
-    <!-- Days Column -->
     <div class="days-list">
       <div *ngFor="let day of tripPlan.days" class="day-card">
-        <img [src]="day.imageUrl" [alt]="day.title" />
         <div class="day-content">
-          <div class="day-number">Day {{ day.dayNumber }}</div>
-          <h4>{{ day.title }}</h4>
-          <p>{{ day.description }}</p>
-          <span class="tag">{{ day.tag }}</span>
+          <div class="day-number">Day {{ day.dayNumber }} · {{ day.date | date:'EEEE, d MMM' }}</div>
+          <h4>{{ day.stops.length ? day.stops.length + ' planned stop' + (day.stops.length === 1 ? '' : 's') : 'A free day to plan' }}</h4>
+          <ul *ngIf="day.stops.length; else noStops" class="stops-list">
+            <li *ngFor="let stop of day.stops">
+              <strong>{{ stop.name }}</strong>
+              <span *ngIf="stop.notes" class="stop-detail">{{ stop.notes }}</span>
+            </li>
+          </ul>
+          <ng-template #noStops>
+            <p>Add attractions to start building this day.</p>
+          </ng-template>
         </div>
       </div>
     </div>
 
-    <!-- Map Mockup Column -->
     <div class="map-card-wrapper">
       <div class="map-overlay-badge">
-        <h4>Trip Highlights</h4>
-        <ul>
-          <li *ngFor="let highlight of tripPlan.highlights">
-            ✓ {{ highlight }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI Trip Insights Footer Bar -->
-  <div class="ai-insights-footer">
-    <div class="insight-title">
-      <span>✨</span>
-      <strong>AI Trip Insights</strong>
-    </div>
-    <p class="insight-sub">
-      Our AI has analysed thousands of trips to create your perfect itinerary.
-    </p>
-
-    <div class="insights-grid">
-      <div class="insight-item">
-        <span class="icon">☀️</span>
-        <div>
-          <strong>Best time to visit</strong>
-          <p>{{ tripPlan.bestTimeToVisit }}</p>
-        </div>
-      </div>
-      <div class="insight-item">
-        <span class="icon">⛅</span>
-        <div>
-          <strong>Weather outlook</strong>
-          <p>{{ tripPlan.weatherOutlook }}</p>
-        </div>
-      </div>
-      <div class="insight-item">
-        <span class="icon">💡</span>
-        <div>
-          <strong>Travel tip</strong>
-          <p>{{ tripPlan.travelTip }}</p>
-        </div>
+        <h4>{{ tripPlan.name }}</h4>
+        <p>{{ tripPlan.days.length }} days ready to customise.</p>
+        <p>Browse destinations and add stops to each day next.</p>
       </div>
     </div>
   </div>
@@ -80,8 +41,8 @@
 <ng-template #loadingTemplate>
   <div class="empty-state">
     <p>
-      ✨ Fill out your preferences on the left and click
-      <strong>Generate My Trip</strong> to see your custom itinerary.
+      ✨ Fill out the details on the left and click
+      <strong>Create My Trip</strong> to save a day-by-day itinerary.
     </p>
   </div>
 </ng-template>

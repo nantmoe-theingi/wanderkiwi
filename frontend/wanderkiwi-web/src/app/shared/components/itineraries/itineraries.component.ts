@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Itinerary } from '../../../models/Itinerary.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-itineraries',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './itineraries.component.html',
   styleUrl: './itineraries.component.scss',
 })

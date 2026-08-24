@@ -3,7 +3,7 @@
     <div>
       <h2>Featured Itineraries</h2>
     </div>
-    <a href="#" class="view-all">View all itineraries →</a>
+    <a [routerLink]="['/trip-planner']" class="view-all">View all itineraries →</a>
   </div>
 
   <div class="itineraries-grid">
@@ -15,7 +15,7 @@
           <span>⏱️ {{ item.duration }}</span>
           <span>🏷️ {{ item.tag }}</span>
         </div>
-        <a href="#" class="view-trip">View Trip →</a>
+        <a [routerLink]="['/trip-planner']" class="view-trip">View Trip →</a>
       </div>
     </div>
   </div>

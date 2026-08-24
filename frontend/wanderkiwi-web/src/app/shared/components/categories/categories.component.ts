@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CategoryItem } from '../../../models/category.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })

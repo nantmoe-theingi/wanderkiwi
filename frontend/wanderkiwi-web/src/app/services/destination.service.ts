@@ -1,47 +1,24 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { DestinationLandingData, DestinationItem } from '../models/destination-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DestinationService {
-  private apiUrl = 'http://localhost:5208/api/Destinations'; // Adjust to your backend URL
+  private baseUrl = 'http://localhost:5208/api'; // Adjust to your backend URL
 
   constructor(private http: HttpClient) {}
 
-  searchDestinations(keyword?: string): Observable<any[]> {
-    let params = new HttpParams();
-    
-    // Only pass the search parameter if the user typed something
-    if (keyword) {
-      params = params.set('search', keyword);
-    }
-
-    return this.http.get<any[]>(this.apiUrl, { params });
+  // Fetches the initial landing page payload (popular destinations, regions, featured attractions)
+  getLandingPageData(): Observable<DestinationLandingData> {
+    return this.http.get<DestinationLandingData>(`${this.baseUrl}/Destinations/page`); // Adjust endpoint if needed
   }
 
-  getFilteredDestinations(search?: string, region?: string, category?: string): Observable<any[]> {
-    let params = new HttpParams();
-
-    if (search) {
-      params = params.set('search', search);
-    }
-    if (region && region !== 'All Regions') {
-      params = params.set('region', region);
-    }
-    if (category && category !== 'All') {
-      params = params.set('category', category);
-    }
-
-    return this.http.get<any[]>(this.apiUrl, { params }).pipe(
-    map(destinations => destinations.map(dest => ({
-      ...dest,
-      // Convert comma-separated string from backend into a proper JavaScript array
-      categories: typeof dest.categories === 'string' 
-        ? dest.categories.split(',').map((c: string) => c.trim()) 
-        : dest.categories
-    })))
-  );
+  // Handles search queries like http://localhost:5208/api/Attractions/search?query=Hobbiton
+  searchAttractions(query: string): Observable<DestinationItem[]> {
+    const params = new HttpParams().set('query', query);
+    return this.http.get<DestinationItem[]>(`${this.baseUrl}/Attractions/search`, { params });
   }
 }

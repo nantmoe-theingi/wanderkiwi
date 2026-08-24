@@ -4,7 +4,7 @@
       <h2>Popular Destinations</h2>
       <p>Explore New Zealand's most loved places</p>
     </div>
-    <a href="#" class="view-all">View all destinations →</a>
+    <a [routerLink]="['/all-destinations']" class="view-all">View all destinations →</a>
   </div>
 
   <div class="destinations-grid">
@@ -19,7 +19,7 @@
         </div>
         <h3>{{ item.name }}</h3>
         <p>{{ item.description }}</p>
-        <a href="#" class="explore-link">Explore →</a>
+        <a [routerLink]="['/all-destinations']" [queryParams]="{ search: item.name }" class="explore-link">Explore →</a>
       </div>
     </div>
   </div>
