@@ -2,13 +2,29 @@ using WanderKiwi.Application.Interfaces;
 using WanderKiwi.Application.Services;
 using WanderKiwi.Infrastructure.Data;
 using WanderKiwi.Infrastructure.Repositories;
-using WanderKiwi.Services.Interfaces;
+using WanderKiwi.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using WandarKiwi.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// 1. Define a specific CORS policy
+var AllowAngularApp = "_allowAngularApp";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowAngularApp,
+        policy =>
+        {
+            policy.WithOrigins(
+                    "http://localhost:4200",                                    // Local Angular dev server
+                    "https://nantmoe-theingi.github.io"                         // Your GitHub Pages production domain
+                  )
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,22 +36,21 @@ builder.Services.AddDbContext<WanderKiwiDbContext>(options =>
 // 2. Register the Repository and Service for Dependency Injection
 builder.Services.AddScoped<IAttractionService, AttractionService>();
 builder.Services.AddScoped<IAttractionRepository, AttractionRepository>();
+builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
+builder.Services.AddScoped<IDestinationService, DestinationService>();
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.Configure<OpenRouteServiceOptions>(builder.Configuration.GetSection(OpenRouteServiceOptions.SectionName));
+builder.Services.AddHttpClient<IRouteService, OpenRouteService>(client =>
+    client.BaseAddress = new Uri("https://api.openrouteservice.org/"));
 
 var app = builder.Build();
 
+// Automatically apply migrations and seed data on startup
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<WanderKiwiDbContext>();
-        DbInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while seeding the database.");
-    }
+    var dbContext = scope.ServiceProvider.GetRequiredService<WanderKiwiDbContext>();
+    dbContext.Database.Migrate(); // Applies any unapplied migrations safely
 }
 
 // Configure the HTTP request pipeline.
@@ -46,6 +61,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// 2. Enable the CORS middleware (Must be placed BEFORE UseAuthorization and MapControllers)
+app.UseCors(AllowAngularApp);
 
 app.UseAuthorization();
 

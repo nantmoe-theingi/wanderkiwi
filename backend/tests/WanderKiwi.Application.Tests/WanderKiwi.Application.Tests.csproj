@@ -20,4 +20,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WanderKiwi.Application\WanderKiwi.Application.csproj" />
+    <ProjectReference Include="..\..\src\WanderKiwi.Domain\WanderKiwi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

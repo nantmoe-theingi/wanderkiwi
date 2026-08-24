@@ -4,21 +4,15 @@ namespace WanderKiwi.Application.Interfaces;
 
 public interface IAttractionService
 {
-    // Retrieves all attractions
-    Task<IEnumerable<AttractionDto>> GetAllAttractionsAsync();
+    Task<IEnumerable<AttractionDto>> GetAllAsync();
 
-    // Supports the search and filter features of the Destination Explorer
-    Task<IEnumerable<AttractionDto>> SearchAttractionsAsync(string? searchTerm, string? region);
+    Task<AttractionDto?> GetByIdAsync(int id);
 
-    // Retrieves details for a specific attraction
-    Task<AttractionDto?> GetAttractionByIdAsync(int id);
+    Task<AttractionDto> CreateAsync(AttractionDto attractionDto);
 
-    // Creates a new attraction
-    Task<AttractionDto> CreateAttractionAsync(AttractionDto attraction);
+    Task<bool> UpdateAsync(int id, AttractionDto attractionDto);
 
-    // Updates an existing attraction
-    Task<bool> UpdateAttractionAsync(int id, AttractionDto attraction);
+    Task<bool> DeleteAsync(int id);
 
-    // Deletes an attraction
-    Task<bool> DeleteAttractionAsync(int id);
+    Task<IEnumerable<AttractionDto>> SearchAsync(string searchTerm);
 }

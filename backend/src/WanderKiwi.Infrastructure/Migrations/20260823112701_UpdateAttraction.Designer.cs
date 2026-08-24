@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WanderKiwi.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using WanderKiwi.Infrastructure.Data;
 namespace WanderKiwi.Infrastructure.Migrations
 {
     [DbContext(typeof(WanderKiwiDbContext))]
-    partial class WanderKiwiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260823112701_UpdateAttraction")]
+    partial class UpdateAttraction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,7 +318,7 @@ namespace WanderKiwi.Infrastructure.Migrations
                             BestTime = "Nov - Mar",
                             BookingNote = "Advance booking strongly recommended; carry food/water and expect weather-related changes.",
                             Description = "A spectacular fiord surrounded by towering peaks, waterfalls and native rainforest.",
-                            DestinationId = 8,
+                            DestinationId = 1,
                             ImageUrl = "assets/images/milford-sound-day-trip.jpg",
                             Latitude = -44.671500000000002,
                             Longitude = 167.9255,
@@ -901,96 +904,6 @@ namespace WanderKiwi.Infrastructure.Migrations
                             RecommendedDuration = "2 hours",
                             ReviewCount = 1343,
                             SourceUrl = "https://tours.wetaworkshop.com/auckland/"
-                        },
-                        new
-                        {
-                            Id = 46,
-                            AvailabilityNote = "Open year round; daily boat departures across Lake Te Anau.",
-                            BestTime = "Year round",
-                            BookingNote = "Advance booking recommended; check-in 30 minutes prior to departure; requires bending/walking in caves.",
-                            Description = "A magical underground experience starting with a scenic lake cruise to a hidden limestone cave illuminated by thousands of glowworms.",
-                            DestinationId = 8,
-                            ImageUrl = "assets/images/te-anau-glowworm-caves.jpg",
-                            Latitude = -45.416499999999999,
-                            Longitude = 167.71180000000001,
-                            Name = "Te Anau Glowworm Caves",
-                            OpeningHoursNote = "Open 7 days, daily departures. Check official website before visit.",
-                            Rating = 4.5m,
-                            RecommendedDuration = "2.25 hours",
-                            ReviewCount = 850,
-                            SourceUrl = "https://www.realnz.com/en/experiences/glowworm-caves/te-anau-glowworm-caves/"
-                        },
-                        new
-                        {
-                            Id = 47,
-                            AvailabilityNote = "Great Walks season runs late October to April; day walks accessible year round in good weather.",
-                            BestTime = "Sep - Apr",
-                            BookingNote = "No booking required for day walks; check DOC weather and track alerts before setting out.",
-                            Description = "An accessible section of the famous Kepler Great Walk, leading through ancient beech forests along the lake shore.",
-                            DestinationId = 8,
-                            ImageUrl = "assets/images/kepler-track-day-walk.jpg",
-                            Latitude = -45.439799999999998,
-                            Longitude = 167.68299999999999,
-                            Name = "Kepler Track Day Walk",
-                            OpeningHoursNote = "Public walking track; accessible during daylight hours.",
-                            Rating = 4.8m,
-                            RecommendedDuration = "3 hours",
-                            ReviewCount = 620,
-                            SourceUrl = "https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/kepler-track/"
-                        },
-                        new
-                        {
-                            Id = 48,
-                            AvailabilityNote = "Operates year round; full-day excursion departing from Manapouri.",
-                            BestTime = "Nov - Mar",
-                            BookingNote = "Advance booking essential; departures leave from Pearl Harbour in Manapouri.",
-                            Description = "A tranquil and remote wilderness cruise through a deep, pristine fiord known for its serene waters and native wildlife.",
-                            DestinationId = 8,
-                            ImageUrl = "assets/images/doubtful-sound-wilderness-cruise.jpg",
-                            Latitude = -45.563600000000001,
-                            Longitude = 167.6163,
-                            Name = "Doubtful Sound Wilderness Cruise",
-                            OpeningHoursNote = "Check official website before visit for seasonal departure times.",
-                            Rating = 4.7m,
-                            RecommendedDuration = "7 hours",
-                            ReviewCount = 540,
-                            SourceUrl = "https://www.realnz.com/en/experiences/cruises/doubtful-sound-wilderness-cruises/"
-                        },
-                        new
-                        {
-                            Id = 49,
-                            AvailabilityNote = "Open year round from dawn to dusk.",
-                            BestTime = "Year round",
-                            BookingNote = "Free entry (gold coin donation appreciated); guided tour feeds can be booked.",
-                            Description = "A lakeside conservation haven providing a rare chance to see endangered native birds like the Takahē up close.",
-                            DestinationId = 8,
-                            ImageUrl = "assets/images/te-anau-bird-sanctuary.jpg",
-                            Latitude = -45.426200000000001,
-                            Longitude = 167.70509999999999,
-                            Name = "Te Anau Bird Sanctuary",
-                            OpeningHoursNote = "Open daily from dawn to dusk.",
-                            Rating = 4.6m,
-                            RecommendedDuration = "1 hours",
-                            ReviewCount = 310,
-                            SourceUrl = "https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/te-anau-bird-sanctuary/"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            AvailabilityNote = "Open year round; an excellent indoor activity.",
-                            BestTime = "Year round",
-                            BookingNote = "Advance booking recommended for popular evening screenings.",
-                            Description = "A boutique cinema showcasing the custom-shot documentary 'Ata Whenua - Shadowland', capturing Fiordland's wild landscapes.",
-                            DestinationId = 8,
-                            ImageUrl = "assets/images/fiordland-cinema.jpg",
-                            Latitude = -45.414999999999999,
-                            Longitude = 167.71350000000001,
-                            Name = "Fiordland Cinema",
-                            OpeningHoursNote = "Check official website for current screening showtimes.",
-                            Rating = 4.8m,
-                            RecommendedDuration = "1 hours",
-                            ReviewCount = 420,
-                            SourceUrl = "https://www.fiordlandcinema.co.nz/"
                         });
                 });
 
@@ -1022,16 +935,11 @@ namespace WanderKiwi.Infrastructure.Migrations
                         new
                         {
                             AttractionId = 2,
-                            CategoryId = 3
+                            CategoryId = 1
                         },
                         new
                         {
                             AttractionId = 2,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 3,
                             CategoryId = 2
                         },
                         new
@@ -1042,27 +950,27 @@ namespace WanderKiwi.Infrastructure.Migrations
                         new
                         {
                             AttractionId = 4,
-                            CategoryId = 8
+                            CategoryId = 1
                         },
                         new
                         {
                             AttractionId = 4,
-                            CategoryId = 1
+                            CategoryId = 3
                         },
                         new
                         {
                             AttractionId = 5,
-                            CategoryId = 1
+                            CategoryId = 4
                         },
                         new
                         {
                             AttractionId = 5,
-                            CategoryId = 7
+                            CategoryId = 3
                         },
                         new
                         {
                             AttractionId = 6,
-                            CategoryId = 4
+                            CategoryId = 1
                         },
                         new
                         {
@@ -1072,417 +980,12 @@ namespace WanderKiwi.Infrastructure.Migrations
                         new
                         {
                             AttractionId = 7,
-                            CategoryId = 5
+                            CategoryId = 1
                         },
                         new
                         {
                             AttractionId = 7,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 8,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 8,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 9,
                             CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 10,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 10,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 11,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 11,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 12,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 12,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 13,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 13,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 14,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 14,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 15,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 15,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 16,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 16,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 17,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 17,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 18,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 19,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 19,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 20,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 21,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 21,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 22,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 22,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 23,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 23,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 24,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 24,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 25,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 25,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 26,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 26,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 27,
-                            CategoryId = 5
-                        },
-                        new
-                        {
-                            AttractionId = 27,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 28,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 28,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 29,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 30,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 30,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 31,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 31,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 32,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 33,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 34,
-                            CategoryId = 5
-                        },
-                        new
-                        {
-                            AttractionId = 34,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 35,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 35,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 36,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 36,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 37,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 38,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 38,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 39,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 39,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 40,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 40,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 41,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 41,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 42,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 42,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 43,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 43,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 44,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 44,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 45,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 45,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 46,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 46,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 46,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 47,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 47,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 48,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 48,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 48,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 49,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 49,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 50,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 50,
-                            CategoryId = 7
                         });
                 });
 
@@ -1748,21 +1251,6 @@ namespace WanderKiwi.Infrastructure.Migrations
                         {
                             DestinationId = 5,
                             CategoryId = 6
-                        },
-                        new
-                        {
-                            DestinationId = 8,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            DestinationId = 8,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            DestinationId = 8,
-                            CategoryId = 8
                         });
                 });
 

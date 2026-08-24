@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WanderKiwi.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using WanderKiwi.Infrastructure.Data;
 namespace WanderKiwi.Infrastructure.Migrations
 {
     [DbContext(typeof(WanderKiwiDbContext))]
-    partial class WanderKiwiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260823115312_AddTeAnauAttractions")]
+    partial class AddTeAnauAttractions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1022,16 +1025,11 @@ namespace WanderKiwi.Infrastructure.Migrations
                         new
                         {
                             AttractionId = 2,
-                            CategoryId = 3
+                            CategoryId = 1
                         },
                         new
                         {
                             AttractionId = 2,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 3,
                             CategoryId = 2
                         },
                         new
@@ -1042,27 +1040,27 @@ namespace WanderKiwi.Infrastructure.Migrations
                         new
                         {
                             AttractionId = 4,
-                            CategoryId = 8
+                            CategoryId = 1
                         },
                         new
                         {
                             AttractionId = 4,
-                            CategoryId = 1
+                            CategoryId = 3
                         },
                         new
                         {
                             AttractionId = 5,
-                            CategoryId = 1
+                            CategoryId = 4
                         },
                         new
                         {
                             AttractionId = 5,
-                            CategoryId = 7
+                            CategoryId = 3
                         },
                         new
                         {
                             AttractionId = 6,
-                            CategoryId = 4
+                            CategoryId = 1
                         },
                         new
                         {
@@ -1072,417 +1070,12 @@ namespace WanderKiwi.Infrastructure.Migrations
                         new
                         {
                             AttractionId = 7,
-                            CategoryId = 5
+                            CategoryId = 1
                         },
                         new
                         {
                             AttractionId = 7,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 8,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 8,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 9,
                             CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 10,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 10,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 11,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 11,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 12,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 12,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 13,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 13,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 14,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 14,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 15,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 15,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 16,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 16,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 17,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 17,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 18,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 19,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 19,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 20,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 21,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 21,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 22,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 22,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 23,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 23,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 24,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 24,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 25,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 25,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 26,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 26,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 27,
-                            CategoryId = 5
-                        },
-                        new
-                        {
-                            AttractionId = 27,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 28,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 28,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 29,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 30,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 30,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 31,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 31,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 32,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 33,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 34,
-                            CategoryId = 5
-                        },
-                        new
-                        {
-                            AttractionId = 34,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 35,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 35,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 36,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 36,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 37,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 38,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 38,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 39,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 39,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 40,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 40,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 41,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 41,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 42,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 42,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 43,
-                            CategoryId = 7
-                        },
-                        new
-                        {
-                            AttractionId = 43,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 44,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 44,
-                            CategoryId = 6
-                        },
-                        new
-                        {
-                            AttractionId = 45,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 45,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 46,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 46,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 46,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 47,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 47,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            AttractionId = 48,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 48,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            AttractionId = 48,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 49,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            AttractionId = 49,
-                            CategoryId = 8
-                        },
-                        new
-                        {
-                            AttractionId = 50,
-                            CategoryId = 4
-                        },
-                        new
-                        {
-                            AttractionId = 50,
-                            CategoryId = 7
                         });
                 });
 
@@ -1748,21 +1341,6 @@ namespace WanderKiwi.Infrastructure.Migrations
                         {
                             DestinationId = 5,
                             CategoryId = 6
-                        },
-                        new
-                        {
-                            DestinationId = 8,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            DestinationId = 8,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            DestinationId = 8,
-                            CategoryId = 8
                         });
                 });
 
