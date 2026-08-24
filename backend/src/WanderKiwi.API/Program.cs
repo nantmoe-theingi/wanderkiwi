@@ -33,6 +33,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<WanderKiwiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Add standard in-memory caching
+builder.Services.AddMemoryCache();
+
 // 2. Register the Repository and Service for Dependency Injection
 builder.Services.AddScoped<IAttractionService, AttractionService>();
 builder.Services.AddScoped<IAttractionRepository, AttractionRepository>();
@@ -40,9 +43,12 @@ builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.AddScoped<ITripGenerationService, TripGenerationService>();
 builder.Services.Configure<OpenRouteServiceOptions>(builder.Configuration.GetSection(OpenRouteServiceOptions.SectionName));
 builder.Services.AddHttpClient<IRouteService, OpenRouteService>(client =>
     client.BaseAddress = new Uri("https://api.openrouteservice.org/"));
+
+
 
 var app = builder.Build();
 

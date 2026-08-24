@@ -64,6 +64,8 @@ public class AttractionRepository : IAttractionRepository
 
     public async Task<IEnumerable<Attraction>> SearchAsync(string searchTerm)
     {
+
+        
         if (string.IsNullOrWhiteSpace(searchTerm))
         {
             return Enumerable.Empty<Attraction>();
@@ -85,7 +87,19 @@ public class AttractionRepository : IAttractionRepository
                 a.Destination.Region.Island.Name.Contains(searchTerm) ||
                 a.AttractionCategories.Any(ac => ac.Category.Name.Contains(searchTerm)))
             .ToListAsync();
+
+            
     }
+
+    public Task<List<Attraction>> GetByDestinationIdAsync(int destinationId) =>
+        _context.Attractions
+            .AsNoTracking()
+            .Include(a => a.AttractionCategories)
+                .ThenInclude(ac => ac.Category)
+            .Where(a => a.DestinationId == destinationId)
+            .OrderByDescending(a => a.Rating)
+            .ToListAsync();
+
 
     public Task<List<Attraction>> GetByDestinationAsync(string destinationName) =>
         _context.Attractions
@@ -95,4 +109,7 @@ public class AttractionRepository : IAttractionRepository
             .Where(a => a.Destination.Name == destinationName)
             .OrderByDescending(a => a.Rating)
             .ToListAsync();
+
+
+    
 }

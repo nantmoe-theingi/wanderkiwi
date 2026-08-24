@@ -1,3 +1,4 @@
+using WanderKiwi.Application.DTOs;
 using WanderKiwi.Application.Models;
 using WanderKiwi.Domain.Entities;
 
@@ -7,4 +8,6 @@ public interface IDestinationRepository
 {
 
     Task<DestinationPageData> GetDestinationPageAsync();
+
+    Task<Destination> GetByIdAsync(int id);
 }

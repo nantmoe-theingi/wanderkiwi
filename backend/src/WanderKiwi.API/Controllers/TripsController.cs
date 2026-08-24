@@ -9,10 +9,39 @@ namespace WanderKiwi.API.Controllers;
 public class TripsController : ControllerBase
 {
     private readonly ITripService _tripService;
+    private readonly ITripGenerationService _tripGenerationService;
 
-    public TripsController(ITripService tripService)
+    public TripsController(ITripService tripService, ITripGenerationService tripGenerationService)
     {
         _tripService = tripService;
+        _tripGenerationService = tripGenerationService;
+    }
+
+    /// <summary>
+    /// Generates a customized day-by-day travel itinerary based on user preferences.
+    /// </summary>
+    /// <param name="request">Trip criteria including destination, dates, trip style, and interests.</param>
+    /// <returns>A structured itinerary with daily scheduled stops.</returns>
+    [HttpPost("generate")]
+    [ProducesResponseType(typeof(GeneratedTripItineraryDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GenerateTrip([FromBody] GenerateTripRequestDto request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var result = await _tripGenerationService.GenerateItineraryAsync(request);
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
     }
 
     [HttpGet]
