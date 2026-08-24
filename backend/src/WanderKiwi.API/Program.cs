@@ -2,6 +2,7 @@ using WanderKiwi.Application.Interfaces;
 using WanderKiwi.Application.Services;
 using WanderKiwi.Infrastructure.Data;
 using WanderKiwi.Infrastructure.Repositories;
+using WanderKiwi.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using WandarKiwi.Application.Interfaces;
 
@@ -37,6 +38,11 @@ builder.Services.AddScoped<IAttractionService, AttractionService>();
 builder.Services.AddScoped<IAttractionRepository, AttractionRepository>();
 builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.Configure<OpenRouteServiceOptions>(builder.Configuration.GetSection(OpenRouteServiceOptions.SectionName));
+builder.Services.AddHttpClient<IRouteService, OpenRouteService>(client =>
+    client.BaseAddress = new Uri("https://api.openrouteservice.org/"));
 
 var app = builder.Build();
 

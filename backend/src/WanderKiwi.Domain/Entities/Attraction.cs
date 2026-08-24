@@ -23,8 +23,15 @@ public class Attraction
     public int ReviewCount { get; set; }
 
     public string BestTime { get; set; } = string.Empty;
+    public string AvailabilityNote { get; set; } = string.Empty;
 
     public string RecommendedDuration { get; set; } = string.Empty;
+
+    public string OpeningHoursNote { get; set; } = string.Empty;
+
+    public string BookingNote { get; set; } = string.Empty;
+
+    public string SourceUrl { get; set; } = string.Empty;
 
     public ICollection<AttractionCategory> AttractionCategories { get; set; }
         = new List<AttractionCategory>();

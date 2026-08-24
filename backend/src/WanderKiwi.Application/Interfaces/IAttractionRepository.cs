@@ -15,4 +15,6 @@ public interface IAttractionRepository
     Task DeleteAsync(int id);
 
     Task<IEnumerable<Attraction>> SearchAsync(string searchTerm);
+
+    Task<List<Attraction>> GetByDestinationAsync(string destinationName);
 }

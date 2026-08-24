@@ -82,7 +82,17 @@ public class AttractionRepository : IAttractionRepository
                 a.Description.Contains(searchTerm) ||
                 a.Destination.Name.Contains(searchTerm) ||
                 a.Destination.Region.Name.Contains(searchTerm) ||
-                a.Destination.Region.Island.Name.Contains(searchTerm))
+                a.Destination.Region.Island.Name.Contains(searchTerm) ||
+                a.AttractionCategories.Any(ac => ac.Category.Name.Contains(searchTerm)))
             .ToListAsync();
     }
+
+    public Task<List<Attraction>> GetByDestinationAsync(string destinationName) =>
+        _context.Attractions
+            .AsNoTracking()
+            .Include(a => a.AttractionCategories)
+                .ThenInclude(ac => ac.Category)
+            .Where(a => a.Destination.Name == destinationName)
+            .OrderByDescending(a => a.Rating)
+            .ToListAsync();
 }

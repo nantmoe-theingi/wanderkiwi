@@ -92,18 +92,20 @@ public class DestinationService : IDestinationService
             BestTime = attraction.BestTime,
             RecommendedDuration = attraction.RecommendedDuration,
 
+            // --- UPDATED FIELDS ---
+            AvailabilityNote = attraction.AvailabilityNote,
+            OpeningHoursNote = attraction.OpeningHoursNote,
+            BookingNote = attraction.BookingNote,
+            SourceUrl = attraction.SourceUrl,
+
             DestinationId = attraction.DestinationId,
             DestinationName = attraction.Destination?.Name ?? string.Empty,
 
             RegionId = attraction.Destination?.RegionId ?? 0,
             RegionName = attraction.Destination?.Region?.Name ?? string.Empty,
 
-            IslandId =
-                attraction.Destination?.Region?.IslandId ?? 0,
-
-            IslandName =
-                attraction.Destination?.Region?.Island?.Name
-                ?? string.Empty,
+            IslandId = attraction.Destination?.Region?.IslandId ?? 0,
+            IslandName = attraction.Destination?.Region?.Island?.Name ?? string.Empty,
 
             Categories = attraction.AttractionCategories
                 .Select(ac => ac.Category.Name)

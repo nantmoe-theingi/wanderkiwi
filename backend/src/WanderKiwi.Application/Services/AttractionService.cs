@@ -65,6 +65,12 @@ public class AttractionService : IAttractionService
         attractionToUpdate.BestTime = attractionDto.BestTime;
         attractionToUpdate.RecommendedDuration = attractionDto.RecommendedDuration;
 
+        // --- UPDATED FIELDS ---
+        attractionToUpdate.AvailabilityNote = attractionDto.AvailabilityNote;
+        attractionToUpdate.OpeningHoursNote = attractionDto.OpeningHoursNote;
+        attractionToUpdate.BookingNote = attractionDto.BookingNote;
+        attractionToUpdate.SourceUrl = attractionDto.SourceUrl;
+
         attractionToUpdate.DestinationId = attractionDto.DestinationId;
 
         await _attractionRepository.UpdateAsync(attractionToUpdate);
@@ -85,39 +91,44 @@ public class AttractionService : IAttractionService
 
     // Helper method to map the Domain Entity to the Application DTO
     private AttractionDto MapToDto(Domain.Entities.Attraction attraction)
-{
-    return new AttractionDto
     {
-        Id = attraction.Id,
-        Name = attraction.Name,
-        Description = attraction.Description,
-        ImageUrl = attraction.ImageUrl,
+        return new AttractionDto
+        {
+            Id = attraction.Id,
+            Name = attraction.Name,
+            Description = attraction.Description,
+            ImageUrl = attraction.ImageUrl,
 
-        Latitude = attraction.Latitude,
-        Longitude = attraction.Longitude,
+            Latitude = attraction.Latitude,
+            Longitude = attraction.Longitude,
 
-        Rating = attraction.Rating,
-        ReviewCount = attraction.ReviewCount,
+            Rating = attraction.Rating,
+            ReviewCount = attraction.ReviewCount,
 
-        BestTime = attraction.BestTime,
-        RecommendedDuration = attraction.RecommendedDuration,
+            BestTime = attraction.BestTime,
+            RecommendedDuration = attraction.RecommendedDuration,
 
-        DestinationId = attraction.DestinationId,
-        DestinationName = attraction.Destination?.Name ?? string.Empty,
+            // --- UPDATED FIELDS ---
+            AvailabilityNote = attraction.AvailabilityNote,
+            OpeningHoursNote = attraction.OpeningHoursNote,
+            BookingNote = attraction.BookingNote,
+            SourceUrl = attraction.SourceUrl,
 
-        RegionId = attraction.Destination?.RegionId ?? 0,
-        RegionName = attraction.Destination?.Region?.Name ?? string.Empty,
+            DestinationId = attraction.DestinationId,
+            DestinationName = attraction.Destination?.Name ?? string.Empty,
 
-        IslandId = attraction.Destination?.Region?.IslandId ?? 0,
-        IslandName = attraction.Destination?.Region?.Island?.Name ?? string.Empty,
+            RegionId = attraction.Destination?.RegionId ?? 0,
+            RegionName = attraction.Destination?.Region?.Name ?? string.Empty,
 
-        Categories = attraction.AttractionCategories
-            .Select(ac => ac.Category.Name)
-            .ToList()
-    };
-}
+            IslandId = attraction.Destination?.Region?.IslandId ?? 0,
+            IslandName = attraction.Destination?.Region?.Island?.Name ?? string.Empty,
 
-    // Helper method to map the Application DTO to the Domain Entity
+            Categories = attraction.AttractionCategories
+                .Select(ac => ac.Category.Name)
+                .ToList()
+        };
+    }
+
     private Domain.Entities.Attraction MapToEntity(AttractionDto attractionDto)
     {
         return new Domain.Entities.Attraction
@@ -135,6 +146,12 @@ public class AttractionService : IAttractionService
 
             BestTime = attractionDto.BestTime,
             RecommendedDuration = attractionDto.RecommendedDuration,
+
+            // --- UPDATED FIELDS ---
+            AvailabilityNote = attractionDto.AvailabilityNote,
+            OpeningHoursNote = attractionDto.OpeningHoursNote,
+            BookingNote = attractionDto.BookingNote,
+            SourceUrl = attractionDto.SourceUrl,
 
             DestinationId = attractionDto.DestinationId
         };
