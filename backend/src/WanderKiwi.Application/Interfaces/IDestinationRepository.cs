@@ -10,4 +10,6 @@ public interface IDestinationRepository
     Task<DestinationPageData> GetDestinationPageAsync();
 
     Task<Destination> GetByIdAsync(int id);
+
+    Task<Destination> GetbyNameAsync(string name);
 }

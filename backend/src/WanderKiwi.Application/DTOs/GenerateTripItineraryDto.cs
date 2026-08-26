@@ -1,37 +1,99 @@
 namespace WanderKiwi.Application.DTOs;
 
+
 public class GeneratedTripItineraryDto
 {
     public string TripName { get; set; } = string.Empty;
+
     public string DestinationName { get; set; } = string.Empty;
-    public int TotalDays { get; set; }
+
     public DateTime StartDate { get; set; }
+
     public DateTime EndDate { get; set; }
-    public List<TripDayItineraryDto> Days { get; set; } = new();
+
+    public int TotalDays { get; set; }
+
+    public int Travelers { get; set; }
+
+    public string TripStyle { get; set; } = string.Empty;
+
+    public List<string> Interests { get; set; } = [];
+
+    public string Budget { get; set; } = string.Empty;
+
+    public string TransportMode { get; set; } = string.Empty;
+
+    public string Summary { get; set; } = string.Empty;
+
+    public List<GeneratedTripDayDto> Days { get; set; } = [];
 }
 
-public class TripDayItineraryDto
+public class GeneratedTripDayDto
 {
     public int DayNumber { get; set; }
+
     public DateTime Date { get; set; }
+
     public string Theme { get; set; } = string.Empty;
-    public List<TripStopItineraryDto> Stops { get; set; } = new();
+
+    public string Summary { get; set; } = string.Empty;
+
+    public List<GeneratedTripStopDto> Stops { get; set; } = [];
 }
 
-public class TripStopItineraryDto
+
+public class GeneratedTripStopDto
 {
     public int Order { get; set; }
-    public int AttractionId { get; set; }
-    public string AttractionName { get; set; } = string.Empty;
-    public string ImageUrl { get; set; } = string.Empty;
+
+    public string Type { get; set; } = string.Empty;
+
+    public string StartTime { get; set; } = string.Empty;
+
+    public string EndTime { get; set; } = string.Empty;
+
+    public string Title { get; set; } = string.Empty;
+
     public string Description { get; set; } = string.Empty;
-    public string RecommendedDuration { get; set; } = string.Empty;
-    public string BestTime { get; set; } = string.Empty;
-    public string TimeSlot { get; set; } = string.Empty; // e.g. "09:30 AM - 11:30 AM"
-    public string OpeningHoursNote { get; set; } = string.Empty;
-    public string BookingNote { get; set; } = string.Empty;
-    public string AvailabilityNote { get; set; } = string.Empty;
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
-    public int DriveTimeToNextMinutes { get; set; }
+
+    public AttractionReferenceDto? Attraction { get; set; }
+
+    public DrivingInfoDto? Driving { get; set; }
+
+    public int DurationMinutes { get; set; }
+
+    public bool WeatherDependent { get; set; }
+
+    // Database enrichment
+    public bool IsFromDatabase { get; set; }
+
+    public int? AttractionId { get; set; }
+
+    public string? ImageUrl { get; set; }
+
+    public double? Latitude { get; set; }
+
+    public double? Longitude { get; set; }
+
+    public string? DataSource { get; set; }
+}
+
+public class AttractionReferenceDto
+{
+    public string Name { get; set; } = string.Empty;
+
+    public string? Location { get; set; }
+
+    public double? Latitude { get; set; }
+
+    public double? Longitude { get; set; }
+}
+
+public class DrivingInfoDto
+{
+    public int DurationMinutes { get; set; }
+
+    public double DistanceKm { get; set; }
+
+    public bool IsRealRoute { get; set; }
 }
