@@ -131,12 +131,6 @@ public class GroqTripGenerationService : ITripGenerationService
         using var document =
             JsonDocument.Parse(responseString);
 
-
-
-Console.WriteLine("========== GROQ RESPONSE ==========");
-Console.WriteLine(responseString);
-Console.WriteLine("===================================");
-
 var root = document.RootElement;
 
 if (!root.TryGetProperty("choices", out var choices))
@@ -196,8 +190,6 @@ if (!message.TryGetProperty("content", out var contentElement))
 var finishReason = choice
     .GetProperty("finish_reason")
     .GetString();
-
-Console.WriteLine($"Groq finish reason: {finishReason}");
 
 var aiJsonOutput = contentElement.GetString();
 

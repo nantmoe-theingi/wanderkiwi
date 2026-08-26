@@ -49,9 +49,6 @@ if (!string.IsNullOrEmpty(connectionString) &&
     connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
 }
 
-// PRINT TO LOGS: This will show us the exact string in your Railway deploy logs!
-Console.WriteLine($"[DEBUG] Resolved Connection String: '{connectionString}'");
-
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("CRITICAL: Connection string is completely null or empty!");
