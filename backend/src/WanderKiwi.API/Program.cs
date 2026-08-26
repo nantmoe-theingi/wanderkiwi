@@ -40,8 +40,9 @@ if (string.IsNullOrEmpty(connectionString))
                        ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 }
 
-// Convert Railway's URL format if present
-if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+// Convert Railway's URL format if present (handling both postgres:// and postgresql://)
+if (!string.IsNullOrEmpty(connectionString) && 
+    (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://")))
 {
     var uri = new Uri(connectionString);
     var userInfo = uri.UserInfo.Split(':');
