@@ -1,0 +1,84 @@
+<div class="trip-container" *ngIf="trip">
+  <!-- Trip Header Summary -->
+  <header class="trip-header">
+    <h1>🌿 {{ trip.tripName }}</h1>
+    <p class="trip-summary">{{ trip.summary }}</p>
+    <div class="trip-meta">
+      <span
+        >📅 {{ trip.startDate | date: "fullDate" }} —
+        {{ trip.endDate | date: "fullDate" }}</span
+      >
+      <span>👥 {{ trip.travelers }} Travelers</span>
+      <span>💰 {{ trip.budget }} Budget</span>
+      <span>🚗 Transport: {{ trip.transportMode }}</span>
+    </div>
+  </header>
+
+  <!-- Day Selection Tabs -->
+  <div class="day-tabs" *ngIf="trip.days && trip.days.length > 1">
+    <button
+      type="button"
+      *ngFor="let day of trip.days; let i = index"
+      class="day-tab-btn"
+      [class.active]="i === activeDayIndex"
+      (click)="selectDay(i)"
+    >
+      Day {{ day.dayNumber }}
+    </button>
+  </div>
+
+  <!-- Days Loop -->
+  <div class="days-container" *ngIf="currentDay">
+    <div class="day-card">
+      <!-- Day Header -->
+      <div class="day-header">
+        <h2>
+          Day {{ currentDay.dayNumber }} —
+          {{ currentDay.date | date: "EEEE, d MMMM" }}
+        </h2>
+        <span class="day-theme">{{ currentDay.theme }}</span>
+      </div>
+      <p class="day-summary">{{ currentDay.summary }}</p>
+
+      <!-- Stops Timeline -->
+      <div class="stops-timeline">
+        <div
+          *ngFor="let stop of currentDay.stops"
+          class="stop-item"
+          [ngClass]="stop.type"
+        >
+          <!-- Conditional Image: Only shown if imageUrl exists -->
+          <div class="stop-image-wrapper" *ngIf="stop.imageUrl">
+            <img [src]="stop.imageUrl" [alt]="stop.title" />
+          </div>
+
+          <!-- Stop Details -->
+          <div class="stop-content">
+            <div class="stop-time-badge">
+              ⏰ {{ stop.startTime }} – {{ stop.endTime }}
+              <span class="type-tag" [ngClass]="stop.type">{{
+                stop.type
+              }}</span>
+            </div>
+
+            <h3>{{ stop.order }}. {{ stop.title }}</h3>
+            <p>{{ stop.description }}</p>
+
+            <!-- Driving info if available -->
+            <div
+              class="stop-footer"
+              *ngIf="stop.driving && stop.driving.durationMinutes > 0"
+            >
+              <span class="drive-info"
+                >🚗 Drive: ~{{ stop.driving.durationMinutes }} mins ({{
+                  stop.driving.distanceKm
+                }}
+                km)</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

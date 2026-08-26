@@ -11,14 +11,29 @@
   </section>
 
   <div class="planner-container">
-    <!-- Left Form -->
+    <!-- Left Form Card: Plan Your Trip -->
     <app-trip-planner-form
       [isSubmitting]="isSubmitting"
       (formSubmitted)="onGenerateTrip($event)">
     </app-trip-planner-form>
 
-    <!-- Right Itinerary Results & Map -->
-    <p *ngIf="errorMessage" class="planner-error" role="alert">{{ errorMessage }}</p>
-    <app-trip-itinerary [tripPlan]="tripPlan"> </app-trip-itinerary>
+    <!-- Right Results Area: Itinerary View -->
+    <div class="planner-results-area">
+      <p *ngIf="errorMessage" class="planner-error" role="alert">{{ errorMessage }}</p>
+      
+      <!-- Shows placeholder text or instructions if no trip is generated yet -->
+      <div class="empty-state" *ngIf="!tripPlan && !isSubmitting">
+        <h3>✨ Ready to Explore?</h3>
+        <p>Fill out your preferences on the left and click "Create My Trip" to build your custom itinerary.</p>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="isSubmitting">
+        <p>✨ Crafting your personalized New Zealand itinerary...</p>
+      </div>
+
+      <!-- The Itinerary Component keeping its exact style -->
+      <app-trip-view [trip]="tripPlan" *ngIf="tripPlan && !isSubmitting"></app-trip-view>
+    </div>
   </div>
 </div>

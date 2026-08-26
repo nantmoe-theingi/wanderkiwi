@@ -7,14 +7,21 @@
     Tell us your preferences and we'll craft the perfect itinerary for you.
   </p>
 
+  <!-- Form Error Banner -->
+  <div *ngIf="formError" class="form-error-alert" role="alert">
+    ⚠️ {{ formError }}
+  </div>
+
   <div class="input-group">
     <label>Where do you want to stay?</label>
     <div class="input-with-icon">
       <span>📍</span>
       <input
         type="text"
+        name="destination"
         [(ngModel)]="request.destination"
         placeholder="e.g. Queenstown"
+        required
       />
     </div>
   </div>
@@ -24,36 +31,72 @@
       <label>Start date</label>
       <div class="input-with-icon">
         <span>📅</span>
-        <input type="date" [(ngModel)]="request.startDate" required />
+        <input
+          type="date"
+          name="startDate"
+          [(ngModel)]="request.startDate"
+          required
+        />
       </div>
     </div>
     <div class="input-group">
       <label>End date</label>
       <div class="input-with-icon">
         <span>📅</span>
-        <input type="date" [(ngModel)]="request.endDate" required />
+        <input
+          type="date"
+          name="endDate"
+          [(ngModel)]="request.endDate"
+          required
+        />
       </div>
     </div>
   </div>
 
-  <div class="date-row">
+  
+
+  <div class="trip-row">
+    <div class="input-group">
+    <label>Start time</label>
+    <div class="input-with-icon">
+      <span>⏰</span>
+      <input
+        type="time"
+        name="startTime"
+        [(ngModel)]="request.startTime"
+        required
+      />
+    </div>
+  </div>
+
     <div class="input-group">
       <label>Travelers</label>
-      <select [(ngModel)]="request.travelers">
-        <option value="2 Adults">2 Adults</option>
-        <option value="1 Adult">1 Adult</option>
-        <option value="Family">Family (3+)</option>
-      </select>
+      <div class="input-with-icon">
+        <span>👥</span>
+        <input
+          type="number"
+          name="travellers"
+          [(ngModel)]="request.travellers"
+          min="1"
+          max="40"
+          step="1"
+          required
+          placeholder="e.g. 2"
+        />
+      </div>
     </div>
+      </div>
     <div class="input-group">
       <label>Trip style</label>
-      <select [(ngModel)]="request.tripStyle">
+      <div class="input-with-icon">
+      <select name="tripStyle" [(ngModel)]="request.tripStyle">
         <option value="Adventure">Adventure</option>
         <option value="Relaxation">Relaxation</option>
         <option value="Road Trip">Road Trip</option>
       </select>
+      </div>
     </div>
-  </div>
+
 
   <div class="input-group">
     <label>Interests (select up to 3)</label>
@@ -70,17 +113,21 @@
 
   <div class="input-group">
     <label>Budget range</label>
-    <select [(ngModel)]="request.budgetRange">
-      <option value="Mid-range">💰 Mid-range</option>
-      <option value="Budget">💰 Budget</option>
-      <option value="Luxury">💰 Luxury</option>
+    <div class="input-with-icon">
+      <span>💰</span>
+    <select [(ngModel)]="request.budget">
+      <option value="Mid-range">Mid-range</option>
+      <option value="Budget">Budget</option>
+      <option value="Luxury">Luxury</option>
     </select>
+    </div>
   </div>
 
   <button class="generate-btn" (click)="onSubmit()" [disabled]="isSubmitting">
-    {{ isSubmitting ? 'Saving trip…' : '✨ Create My Trip' }}
+    {{ isSubmitting ? "Saving trip…" : "✨ Create My Trip" }}
   </button>
   <small class="ai-note"
-    >Your trip is saved with a day-by-day plan ready for you to customise.</small
+    >Your trip is saved with a day-by-day plan ready for you to
+    customise.</small
   >
 </div>
