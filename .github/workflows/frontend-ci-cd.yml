@@ -27,7 +27,7 @@ jobs:
       working-directory: frontend/wanderkiwi-web/
 
     - name: Build project
-      run: npm run build -- --configuration production
+      run: run: npm run build -- --configuration production --base-href "/wanderkiwi/"
       working-directory:  frontend/wanderkiwi-web/
 
     # Only deploy to GitHub Pages if it's a push to main (not on PR checks)
