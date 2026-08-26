@@ -4,8 +4,8 @@ WORKDIR /src
 
 # Copy solution and project files
 COPY ["WanderKiwi.sln", "./"]
-COPY ["WanderKiwi.Api/WanderKiwi.Api.csproj", "WanderKiwi.Api/"]
-COPY ["WanderKiwi.Infrastructure/WanderKiwi.Infrastructure.csproj", "WanderKiwi.Infrastructure/"]
+COPY ["src/WanderKiwi.Api/WanderKiwi.Api.csproj", "src/WanderKiwi.Api/"]
+COPY ["src/WanderKiwi.Infrastructure/WanderKiwi.Infrastructure.csproj", "src/WanderKiwi.Infrastructure/"]
 # (Include any other project files you have in your solution here)
 
 # Restore dependencies
