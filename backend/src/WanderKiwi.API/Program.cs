@@ -5,6 +5,7 @@ using WanderKiwi.Infrastructure.Repositories;
 using WanderKiwi.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using WandarKiwi.Application.Interfaces;
+using WanderKiwi.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,11 +44,16 @@ builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<ITripService, TripService>();
-builder.Services.AddScoped<ITripGenerationService, TripGenerationService>();
+// builder.Services.AddScoped<ITripGenerationService, TripGenerationService>();
 builder.Services.Configure<OpenRouteServiceOptions>(builder.Configuration.GetSection(OpenRouteServiceOptions.SectionName));
 builder.Services.AddHttpClient<IRouteService, OpenRouteService>(client =>
     client.BaseAddress = new Uri("https://api.openrouteservice.org/"));
+builder.Services.Configure<GroqApiOptions>(
+    builder.Configuration.GetSection("GroqApi"));
 
+builder.Services.AddHttpClient<GroqTripGenerationService>();
+
+builder.Services.AddScoped<ITripGenerationService, GroqTripGenerationService>();
 
 
 var app = builder.Build();

@@ -11,7 +11,9 @@ public class TripsController : ControllerBase
     private readonly ITripService _tripService;
     private readonly ITripGenerationService _tripGenerationService;
 
-    public TripsController(ITripService tripService, ITripGenerationService tripGenerationService)
+    public TripsController(
+        ITripService tripService, 
+        ITripGenerationService tripGenerationService)
     {
         _tripService = tripService;
         _tripGenerationService = tripGenerationService;

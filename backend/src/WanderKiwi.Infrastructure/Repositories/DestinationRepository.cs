@@ -63,4 +63,14 @@ public class DestinationRepository : IDestinationRepository
                 .ThenInclude(ac => ac.Category)
             .FirstAsync(a => a.Id == id);
     }
+
+    public async Task<Destination> GetbyNameAsync(string name)
+    {
+        return await _context.Destinations
+                .Include(a => a.Region)
+                    .ThenInclude(r => r.Island)
+            .Include(a => a.DestinationCategories)
+                .ThenInclude(ac => ac.Category)
+            .FirstAsync(a => a.Name == name);
+    }
 }

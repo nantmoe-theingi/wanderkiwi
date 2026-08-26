@@ -5,7 +5,7 @@ using WanderKiwi.Domain.Entities;
 
 namespace WanderKiwi.Application.Services;
 
-public class TripGenerationService : ITripGenerationService
+public class TripGenerationService //: ITripGenerationService
 {
     private readonly IDestinationRepository _destinationRepository;
     private readonly IAttractionRepository _attractionRepository;
@@ -25,123 +25,123 @@ public class TripGenerationService : ITripGenerationService
         _cache = cache;
     }
 
-    public async Task<GeneratedTripItineraryDto> GenerateItineraryAsync(GenerateTripRequestDto request)
-    {
-        // 1. Fetch Destination details
-        if (request.DestinationId <= 0)
-            throw new ArgumentException("Invalid Destination ID.");
+    // public async Task<GeneratedTripItineraryDto> GenerateItineraryAsync(GenerateTripRequestDto request)
+    // {
+    //     // 1. Fetch Destination details
+    //     if (request.DestinationId <= 0)
+    //         throw new ArgumentException("Invalid Destination ID.");
 
-        var destination = await _destinationRepository.GetByIdAsync(request.DestinationId);
+    //     var destination = await _destinationRepository.GetByIdAsync(request.DestinationId);
 
-        if (destination == null)
-            throw new ArgumentException($"Destination with ID {request.DestinationId} not found.");
+    //     if (destination == null)
+    //         throw new ArgumentException($"Destination with ID {request.DestinationId} not found.");
 
-        // 2. Fetch candidate attractions for this destination
-        var attractions = await _attractionRepository.GetByDestinationIdAsync(request.DestinationId);
+    //     // 2. Fetch candidate attractions for this destination
+    //     var attractions = await _attractionRepository.GetByDestinationIdAsync(request.DestinationId);
 
-        // Filter by selected interests/categories if specified
-        var candidateAttractions = attractions.ToList();
-        if (request.Interests != null && request.Interests.Any())
-        {
-            candidateAttractions = candidateAttractions.Where(a => a.AttractionCategories
-                .Any(ac => request.Interests.Contains(ac.Category.Name))).ToList();
-        }
+    //     // Filter by selected interests/categories if specified
+    //     var candidateAttractions = attractions.ToList();
+    //     if (request.Interests != null && request.Interests.Any())
+    //     {
+    //         candidateAttractions = candidateAttractions.Where(a => a.AttractionCategories
+    //             .Any(ac => request.Interests.Contains(ac.Category.Name))).ToList();
+    //     }
 
 
 
-        // Fallback: If category filter is too strict, grab all attractions for this destination
-        if (!candidateAttractions.Any())
-        {
-            candidateAttractions = attractions.ToList();
-        }
+    //     // Fallback: If category filter is too strict, grab all attractions for this destination
+    //     if (!candidateAttractions.Any())
+    //     {
+    //         candidateAttractions = attractions.ToList();
+    //     }
 
-        // 3. Calculate trip duration in days
-        int totalDays = (int)(request.EndDate.Date - request.StartDate.Date).TotalDays + 1;
-        totalDays = Math.Max(1, totalDays);
+    //     // 3. Calculate trip duration in days
+    //     int totalDays = (int)(request.EndDate.Date - request.StartDate.Date).TotalDays + 1;
+    //     totalDays = Math.Max(1, totalDays);
 
-        var response = new GeneratedTripItineraryDto
-        {
-            TripName = $"{destination.Name} {request.TripStyle} Gateway",
-            DestinationName = destination.Name,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate,
-            TotalDays = totalDays,
-            Days = new List<TripDayItineraryDto>()
-        };
+    //     var response = new GeneratedTripItineraryDto
+    //     {
+    //         TripName = $"{destination.Name} {request.TripStyle} Gateway",
+    //         DestinationName = destination.Name,
+    //         StartDate = request.StartDate,
+    //         EndDate = request.EndDate,
+    //         TotalDays = totalDays,
+    //         Days = new List<TripDayItineraryDto>()
+    //     };
 
-        // Shuffle attractions deterministically or by rating to give a balanced itinerary
-        var availableQueue = candidateAttractions
-            .OrderByDescending(a => a.Rating)
-            .ToList();
+    //     // Shuffle attractions deterministically or by rating to give a balanced itinerary
+    //     var availableQueue = candidateAttractions
+    //         .OrderByDescending(a => a.Rating)
+    //         .ToList();
 
-        // 4. Allocate stops per day (2-3 stops per day depending on duration)
-        for (int dayIndex = 0; dayIndex < totalDays; dayIndex++)
-        {
-            var dayDto = new TripDayItineraryDto
-            {
-                DayNumber = dayIndex + 1,
-                Date = request.StartDate.AddDays(dayIndex),
-                Theme = $"Day {dayIndex + 1} Highlights",
-                Stops = new List<TripStopItineraryDto>()
-            };
+    //     // 4. Allocate stops per day (2-3 stops per day depending on duration)
+    //     for (int dayIndex = 0; dayIndex < totalDays; dayIndex++)
+    //     {
+    //         var dayDto = new TripDayItineraryDto
+    //         {
+    //             DayNumber = dayIndex + 1,
+    //             Date = request.StartDate.AddDays(dayIndex),
+    //             Theme = $"Day {dayIndex + 1} Highlights",
+    //             Stops = new List<TripStopItineraryDto>()
+    //         };
 
-            int stopsForToday = Math.Min(3, availableQueue.Count);
-            var todayAttractions = availableQueue.Take(stopsForToday).ToList();
-            availableQueue.RemoveRange(0, stopsForToday);
+    //         int stopsForToday = Math.Min(3, availableQueue.Count);
+    //         var todayAttractions = availableQueue.Take(stopsForToday).ToList();
+    //         availableQueue.RemoveRange(0, stopsForToday);
 
-            // Start the day at 9:30 AM
-            DateTime currentStartTime = request.StartDate.AddDays(dayIndex).AddHours(9).AddMinutes(30);
+    //         // Start the day at 9:30 AM
+    //         DateTime currentStartTime = request.StartDate.AddDays(dayIndex).AddHours(9).AddMinutes(30);
 
-            for (int i = 0; i < todayAttractions.Count; i++)
-            {
-                var attr = todayAttractions[i];
+    //         for (int i = 0; i < todayAttractions.Count; i++)
+    //         {
+    //             var attr = todayAttractions[i];
                 
-                // Parse recommended duration (e.g., "2 hours", "2.5 hours", "30 minutes")
-                double durationHours = ParseDuration(attr.RecommendedDuration);
-                DateTime currentEndTime = currentStartTime.AddHours(durationHours);
+    //             // Parse recommended duration (e.g., "2 hours", "2.5 hours", "30 minutes")
+    //             double durationHours = ParseDuration(attr.RecommendedDuration);
+    //             DateTime currentEndTime = currentStartTime.AddHours(durationHours);
 
-                int driveTimeMinutes = 0;
+    //             int driveTimeMinutes = 0;
 
-                // If there is a next stop, calculate driving time to it
-                if (i < todayAttractions.Count - 1)
-                {
-                    var nextAttr = todayAttractions[i + 1];
-                    driveTimeMinutes = await GetCachedDriveTimeAsync(attr, nextAttr);
-                }
+    //             // If there is a next stop, calculate driving time to it
+    //             if (i < todayAttractions.Count - 1)
+    //             {
+    //                 var nextAttr = todayAttractions[i + 1];
+    //                 driveTimeMinutes = await GetCachedDriveTimeAsync(attr, nextAttr);
+    //             }
 
-                dayDto.Stops.Add(new TripStopItineraryDto
-                {
-                    Order = i + 1,
-                    AttractionId = attr.Id,
-                    AttractionName = attr.Name,
-                    ImageUrl = attr.ImageUrl,
-                    Description = attr.Description,
-                    RecommendedDuration = attr.RecommendedDuration,
-                    BestTime = attr.BestTime,
-                    TimeSlot = $"{currentStartTime:hh:mm tt} - {currentEndTime:hh:mm tt}",
-                    DriveTimeToNextMinutes = driveTimeMinutes,
-                    OpeningHoursNote = attr.OpeningHoursNote,
-                    BookingNote = attr.BookingNote,
-                    AvailabilityNote = attr.AvailabilityNote,
-                    Latitude = attr.Latitude,
-                    Longitude = attr.Longitude
-                });
+    //             dayDto.Stops.Add(new TripStopItineraryDto
+    //             {
+    //                 Order = i + 1,
+    //                 AttractionId = attr.Id,
+    //                 AttractionName = attr.Name,
+    //                 ImageUrl = attr.ImageUrl,
+    //                 Description = attr.Description,
+    //                 RecommendedDuration = attr.RecommendedDuration,
+    //                 BestTime = attr.BestTime,
+    //                 TimeSlot = $"{currentStartTime:hh:mm tt} - {currentEndTime:hh:mm tt}",
+    //                 DriveTimeToNextMinutes = driveTimeMinutes,
+    //                 OpeningHoursNote = attr.OpeningHoursNote,
+    //                 BookingNote = attr.BookingNote,
+    //                 AvailabilityNote = attr.AvailabilityNote,
+    //                 Latitude = attr.Latitude,
+    //                 Longitude = attr.Longitude
+    //             });
 
-                // Set start time for the next attraction (Current End Time + Drive Time + 15 min buffer)
-                currentStartTime = currentEndTime.AddMinutes(driveTimeMinutes + 15);
-            }
+    //             // Set start time for the next attraction (Current End Time + Drive Time + 15 min buffer)
+    //             currentStartTime = currentEndTime.AddMinutes(driveTimeMinutes + 15);
+    //         }
 
-            response.Days.Add(dayDto);
+    //         response.Days.Add(dayDto);
 
-            // Refill queue if it's a multi-day trip and we run out of unique stops
-            if (!availableQueue.Any() && candidateAttractions.Any())
-            {
-                availableQueue = candidateAttractions.OrderBy(a => Guid.NewGuid()).ToList();
-            }
-        }
+    //         // Refill queue if it's a multi-day trip and we run out of unique stops
+    //         if (!availableQueue.Any() && candidateAttractions.Any())
+    //         {
+    //             availableQueue = candidateAttractions.OrderBy(a => Guid.NewGuid()).ToList();
+    //         }
+    //     }
 
-        return response;
-    }
+    //     return response;
+    // }
 
     /// <summary>
     /// Wrapper for IRouteService that caches the API response.
