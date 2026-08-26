@@ -7,34 +7,34 @@ import { ArticlesComponent } from './pages/articles/articles.component';
 import { AllDestinationsComponent } from './pages/all-destinations/all-destinations.component';
 
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      {
         path: '',
-        component: MainLayoutComponent,
-        children: [
-            {
-                path: '',
-                component: HomeComponent
-            },
-            {
-                path: 'all-destinations',
-                component: AllDestinationsComponent
-            },
-            {
-                path: 'trip-planner',
-                component: TripPlannerComponent
-            },
-            {
-                path: 'articles',
-                component: ArticlesComponent
-            },
-            {
-                path: 'about-us',
-                component: AboutUsComponent
-            }
-        ]
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
+        component: HomeComponent,
+      },
+      {
+        path: 'all-destinations',
+        component: AllDestinationsComponent,
+      },
+      {
+        path: 'trip-planner',
+        component: TripPlannerComponent,
+      },
+      {
+        path: 'articles',
+        component: ArticlesComponent,
+      },
+      {
+        path: 'about-us',
+        component: AboutUsComponent,
+      },
+    ],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
