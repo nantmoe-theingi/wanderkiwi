@@ -37,7 +37,7 @@ export class TripPlannerComponent {
   //   });
   // }
 
-  tripPlan: TripResponse | null = null; // Type it with your new TripResponse interface
+  tripPlan: TripResponse | null = null;
   isSubmitting = false;
   errorMessage = '';
 

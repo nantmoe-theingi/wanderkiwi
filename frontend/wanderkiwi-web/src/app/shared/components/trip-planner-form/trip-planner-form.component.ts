@@ -23,16 +23,16 @@ export class TripPlannerFormComponent {
 
   @Output() formSubmitted = new EventEmitter<TripPlanRequest>();
 
- request: TripPlanRequest = {
+  request: TripPlanRequest = {
     destination: 'Queenstown',
-    startDate: new Date().toISOString().split('T')[0],  // Default to today's date in YYYY-MM-DD format
+    startDate: new Date().toISOString().split('T')[0], // Default to today's date in YYYY-MM-DD format
     endDate: new Date().toISOString().split('T')[0],
     startTime: '08:00', // Default start time set to 8:00 AM
     travellers: 2,
     tripStyle: 'Adventure',
     interests: ['Nature', 'Adventure'],
     budget: 'Mid-range',
-    transportMode: 'Car'
+    transportMode: 'Car',
   };
 
   isInterestSelected(interest: string): boolean {
@@ -50,7 +50,7 @@ export class TripPlannerFormComponent {
     }
   }
 
- onSubmit() {
+  onSubmit() {
     this.formError = ''; // Reset error message on new click
 
     // 1. Check required text fields
@@ -96,7 +96,7 @@ export class TripPlannerFormComponent {
     // Create a clean payload object with the formatted time for the backend
     const payload: TripPlanRequest = {
       ...this.request,
-      startTime: timeToSend
+      startTime: timeToSend,
     };
 
     // All validations passed, emit the request
