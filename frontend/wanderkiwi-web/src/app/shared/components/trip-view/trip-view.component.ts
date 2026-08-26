@@ -6,10 +6,9 @@ import { TripDay, TripResponse } from '../../../models/trip-view.model';
   selector: 'app-trip-view',
   imports: [CommonModule],
   templateUrl: './trip-view.component.html',
-  styleUrl: './trip-view.component.scss'
+  styleUrl: './trip-view.component.scss',
 })
 export class TripViewComponent {
-
   // Tracks which day tab is currently open (defaults to Day 1 / index 0)
   activeDayIndex: number = 0;
 
@@ -25,5 +24,4 @@ export class TripViewComponent {
   selectDay(index: number) {
     this.activeDayIndex = index;
   }
-
 }
