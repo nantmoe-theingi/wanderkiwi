@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: [ "main" ]
     paths:
-    - 'frontend/**'
+      - 'frontend/**'
 
 jobs:
   build-and-deploy:
@@ -27,8 +27,8 @@ jobs:
       working-directory: frontend/wanderkiwi-web/
 
     - name: Build project
-      run: run: npm run build -- --configuration production --base-href "/wanderkiwi/"
-      working-directory:  frontend/wanderkiwi-web/
+      run: npm run build -- --configuration production --base-href "/wanderkiwi/"
+      working-directory: frontend/wanderkiwi-web/
 
     # Only deploy to GitHub Pages if it's a push to main (not on PR checks)
     - name: Deploy to GitHub Pages
@@ -36,4 +36,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./frontend/dist/wanderkiwi-web
+        publish_dir: ./frontend/wanderkiwi-web/dist/wanderkiwi-web
