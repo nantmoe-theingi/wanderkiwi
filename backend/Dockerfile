@@ -11,6 +11,9 @@ COPY ["src/WanderKiwi.Application/WanderKiwi.Application.csproj", "src/WanderKiw
 COPY ["src/WanderKiwi.Domain/WanderKiwi.Domain.csproj", "src/WanderKiwi.Domain/"]
 COPY ["src/WanderKiwi.Infrastructure/WanderKiwi.Infrastructure.csproj", "src/WanderKiwi.Infrastructure/"]
 COPY ["src/WanderKiwi.Shared/WanderKiwi.Shared.csproj", "src/WanderKiwi.Shared/"]
+COPY ["tests/WanderKiwi.API.Tests/WanderKiwi.API.Tests.csproj", "tests/WanderKiwi.API.Tests/"]
+COPY ["tests/WanderKiwi.Application.Tests/WanderKiwi.Application.Tests.csproj", "tests/WanderKiwi.Application.Tests/"]
+COPY ["tests/WanderKiwi.Domain.Tests/WanderKiwi.Domain.Tests.csproj", "tests/WanderKiwi.Domain.Tests/"]
 
 # Restore dependencies
 RUN dotnet restore
