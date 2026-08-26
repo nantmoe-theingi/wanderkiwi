@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen();
 
 // 1. Register the DbContext with a connection string
 builder.Services.AddDbContext<WanderKiwiDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add standard in-memory caching
 builder.Services.AddMemoryCache();
