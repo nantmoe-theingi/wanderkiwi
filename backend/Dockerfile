@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy solution and project files
-COPY ["WanderKiwi.Backend.sln", "./"]
+COPY ["WanderKiwi.sln", "./"]
 COPY ["WanderKiwi.Api/WanderKiwi.Api.csproj", "WanderKiwi.Api/"]
 COPY ["WanderKiwi.Infrastructure/WanderKiwi.Infrastructure.csproj", "WanderKiwi.Infrastructure/"]
 # (Include any other project files you have in your solution here)
