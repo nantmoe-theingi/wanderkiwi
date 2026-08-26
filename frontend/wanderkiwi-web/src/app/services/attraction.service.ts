@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Attraction } from '../models/attraction.model';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AttractionService {
-  private apiUrl = 'http://localhost:5208/api/attractions'; 
+  private apiUrl = `${environment.apiUrl}/attractions`;
 
   constructor(private http: HttpClient) {}
 

@@ -3,13 +3,14 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TripPlanResponse } from '../models/trip-plan-response';
 import { TripPlanRequest } from '../models/trip-plan-request.model';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripPlannerService {
-  private readonly apiUrl = 'http://localhost:5208/api/trips';
-  private readonly temporaryOwnerId = 'local-user';
+  private readonly apiUrl = `${environment.apiUrl}/trips`;
+  // private readonly temporaryOwnerId = 'local-user';
 
   constructor(private http: HttpClient) {}
 
