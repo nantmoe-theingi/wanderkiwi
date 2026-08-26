@@ -4,16 +4,16 @@ WORKDIR /src
 
 # Copy solution and project files
 COPY ["WanderKiwi.sln", "./"]
-COPY ["src/WanderKiwi.Api/WanderKiwi.Api.csproj", "src/WanderKiwi.Api/"]
+COPY ["src/WanderKiwi.API/WanderKiwi.API.csproj", "src/WanderKiwi.API/"]
 COPY ["src/WanderKiwi.Infrastructure/WanderKiwi.Infrastructure.csproj", "src/WanderKiwi.Infrastructure/"]
-# (Include any other project files you have in your solution here)
+# (Include other project files here if you have them, e.g., Application/Domain)
 
 # Restore dependencies
 RUN dotnet restore
 
 # Copy the rest of the source code
 COPY . .
-WORKDIR "/src/WanderKiwi.Api"
+WORKDIR "/src/src/WanderKiwi.API"
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
 # Stage 2: Run the application
@@ -23,4 +23,4 @@ EXPOSE 8080
 EXPOSE 8081
 
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "WanderKiwi.Api.dll"]
+ENTRYPOINT ["dotnet", "WanderKiwi.API.dll"]
