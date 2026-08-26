@@ -98,7 +98,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // 2. Enable the CORS middleware (Must be placed BEFORE UseAuthorization and MapControllers)
-app.UseCors(AllowAngularApp);
+// app.UseCors(AllowAngularApp);
+app.UseCors(policy =>
+    policy.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
 
 app.UseAuthorization();
 
