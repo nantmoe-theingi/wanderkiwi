@@ -1,48 +1,82 @@
-<div class="itinerary-display-area" *ngIf="tripPlan; else loadingTemplate">
-  <div class="itinerary-action-bar">
-    <div class="itinerary-meta-badges">
-      <span class="badge">📅 {{ tripPlan.startDate | date:'d MMM y' }} – {{ tripPlan.endDate | date:'d MMM y' }}</span>
-      <span class="badge">🚗 {{ tripPlan.tripStyle || 'Flexible trip' }}</span>
-      <span class="badge">💰 {{ tripPlan.budgetRange || 'Budget to be decided' }}</span>
+<div class="itinerary-results" *ngIf="tripPlan">
+  <!-- Header Summary -->
+  <div class="itinerary-header">
+    <div class="header-main">
+      <h2>{{ tripPlan.tripName }}</h2>
+      <span class="trip-dates">
+        📅 {{ tripPlan.startDate | date:'mediumDate' }} - {{ tripPlan.endDate | date:'mediumDate' }}
+      </span>
     </div>
-    <span class="saved-status">✓ Saved</span>
+    <span class="destination-badge">📍 {{ tripPlan.destinationName }}</span>
   </div>
 
-  <div class="itinerary-split-grid">
-    <div class="days-list">
-      <div *ngFor="let day of tripPlan.days" class="day-card">
-        <div class="day-content">
-          <div class="day-number">Day {{ day.dayNumber }} · {{ day.date | date:'EEEE, d MMM' }}</div>
-          <h4>{{ day.stops.length ? day.stops.length + ' planned stop' + (day.stops.length === 1 ? '' : 's') : 'A free day to plan' }}</h4>
-          <ul *ngIf="day.stops.length; else noStops" class="stops-list">
-            <li *ngFor="let stop of day.stops">
-              <strong>{{ stop.name }}</strong>
-              <span *ngIf="stop.notes" class="stop-detail">{{ stop.notes }}</span>
-            </li>
-          </ul>
-          <ng-template #noStops>
-            <p>Add attractions to start building this day.</p>
-          </ng-template>
-        </div>
-      </div>
+  <!-- Day Selection Tabs for Multi-day Trips -->
+  <div class="day-tabs" *ngIf="tripPlan.days.length > 1">
+    <button
+      *ngFor="let day of tripPlan.days; let i = index"
+      class="tab-btn"
+      [class.active]="i === activeDayIndex"
+      (click)="selectDay(i)">
+      Day {{ day.dayNumber }}
+    </button>
+  </div>
+
+  <!-- Active Day View -->
+  <div class="day-view" *ngIf="currentDay">
+    <div class="day-header">
+      <h3>Day {{ currentDay.dayNumber }}: {{ currentDay.theme }}</h3>
     </div>
 
-    <div class="map-card-wrapper">
-      <div class="map-overlay-badge">
-        <h4>{{ tripPlan.name }}</h4>
-        <p>{{ tripPlan.days.length }} days ready to customise.</p>
-        <p>Browse destinations and add stops to each day next.</p>
+    <!-- Timeline List of Stops -->
+    <div class="timeline">
+      <div *ngFor="let stop of currentDay.stops; let isLast = last" class="timeline-item">
+        
+        <!-- Stop Card -->
+        <div class="stop-card">
+          <div class="card-image">
+            <img [src]="stop.imageUrl" [alt]="stop.attractionName" />
+            <span class="time-badge">⏰ {{ stop.timeSlot }}</span>
+          </div>
+
+          <div class="card-content">
+            <div class="card-title-row">
+              <h4>{{ stop.order }}. {{ stop.attractionName }}</h4>
+              <span class="duration-chip">⏱️ {{ stop.recommendedDuration }}</span>
+            </div>
+
+            <p class="description">{{ stop.description }}</p>
+
+            <!-- Important Notes -->
+            <div class="notes-container">
+              <span *ngIf="stop.bookingNote" class="note-pill booking">
+                📌 {{ stop.bookingNote }}
+              </span>
+              <span *ngIf="stop.availabilityNote" class="note-pill availability">
+                ℹ️ {{ stop.availabilityNote }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Driving Time Connector to Next Stop -->
+        <div class="drive-connector" *ngIf="!isLast && stop.driveTimeToNextMinutes > 0">
+          <div class="line"></div>
+          <div class="drive-badge">
+            🚗 <span>{{ stop.driveTimeToNextMinutes }} mins drive to next stop</span>
+          </div>
+          <div class="line"></div>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
 
-<!-- Empty/Loading State Template -->
-<ng-template #loadingTemplate>
-  <div class="empty-state">
-    <p>
-      ✨ Fill out the details on the left and click
-      <strong>Create My Trip</strong> to save a day-by-day itinerary.
-    </p>
+<!-- Empty State -->
+<div class="itinerary-empty" *ngIf="!tripPlan">
+  <div class="empty-content">
+    <span class="sparkle-icon">✨</span>
+    <h3>No Itinerary Generated Yet</h3>
+    <p>Fill in your preferences on the left and click "Create My Trip" to generate your custom travel plan.</p>
   </div>
-</ng-template>
+</div>

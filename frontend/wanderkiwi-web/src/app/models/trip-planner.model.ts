@@ -1,12 +1,12 @@
-export interface TripPlanRequest {
-  destination: string;
-  startDate: string;
-  endDate: string;
-  travelers: string;
-  tripStyle: string;
-  interests: string[];
-  budgetRange: string;
-}
+// export interface TripPlanRequest {
+//   destination: string;
+//   startDate: string;
+//   endDate: string;
+//   travelers: string;
+//   tripStyle: string;
+//   interests: string[];
+//   budgetRange: string;
+// }
 
 export interface TripStop {
   id: number;
@@ -25,13 +25,13 @@ export interface ItineraryDay {
   stops: TripStop[];
 }
 
-export interface TripPlanResponse {
-  id: number;
-  ownerId: string;
-  name: string;
-  startDate: string;
-  endDate: string;
-  budgetRange: string;
-  tripStyle: string;
-  days: ItineraryDay[];
-}
+// export interface TripPlanResponse {
+//   id: number;
+//   ownerId: string;
+//   name: string;
+//   startDate: string;
+//   endDate: string;
+//   budgetRange: string;
+//   tripStyle: string;
+//   days: ItineraryDay[];
+// }
