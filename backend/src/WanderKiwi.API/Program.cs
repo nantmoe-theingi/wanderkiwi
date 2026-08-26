@@ -31,18 +31,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // 1. Register the DbContext with a connection string
-// 1a. Get connection string from configuration or environment variables
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
-    ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+// 1a. Get connection string safely, ignoring empty config strings
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// If running on Railway/Cloud and using a Postgres URL format, convert it if needed, 
-// or let Npgsql handle it directly by ensuring it's not empty.
-if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+if (string.IsNullOrEmpty(connectionString))
 {
-    var uri = new Uri(connectionString);
-    var userInfo = uri.UserInfo.Split(':');
-    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
+    connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") 
+                       ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 }
 
 builder.Services.AddDbContext<WanderKiwiDbContext>(options =>
