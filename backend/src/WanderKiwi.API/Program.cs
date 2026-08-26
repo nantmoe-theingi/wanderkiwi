@@ -40,6 +40,14 @@ if (string.IsNullOrEmpty(connectionString))
                        ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 }
 
+// Convert Railway's URL format into a standard Npgsql key-value connection string
+if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+{
+    var uri = new Uri(connectionString);
+    var userInfo = uri.UserInfo.Split(':');
+    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
+}
+
 builder.Services.AddDbContext<WanderKiwiDbContext>(options =>
     options.UseNpgsql(connectionString));
 
