@@ -9,22 +9,20 @@
   >
   </app-hero>
 
+  <app-destination-results
+    *ngIf="isSearching; else landingView"
+    [searchResults]="searchResults"
+    [searchQuery]="searchQuery"
+    [regions]="filteredRegions"
+    [showRegionFilter]="isIslandSearch"
+    (filterChange)="onParentFilterChange($event)"
+    (clearAllFilters)="onParentClearFilters()"
+  >
+  </app-destination-results>
 
-<app-destination-results
-  *ngIf="isSearching; else landingView"
-  [searchResults]="searchResults"
-  [searchQuery]="searchQuery"
-  [regions]="filteredRegions"
-  [showRegionFilter]="isIslandSearch"
-  (filterChange)="onParentFilterChange($event)"
-  (clearAllFilters)="onParentClearFilters()">
-</app-destination-results>
-  
-
-  <!-- ================= FULL LANDING PAGE VIEW ================= -->
+  <!-- FULL LANDING PAGE VIEW -->
   <ng-template #landingView>
     <div class="landing-content">
-      
       <!-- 1. Explore by Island Section -->
       <section class="section-block">
         <h2 class="section-title">📍 Explore by Island</h2>
@@ -33,15 +31,24 @@
             <div class="island-info">
               <h3>North Island</h3>
               <p>Culture • Beaches • Geothermal • Adventure</p>
-              <button class="explore-btn" (click)="onSelectIsland('North Island')">Explore North Island →</button>
+              <button
+                class="explore-btn"
+                (click)="onSelectIsland('North Island')"
+              >
+                Explore North Island →
+              </button>
             </div>
           </div>
           <div class="island-card south">
             <div class="island-info">
               <h3>South Island</h3>
               <p>Mountains • Lakes • Adventure • Nature</p>
-              <button class="explore-btn" (click)="onSelectIsland('South Island')">Explore South Island →</button>
-
+              <button
+                class="explore-btn"
+                (click)="onSelectIsland('South Island')"
+              >
+                Explore South Island →
+              </button>
             </div>
           </div>
         </div>
@@ -53,22 +60,42 @@
           <h2 class="section-title">⭐ Popular Destinations</h2>
         </div>
         <div class="destinations-grid">
-          <div *ngFor="let item of popularDestinations" class="destination-card">
+          <div
+            *ngFor="let item of popularDestinations"
+            class="destination-card"
+          >
             <div class="image-wrapper">
-              <img [src]="item.imageUrl" [alt]="item.name" width="400" height="250" />
+              <img
+                [src]="item.imageUrl"
+                [alt]="item.name"
+                width="400"
+                height="250"
+              />
               <span class="popular-tag" *ngIf="item.isPopular">Popular</span>
               <!-- <button class="bookmark-btn" aria-label="Save"><i class="far fa-heart"></i></button> -->
             </div>
             <div class="card-body">
-              <div class="location-row"><span>📍 {{ item.regionName }}, {{ item.islandName }}</span></div>
+              <div class="location-row">
+                <span>📍 {{ item.regionName }}, {{ item.islandName }}</span>
+              </div>
               <h3>{{ item.name }}</h3>
               <p>{{ item.description }}</p>
               <div class="category-tags">
-                <span *ngFor="let tag of item.categories" class="cat-tag">{{ tag }}</span>
+                <span *ngFor="let tag of item.categories" class="cat-tag">{{
+                  tag
+                }}</span>
               </div>
               <div class="card-footer">
-                <span class="rating">⭐ {{ item.rating }} <small>({{ item.reviewCount }} reviews)</small></span>
-                <a [routerLink]="['/all-destinations']" [queryParams]="{ search: item.name }" class="explore-link">Explore {{ item.name }} →</a>
+                <span class="rating"
+                  >⭐ {{ item.rating }}
+                  <small>({{ item.reviewCount }} reviews)</small></span
+                >
+                <a
+                  [routerLink]="['/all-destinations']"
+                  [queryParams]="{ search: item.name }"
+                  class="explore-link"
+                  >Explore {{ item.name }} →</a
+                >
               </div>
             </div>
           </div>
@@ -83,17 +110,28 @@
             <h3>North Island</h3>
             <ul class="region-list">
               <li *ngFor="let reg of northIslandRegions">
-                <span>›</span> 
-                <span [routerLink]="['/all-destinations']" [queryParams]="{ search: reg.name }" class="explore-link">{{ reg.name }}</span>
+                <span>›</span>
+                <span
+                  [routerLink]="['/all-destinations']"
+                  [queryParams]="{ search: reg.name }"
+                  class="explore-link"
+                  >{{ reg.name }}</span
+                >
               </li>
             </ul>
           </div>
           <div class="island-regions">
             <h3>South Island</h3>
             <ul class="region-list">
-              <li *ngFor="let reg of southIslandRegions"><span>›</span> 
-              <span [routerLink]="['/all-destinations']" [queryParams]="{ search: reg.name }" class="explore-link">{{ reg.name }}</span>
-        </li>
+              <li *ngFor="let reg of southIslandRegions">
+                <span>›</span>
+                <span
+                  [routerLink]="['/all-destinations']"
+                  [queryParams]="{ search: reg.name }"
+                  class="explore-link"
+                  >{{ reg.name }}</span
+                >
+              </li>
             </ul>
           </div>
         </div>
@@ -105,26 +143,54 @@
           <h2 class="section-title">📸 Must-See Attractions</h2>
         </div>
         <div class="destinations-grid">
-          <div *ngFor="let attraction of featuredAttractions" class="destination-card">
+          <div
+            *ngFor="let attraction of featuredAttractions"
+            class="destination-card"
+          >
             <div class="image-wrapper">
-              <img [src]="attraction.imageUrl" [alt]="attraction.name" width="400" height="250" />
-               <button class="bookmark-btn" (click)="onToggleBookmark(attraction, $event)" aria-label="Save">
-    <i [class.fas]="attraction.isBookmarked" [class.far]="!attraction.isBookmarked" class="fa-heart" [style.color]="attraction.isBookmarked ? '#ef4444' : '#475569'"></i>
-  </button>
+              <img
+                [src]="attraction.imageUrl"
+                [alt]="attraction.name"
+                width="400"
+                height="250"
+              />
+              <button
+                class="bookmark-btn"
+                (click)="onToggleBookmark(attraction, $event)"
+                aria-label="Save"
+              >
+                <i
+                  [class.fas]="attraction.isBookmarked"
+                  [class.far]="!attraction.isBookmarked"
+                  class="fa-heart"
+                  [style.color]="
+                    attraction.isBookmarked ? '#ef4444' : '#475569'
+                  "
+                ></i>
+              </button>
             </div>
             <div class="card-body">
-              <div class="location-row"><span>📍 {{ attraction.regionName }}, {{ attraction.islandName }}</span></div>
+              <div class="location-row">
+                <span
+                  >📍 {{ attraction.regionName }},
+                  {{ attraction.islandName }}</span
+                >
+              </div>
               <h3>{{ attraction.name }}</h3>
               <p>{{ attraction.description }}</p>
               <div class="card-footer">
-                <span class="rating">⭐ {{ attraction.rating }} <small>({{ attraction.reviewCount }} reviews)</small></span>
-                <span class="best-time" *ngIf="attraction.bestTime">📅 Best time: {{ attraction.bestTime }}</span>
+                <span class="rating"
+                  >⭐ {{ attraction.rating }}
+                  <small>({{ attraction.reviewCount }} reviews)</small></span
+                >
+                <span class="best-time" *ngIf="attraction.bestTime"
+                  >📅 Best time: {{ attraction.bestTime }}</span
+                >
               </div>
             </div>
           </div>
         </div>
       </section>
-
     </div>
   </ng-template>
 </div>

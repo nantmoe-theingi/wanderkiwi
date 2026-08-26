@@ -4,7 +4,8 @@
     <div class="header-main">
       <h2>{{ tripPlan.tripName }}</h2>
       <span class="trip-dates">
-        📅 {{ tripPlan.startDate | date:'mediumDate' }} - {{ tripPlan.endDate | date:'mediumDate' }}
+        📅 {{ tripPlan.startDate | date: "mediumDate" }} -
+        {{ tripPlan.endDate | date: "mediumDate" }}
       </span>
     </div>
     <span class="destination-badge">📍 {{ tripPlan.destinationName }}</span>
@@ -16,7 +17,8 @@
       *ngFor="let day of tripPlan.days; let i = index"
       class="tab-btn"
       [class.active]="i === activeDayIndex"
-      (click)="selectDay(i)">
+      (click)="selectDay(i)"
+    >
       Day {{ day.dayNumber }}
     </button>
   </div>
@@ -29,8 +31,10 @@
 
     <!-- Timeline List of Stops -->
     <div class="timeline">
-      <div *ngFor="let stop of currentDay.stops; let isLast = last" class="timeline-item">
-        
+      <div
+        *ngFor="let stop of currentDay.stops; let isLast = last"
+        class="timeline-item"
+      >
         <!-- Stop Card -->
         <div class="stop-card">
           <div class="card-image">
@@ -41,7 +45,9 @@
           <div class="card-content">
             <div class="card-title-row">
               <h4>{{ stop.order }}. {{ stop.attractionName }}</h4>
-              <span class="duration-chip">⏱️ {{ stop.recommendedDuration }}</span>
+              <span class="duration-chip"
+                >⏱️ {{ stop.recommendedDuration }}</span
+              >
             </div>
 
             <p class="description">{{ stop.description }}</p>
@@ -51,7 +57,10 @@
               <span *ngIf="stop.bookingNote" class="note-pill booking">
                 📌 {{ stop.bookingNote }}
               </span>
-              <span *ngIf="stop.availabilityNote" class="note-pill availability">
+              <span
+                *ngIf="stop.availabilityNote"
+                class="note-pill availability"
+              >
                 ℹ️ {{ stop.availabilityNote }}
               </span>
             </div>
@@ -59,14 +68,19 @@
         </div>
 
         <!-- Driving Time Connector to Next Stop -->
-        <div class="drive-connector" *ngIf="!isLast && stop.driveTimeToNextMinutes > 0">
+        <div
+          class="drive-connector"
+          *ngIf="!isLast && stop.driveTimeToNextMinutes > 0"
+        >
           <div class="line"></div>
           <div class="drive-badge">
-            🚗 <span>{{ stop.driveTimeToNextMinutes }} mins drive to next stop</span>
+            🚗
+            <span
+              >{{ stop.driveTimeToNextMinutes }} mins drive to next stop</span
+            >
           </div>
           <div class="line"></div>
         </div>
-
       </div>
     </div>
   </div>
@@ -77,6 +91,9 @@
   <div class="empty-content">
     <span class="sparkle-icon">✨</span>
     <h3>No Itinerary Generated Yet</h3>
-    <p>Fill in your preferences on the left and click "Create My Trip" to generate your custom travel plan.</p>
+    <p>
+      Fill in your preferences on the left and click "Create My Trip" to
+      generate your custom travel plan.
+    </p>
   </div>
 </div>

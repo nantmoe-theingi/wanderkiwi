@@ -53,21 +53,19 @@
     </div>
   </div>
 
-  
-
   <div class="trip-row">
     <div class="input-group">
-    <label>Start time</label>
-    <div class="input-with-icon">
-      <span>⏰</span>
-      <input
-        type="time"
-        name="startTime"
-        [(ngModel)]="request.startTime"
-        required
-      />
+      <label>Start time</label>
+      <div class="input-with-icon">
+        <span>⏰</span>
+        <input
+          type="time"
+          name="startTime"
+          [(ngModel)]="request.startTime"
+          required
+        />
+      </div>
     </div>
-  </div>
 
     <div class="input-group">
       <label>Travelers</label>
@@ -85,18 +83,17 @@
         />
       </div>
     </div>
-      </div>
-    <div class="input-group">
-      <label>Trip style</label>
-      <div class="input-with-icon">
+  </div>
+  <div class="input-group">
+    <label>Trip style</label>
+    <div class="input-with-icon">
       <select name="tripStyle" [(ngModel)]="request.tripStyle">
         <option value="Adventure">Adventure</option>
         <option value="Relaxation">Relaxation</option>
         <option value="Road Trip">Road Trip</option>
       </select>
-      </div>
     </div>
-
+  </div>
 
   <div class="input-group">
     <label>Interests (select up to 3)</label>
@@ -115,11 +112,11 @@
     <label>Budget range</label>
     <div class="input-with-icon">
       <span>💰</span>
-    <select [(ngModel)]="request.budget">
-      <option value="Mid-range">Mid-range</option>
-      <option value="Budget">Budget</option>
-      <option value="Luxury">Luxury</option>
-    </select>
+      <select [(ngModel)]="request.budget">
+        <option value="Mid-range">Mid-range</option>
+        <option value="Budget">Budget</option>
+        <option value="Luxury">Luxury</option>
+      </select>
     </div>
   </div>
 
