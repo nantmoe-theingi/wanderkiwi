@@ -31,7 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // 1. Register the DbContext with a connection string
-// 1a. Get connection string safely, ignoring empty config strings
+// 1a. Get connection string safely from config or environment variables
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrEmpty(connectionString))
@@ -40,12 +40,20 @@ if (string.IsNullOrEmpty(connectionString))
                        ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 }
 
-// Convert Railway's URL format into a standard Npgsql key-value connection string
+// Convert Railway's URL format if present
 if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
 {
     var uri = new Uri(connectionString);
     var userInfo = uri.UserInfo.Split(':');
     connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
+}
+
+// PRINT TO LOGS: This will show us the exact string in your Railway deploy logs!
+Console.WriteLine($"[DEBUG] Resolved Connection String: '{connectionString}'");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("CRITICAL: Connection string is completely null or empty!");
 }
 
 builder.Services.AddDbContext<WanderKiwiDbContext>(options =>
