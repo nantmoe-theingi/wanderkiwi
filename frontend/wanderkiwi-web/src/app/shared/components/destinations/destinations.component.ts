@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AttractionService } from '../../../services/attraction.service';
-import { Attraction } from '../../../models/attraction.model';
 import { RouterModule } from '@angular/router';
+import { DestinationService } from '../../../services/destination.service';
+import { DestinationLookup } from '../../../models/destination-lookup.model';
 
 @Component({
   selector: 'app-destinations',
@@ -11,16 +11,16 @@ import { RouterModule } from '@angular/router';
   styleUrl: './destinations.component.scss'
 })
 export class DestinationsComponent implements OnInit {
-  destinations: Attraction[] = [];
+  destinations: DestinationLookup[] = [];
 
-  constructor(private attractionService: AttractionService) {}
+  constructor(private desService: DestinationService) {}
 
   ngOnInit(): void {
     this.loadDestinations();
   }
 
   loadDestinations() {
-    this.attractionService.getDestinations().subscribe({
+    this.desService.getPopularDestinations().subscribe({
       next: (data) => {
         this.destinations = data;
       },

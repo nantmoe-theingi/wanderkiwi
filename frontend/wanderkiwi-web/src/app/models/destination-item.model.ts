@@ -12,10 +12,10 @@ export interface DestinationItem {
   islandName: string;
   categories: string[];
   attractions?: any[];
-  // Extra fields for attractions if applicable
   subLocation?: string;
   bestTime?: string;
-  isBookmarked?: boolean; 
+  activityLevel?: string;
+  isBookmarked?: boolean;
 }
 
 export interface RegionItem {

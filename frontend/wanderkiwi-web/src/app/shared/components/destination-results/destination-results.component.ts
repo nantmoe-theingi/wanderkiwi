@@ -21,12 +21,12 @@ export class DestinationResultsComponent implements OnInit {
   selectedRegion: string = '';
   selectedCategory: string = 'All';
   sortBy: string = 'recommended';
-  selectedWeather: string = 'Any';
+  // selectedWeather: string = 'Any';
   selectedBestTime: string = 'Any time';
   selectedActivityLevel: string = 'Any';
 
   categories: string[] = ['All', 'Nature', 'Adventure', 'Sightseeing', 'Culture', 'Food & Wine'];
-  weatherOptions: string[] = ['Any', 'Sunny', 'Rainy', 'Snowy'];
+  // weatherOptions: string[] = ['Any', 'Sunny', 'Rainy', 'Snowy'];
   bestTimeOptions: string[] = ['Any time', 'Dec - Feb', 'Nov - Mar', 'Sep - Apr', 'Year round'];
   activityLevelOptions: string[] = ['Any', 'Easy', 'Moderate', 'Challenging'];
 
@@ -57,10 +57,10 @@ export class DestinationResultsComponent implements OnInit {
     this.emitFilterState();
   }
 
-  selectWeather(weather: string) {
-    this.selectedWeather = weather;
-    this.emitFilterState();
-  }
+  // selectWeather(weather: string) {
+  //   this.selectedWeather = weather;
+  //   this.emitFilterState();
+  // }
 
   onSortChange() {
     this.emitFilterState();
@@ -69,7 +69,7 @@ export class DestinationResultsComponent implements OnInit {
   clearFilters() {
     this.selectedRegion = '';
     this.selectedCategory = 'All';
-    this.selectedWeather = 'Any';
+    // this.selectedWeather = 'Any';
     this.selectedBestTime = 'Any time';
     this.selectedActivityLevel = 'Any';
     this.sortBy = 'recommended';
@@ -81,7 +81,7 @@ export class DestinationResultsComponent implements OnInit {
     this.filterChange.emit({
       region: this.selectedRegion,
       category: this.selectedCategory,
-      weather: this.selectedWeather,
+      // weather: this.selectedWeather,
       bestTime: this.selectedBestTime,
       activityLevel: this.selectedActivityLevel,
       sort: this.sortBy

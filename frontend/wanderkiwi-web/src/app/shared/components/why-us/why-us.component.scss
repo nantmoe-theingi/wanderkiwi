@@ -1,11 +1,11 @@
 .why-wrapper {
     background-color: #f0f9ff;
-    padding: 20px 0;
+    padding: 30px 0;
     width: 100%;
 }
 
 .why-section {
-    padding: 0px 20px 20px 20px;
+    padding: 0px 20px;
     margin: 0 auto;
     max-width: 1200px;
 }
@@ -15,21 +15,57 @@
     font-size: 24px;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.features-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
     gap: 20px;
+    width: max-content; // Ensures track expands horizontally to hold all 6 cards without wrapping
 }
 
 .feature-card {
+    width: 260px; // Fixed clean width so calculation is always accurate
+    box-sizing: border-box;
     background: white;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     border: 1px solid #e2e8f0;
+    position: relative;
+    flex-shrink: 0; // Prevents cards from squishing
+
+    &.coming-soon-card {
+        background: #f8fafc;
+        border-style: dashed;
+        opacity: 0.85;
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+    }
 }
 
 .feature-icon {
@@ -49,4 +85,31 @@
     color: #64748b;
     margin: 0;
     line-height: 1.4;
+}
+
+.carousel-btn {
+    position: absolute;
+    background: white;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: background 0.2s;
+
+    &:hover {
+        background: #f1f5f9;
+    }
+
+    &.prev {
+        left: -5px;
+    }
+
+    &.next {
+        right: -5px;
+    }
 }

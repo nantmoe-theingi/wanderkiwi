@@ -1,59 +1,66 @@
-
-
 <!-- ================= SEARCH RESULTS VIEW ================= -->
 <div class="main-container">
-  
- <aside class="filters-sidebar">
-  <div class="filters-header">
-    <h3>Filters</h3>
-    <button class="clear-all" (click)="clearFilters()">Clear all</button>
-  </div>
-
-<!-- Region Filter (Only shows if searching by Island) -->
-  <div class="filter-group" *ngIf="showRegionFilter">
-    <label>Region</label>
-    <select [(ngModel)]="selectedRegion" (change)="onFilterChange()">
-      <option value="">All Regions</option>
-      <option *ngFor="let reg of regions" [value]="reg.name">{{ reg.name }}</option>
-    </select>
-  </div>
-
-  <!-- Category Filter -->
-  <div class="filter-group">
-    <label>Category</label>
-    <div class="pill-filters">
-      <button *ngFor="let cat of categories" [class.active]="selectedCategory === cat" (click)="selectCategory(cat)">
-        {{ cat }}
-      </button>
+  <aside class="filters-sidebar">
+    <div class="filters-header">
+      <h3>Filters</h3>
+      <button class="clear-all" (click)="clearFilters()">Clear all</button>
     </div>
-  </div>
 
-  <!-- Weather Filter -->
-  <div class="filter-group">
+    <!-- Region Filter (Only shows if searching by Island) -->
+    <div class="filter-group" *ngIf="showRegionFilter">
+      <label>Region</label>
+      <select [(ngModel)]="selectedRegion" (change)="onFilterChange()">
+        <option value="">All Regions</option>
+        <option *ngFor="let reg of regions" [value]="reg.name">
+          {{ reg.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-group">
+      <label>Category</label>
+      <div class="pill-filters">
+        <button
+          *ngFor="let cat of categories"
+          [class.active]="selectedCategory === cat"
+          (click)="selectCategory(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Weather Filter -->
+    <!-- <div class="filter-group">
     <label>Weather</label>
     <div class="pill-filters">
       <button *ngFor="let w of weatherOptions" [class.active]="selectedWeather === w" (click)="selectWeather(w)">
         {{ w }}
       </button>
     </div>
-  </div>
+  </div> -->
 
-  <!-- Best Time to Visit Filter -->
-  <div class="filter-group">
-    <label>Best time to visit</label>
-    <select [(ngModel)]="selectedBestTime" (change)="onFilterChange()">
-      <option *ngFor="let time of bestTimeOptions" [value]="time">{{ time }}</option>
-    </select>
-  </div>
+    <!-- Best Time to Visit Filter -->
+    <div class="filter-group">
+      <label>Best time to visit</label>
+      <select [(ngModel)]="selectedBestTime" (change)="onFilterChange()">
+        <option *ngFor="let time of bestTimeOptions" [value]="time">
+          {{ time }}
+        </option>
+      </select>
+    </div>
 
-  <!-- Activity Level Filter -->
-  <div class="filter-group">
-    <label>Activity level</label>
-    <select [(ngModel)]="selectedActivityLevel" (change)="onFilterChange()">
-      <option *ngFor="let level of activityLevelOptions" [value]="level">{{ level }}</option>
-    </select>
-  </div>
-</aside>
+    <!-- Activity Level Filter -->
+    <div class="filter-group">
+      <label>Activity level</label>
+      <select [(ngModel)]="selectedActivityLevel" (change)="onFilterChange()">
+        <option *ngFor="let level of activityLevelOptions" [value]="level">
+          {{ level }}
+        </option>
+      </select>
+    </div>
+  </aside>
   <!-- Right Content Section -->
   <main class="content-area">
     <div class="results-header-wrapper">
@@ -77,30 +84,59 @@
     <div class="destinations-grid">
       <div *ngFor="let item of searchResults" class="destination-card">
         <div class="image-wrapper">
-          <img [src]="item.imageUrl" [alt]="item.name" width="400" height="250" />
+          <img
+            [src]="item.imageUrl"
+            [alt]="item.name"
+            width="400"
+            height="250"
+          />
           <span class="popular-tag" *ngIf="item.isPopular">Popular</span>
-  <button class="bookmark-btn" (click)="onToggleBookmark(item, $event)" aria-label="Save">
-    <i [class.fas]="item.isBookmarked" [class.far]="!item.isBookmarked" class="fa-heart" [style.color]="item.isBookmarked ? '#ef4444' : '#475569'"></i>
-  </button>
+          <button
+            class="bookmark-btn"
+            (click)="onToggleBookmark(item, $event)"
+            aria-label="Save"
+          >
+            <i
+              [class.fas]="item.isBookmarked"
+              [class.far]="!item.isBookmarked"
+              class="fa-heart"
+              [style.color]="item.isBookmarked ? '#ef4444' : '#475569'"
+            ></i>
+          </button>
         </div>
-        
+
         <div class="card-body">
           <div class="location-row">
-            <span>📍 {{ item.regionName || 'New Zealand' }}, {{ item.islandName || '' }}</span>
+            <span
+              >📍 {{ item.regionName || "New Zealand" }},
+              {{ item.islandName || "" }}</span
+            >
           </div>
           <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
 
           <div class="category-tags">
-            <span *ngFor="let tag of item.categories" class="cat-tag">{{ tag }}</span>
+            <span *ngFor="let tag of item.categories" class="cat-tag">{{
+              tag
+            }}</span>
           </div>
 
           <div class="card-footer">
-            <span class="rating">⭐ {{ item.rating }} <small>({{ item.reviewCount }} reviews)</small></span>
-            <span class="best-time" *ngIf="item.bestTime">📅 Best time: {{ item.bestTime }}</span>
+            <span class="rating"
+              >⭐ {{ item.rating }}
+              <small>({{ item.reviewCount }} reviews)</small></span
+            >
+            <span class="best-time" *ngIf="item.bestTime"
+              >📅 Best time: {{ item.bestTime }}</span
+            >
           </div>
         </div>
       </div>
     </div>
+     <div class="rating-note-footer">
+    * Note: Ratings and review counts are based on curated sample data for demonstration purposes.
+  </div>
   </main>
+ 
 </div>
+

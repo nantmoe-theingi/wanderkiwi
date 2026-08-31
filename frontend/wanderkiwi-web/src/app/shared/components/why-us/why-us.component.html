@@ -1,12 +1,22 @@
 <div class="why-wrapper">
   <section class="section why-section">
     <h2>Why WanderKiwi?</h2>
-    <div class="features-grid">
-      <div *ngFor="let f of features" class="feature-card">
-        <div class="feature-icon">{{ f.icon }}</div>
-        <h3>{{ f.title }}</h3>
-        <p>{{ f.desc }}</p>
+    
+    <div class="carousel-container" (mouseenter)="stopAutoSlide()" (mouseleave)="startAutoSlide()">
+      <button class="carousel-btn prev" (click)="prevSlide()">&#10094;</button>
+      
+      <div class="carousel-viewport">
+        <div class="features-track" [style.transform]="'translateX(-' + (currentIndex * slideDistance) + 'px)'">
+          <div *ngFor="let f of features" class="feature-card" [class.coming-soon-card]="f.isComingSoon">
+            <span class="badge" *ngIf="f.isComingSoon">Coming Soon</span>
+            <div class="feature-icon">{{ f.icon }}</div>
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.desc }}</p>
+          </div>
+        </div>
       </div>
+
+      <button class="carousel-btn next" (click)="nextSlide()">&#10095;</button>
     </div>
   </section>
 </div>
