@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DestinationService } from '../../services/destination.service';
-import { DestinationItem, RegionItem } from '../../models/destination-item.model';
+import {
+  DestinationItem,
+  RegionItem,
+} from '../../models/destination-item.model';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
 import { DestinationResultsComponent } from '../../shared/components/destination-results/destination-results.component';
 import { NEW_ZEALAND_ISLANDS } from '../../shared/constants/island.constant';
@@ -11,7 +14,13 @@ import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-all-destinations',
-  imports: [CommonModule, FormsModule, HeroComponent, RouterModule, DestinationResultsComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeroComponent,
+    RouterModule,
+    DestinationResultsComponent,
+  ],
   templateUrl: './all-destinations.component.html',
   styleUrl: './all-destinations.component.scss',
 })
@@ -19,7 +28,8 @@ export class AllDestinationsComponent implements OnInit {
   searchQuery = '';
   isSearching = false;
   isFavoritesView: boolean = false;
- 
+  northIslandImageUrl: string = '/assets/images/north-island.jpg';
+  southIslandImageUrl: string = '/assets/images/south-island.jpg';
 
   // Landing page data structures matching your backend response
   popularDestinations: DestinationItem[] = [];
@@ -32,7 +42,7 @@ export class AllDestinationsComponent implements OnInit {
   selectedRegion: string = '';
   selectedCategory: string = 'All';
   sortBy: string = 'recommended';
-    // Master copy of search results
+  // Master copy of search results
   allSearchResults: DestinationItem[] = [];
   // Filtered / Search results view
   searchResults: DestinationItem[] = [];
@@ -41,12 +51,12 @@ export class AllDestinationsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private destinationService: DestinationService,
-    private favoritesService: FavoritesService
+    private favoritesService: FavoritesService,
   ) {}
 
   ngOnInit() {
     // Listen to query parameters changing (e.g. searching vs clicking favorites)
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (params['mode'] === 'favorites' || params['search'] === 'favorites') {
         this.isFavoritesView = true;
         this.isSearching = true;
@@ -61,12 +71,9 @@ export class AllDestinationsComponent implements OnInit {
         this.isFavoritesView = false;
         this.isSearching = false;
         this.loadLandingData();
-      
       }
     });
-  
 
-    
     // this.route.queryParams.subscribe((params) => {
     //   this.searchQuery = params['search'] || '';
 
@@ -80,46 +87,44 @@ export class AllDestinationsComponent implements OnInit {
     // });
 
     // Sync initial bookmark state from localStorage when results load
-    this.searchResults.forEach(attraction => {
-      attraction.isBookmarked = this.favoritesService.isBookmarked(attraction.id);
+    this.searchResults.forEach((attraction) => {
+      attraction.isBookmarked = this.favoritesService.isBookmarked(
+        attraction.id,
+      );
     });
-
-    
   }
 
   // Load initial landing data (Popular destinations, regions, attractions)
   loadLandingData() {
     this.destinationService.getLandingPageData().subscribe({
       next: (data) => {
-      
         this.popularDestinations = data.popularDestinations;
         this.regions = data.regions;
 
-          // 1. Loop through data and check localStorage for each item's ID
-      data.featuredAttractions.forEach(item => {
-        item.isBookmarked = this.favoritesService.isBookmarked(item.id);
-      });
+        // 1. Loop through data and check localStorage for each item's ID
+        data.featuredAttractions.forEach((item) => {
+          item.isBookmarked = this.favoritesService.isBookmarked(item.id);
+        });
         this.featuredAttractions = data.featuredAttractions;
       },
-      error: (err) => console.error('Error loading landing page data', err)
+      error: (err) => console.error('Error loading landing page data', err),
     });
   }
 
   // Calls backend search endpoint
   performSearch(query: string) {
-
     this.destinationService.searchAttractions(query).subscribe({
-    next: (data) => {
-      // 1. Loop through data and check localStorage for each item's ID
-      data.forEach(item => {
-        item.isBookmarked = this.favoritesService.isBookmarked(item.id);
-      });
+      next: (data) => {
+        // 1. Loop through data and check localStorage for each item's ID
+        data.forEach((item) => {
+          item.isBookmarked = this.favoritesService.isBookmarked(item.id);
+        });
 
-      this.allSearchResults = data;    // Save the original list
-      this.searchResults = [...data]; // Initialize display list
-    },
-    error: (err) => console.error('Error performing search', err)
-  });
+        this.allSearchResults = data; // Save the original list
+        this.searchResults = [...data]; // Initialize display list
+      },
+      error: (err) => console.error('Error performing search', err),
+    });
   }
 
   onToggleBookmark(attraction: DestinationItem, event: Event) {
@@ -130,33 +135,37 @@ export class AllDestinationsComponent implements OnInit {
   // Triggered when user searches from Hero component
   onHeroSearch(query: string) {
     if (query.trim()) {
-      this.router.navigate(['/all-destinations'], { queryParams: { search: query } });
+      this.router.navigate(['/all-destinations'], {
+        queryParams: { search: query },
+      });
     } else {
       this.router.navigate(['/all-destinations']);
     }
   }
 
   get northIslandRegions() {
-    return this.regions.filter(r => r.islandName === 'North Island');
+    return this.regions.filter((r) => r.islandName === 'North Island');
   }
 
   get southIslandRegions() {
-    return this.regions.filter(r => r.islandName === 'South Island');
+    return this.regions.filter((r) => r.islandName === 'South Island');
   }
 
   // Returns only regions that belong to the currently searched island
   get filteredRegions(): RegionItem[] {
     if (this.searchQuery === NEW_ZEALAND_ISLANDS.NORTH) {
-      return this.regions.filter(r => r.islandName === 'North Island');
+      return this.regions.filter((r) => r.islandName === 'North Island');
     } else if (this.searchQuery === NEW_ZEALAND_ISLANDS.SOUTH) {
-      return this.regions.filter(r => r.islandName === 'South Island');
+      return this.regions.filter((r) => r.islandName === 'South Island');
     }
     return this.regions;
   }
 
   // Triggered when clicking North or South Island buttons
   onSelectIsland(islandName: string) {
-    this.router.navigate(['/all-destinations'], { queryParams: { search: islandName } });
+    this.router.navigate(['/all-destinations'], {
+      queryParams: { search: islandName },
+    });
   }
 
   onParentFilterChange(filters: any) {
@@ -171,25 +180,32 @@ export class AllDestinationsComponent implements OnInit {
 
     // 1. Region Filter
     if (this.selectedRegion && this.selectedRegion !== 'All Regions') {
-      tempResults = tempResults.filter(item => item.regionName === this.selectedRegion);
+      tempResults = tempResults.filter(
+        (item) => item.regionName === this.selectedRegion,
+      );
     }
 
     // 2. Category Filter
     if (this.selectedCategory && this.selectedCategory !== 'All') {
-      tempResults = tempResults.filter(item => 
-        item.categories && item.categories.includes(this.selectedCategory)
+      tempResults = tempResults.filter(
+        (item) =>
+          item.categories && item.categories.includes(this.selectedCategory),
       );
     }
 
     // 3. Best Time Filter
     if (this.selectedBestTime && this.selectedBestTime !== 'Any time') {
-      tempResults = tempResults.filter(item => item.bestTime === this.selectedBestTime);
+      tempResults = tempResults.filter(
+        (item) => item.bestTime === this.selectedBestTime,
+      );
     }
 
-    // 4. Activity Level Filter 
+    // 4. Activity Level Filter
     if (this.selectedActivityLevel && this.selectedActivityLevel !== 'Any') {
-      tempResults = tempResults.filter(item => 
-        item.activityLevel?.toLowerCase() === this.selectedActivityLevel.toLowerCase()
+      tempResults = tempResults.filter(
+        (item) =>
+          item.activityLevel?.toLowerCase() ===
+          this.selectedActivityLevel.toLowerCase(),
       );
     }
 
@@ -212,11 +228,10 @@ export class AllDestinationsComponent implements OnInit {
     this.sortBy = 'recommended';
 
     if (this.isFavoritesView) {
-    this.loadFavoriteDestinations(); // Reloads fresh favorites
-  } else {
-    this.searchResults = [...this.allSearchResults];
-  }
-    
+      this.loadFavoriteDestinations(); // Reloads fresh favorites
+    } else {
+      this.searchResults = [...this.allSearchResults];
+    }
   }
 
   loadFavoriteDestinations() {
@@ -238,9 +253,10 @@ export class AllDestinationsComponent implements OnInit {
     // });
   }
 
-
   get isIslandSearch(): boolean {
-  return this.searchQuery === NEW_ZEALAND_ISLANDS.NORTH || 
-         this.searchQuery === NEW_ZEALAND_ISLANDS.SOUTH;
-}
+    return (
+      this.searchQuery === NEW_ZEALAND_ISLANDS.NORTH ||
+      this.searchQuery === NEW_ZEALAND_ISLANDS.SOUTH
+    );
+  }
 }
