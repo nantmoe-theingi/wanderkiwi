@@ -20,11 +20,11 @@ public class AttractionService : IAttractionService
     }
 
     public async Task<IEnumerable<AttractionDto>> SearchAsync(string searchTerm)
-{
-    var attractions = await _attractionRepository.SearchAsync(searchTerm);
+    {
+        var attractions = await _attractionRepository.SearchAsync(searchTerm);
 
-    return attractions.Select(MapToDto);
-}
+        return attractions.Select(MapToDto);
+    }
 
     public async Task<AttractionDto?> GetByIdAsync(int id)
     {
@@ -107,6 +107,7 @@ public class AttractionService : IAttractionService
 
             BestTime = attraction.BestTime,
             RecommendedDuration = attraction.RecommendedDuration,
+            ActivityLevel = attraction.ActivityLevel,
 
             // --- UPDATED FIELDS ---
             AvailabilityNote = attraction.AvailabilityNote,
