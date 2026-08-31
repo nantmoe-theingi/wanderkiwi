@@ -186,7 +186,14 @@ export class AllDestinationsComponent implements OnInit {
       tempResults = tempResults.filter(item => item.bestTime === this.selectedBestTime);
     }
 
-    // 4. Sorting logic
+    // 4. Activity Level Filter 
+    if (this.selectedActivityLevel && this.selectedActivityLevel !== 'Any') {
+      tempResults = tempResults.filter(item => 
+        item.activityLevel?.toLowerCase() === this.selectedActivityLevel.toLowerCase()
+      );
+    }
+
+    // 5. Sorting logic
     if (this.sortBy === 'rating') {
       tempResults.sort((a, b) => b.rating - a.rating);
     } else if (this.sortBy === 'name') {
@@ -199,7 +206,7 @@ export class AllDestinationsComponent implements OnInit {
   onParentClearFilters() {
     this.selectedRegion = '';
     this.selectedCategory = 'All';
-    this.selectedWeather = 'Any';
+    // this.selectedWeather = 'Any';
     this.selectedBestTime = 'Any time';
     this.selectedActivityLevel = 'Any';
     this.sortBy = 'recommended';

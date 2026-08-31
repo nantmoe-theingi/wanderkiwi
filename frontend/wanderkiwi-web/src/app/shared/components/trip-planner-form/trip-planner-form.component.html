@@ -12,18 +12,28 @@
     ⚠️ {{ formError }}
   </div>
 
-  <div class="input-group">
-    <label>Where do you want to stay?</label>
+  <div class="input-group autocomplete-container">
+    <label>Where do you want to go?</label>
     <div class="input-with-icon">
       <span>📍</span>
       <input
         type="text"
         name="destination"
         [(ngModel)]="request.destination"
-        placeholder="e.g. Queenstown"
+        (input)="onInputChange()"
+        placeholder="Type a city (e.g. Queenstown)"
+        autocomplete="off"
         required
       />
     </div>
+    <!-- Dropdown Suggestions Box -->
+    <ul class="suggestions-dropdown" *ngIf="isDropdownOpen">
+      <li *ngFor="let dest of filteredDestinations" (click)="selectDestination(dest)">
+        {{ dest.name }} <small>({{ dest.regionName }})</small>
+      </li>
+    </ul>
+    <!-- Error message if invalid place is entered -->
+    <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>
 
   <div class="date-row">
@@ -35,6 +45,8 @@
           type="date"
           name="startDate"
           [(ngModel)]="request.startDate"
+          [min]="todayDateString"
+          (change)="onStartDateChange()"
           required
         />
       </div>
@@ -47,6 +59,8 @@
           type="date"
           name="endDate"
           [(ngModel)]="request.endDate"
+          [min]="request.startDate || todayDateString" 
+          [max]="maxEndDateString"
           required
         />
       </div>
@@ -76,7 +90,7 @@
           name="travellers"
           [(ngModel)]="request.travellers"
           min="1"
-          max="40"
+          max="20"
           step="1"
           required
           placeholder="e.g. 2"

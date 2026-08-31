@@ -10,9 +10,14 @@ import { TripViewComponent } from '../../shared/components/trip-view/trip-view.c
 
 @Component({
   selector: 'app-trip-planner',
-  imports: [CommonModule, TripPlannerFormComponent, TripItineraryComponent, TripViewComponent],
+  imports: [
+    CommonModule,
+    TripPlannerFormComponent,
+    TripItineraryComponent,
+    TripViewComponent,
+  ],
   templateUrl: './trip-planner.component.html',
-  styleUrl: './trip-planner.component.scss'
+  styleUrl: './trip-planner.component.scss',
 })
 export class TripPlannerComponent {
   // tripPlan: TripPlanResponse | null = null;
@@ -44,19 +49,21 @@ export class TripPlannerComponent {
   constructor(private tripPlannerService: TripPlannerService) {}
 
   onGenerateTrip(request: TripPlanRequest) {
-  this.isSubmitting = true;
-  this.errorMessage = '';
+    this.isSubmitting = true;
+    this.errorMessage = '';
 
-  // The 'request' parameter contains the live user selections
-  this.tripPlannerService.createTrip(request).subscribe({
-    next: (response: any) => {
-      this.tripPlan = response;
-      this.isSubmitting = false;
-    },
-    error: (error) => {
-      this.errorMessage = error.error?.message || 'We could not generate your trip. Please try again.';
-      this.isSubmitting = false;
-    }
-  });
-}
+    // The 'request' parameter contains the live user selections
+    this.tripPlannerService.createTrip(request).subscribe({
+      next: (response: any) => {
+        this.tripPlan = response;
+        this.isSubmitting = false;
+      },
+      error: (error) => {
+        this.errorMessage =
+          error.error?.message ||
+          'We could not generate your trip. Please try again.';
+        this.isSubmitting = false;
+      },
+    });
+  }
 }

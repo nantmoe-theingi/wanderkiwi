@@ -90,7 +90,8 @@
         cursor: pointer;
         transition: all 0.2s;
 
-        &.active, &:hover {
+        &.active,
+        &:hover {
           background: #0284c7;
           color: white;
           border-color: #0284c7;
@@ -171,7 +172,7 @@
   .image-wrapper {
     position: relative;
     height: 180px;
-    
+
     img {
       width: 100%;
       height: 100%;
@@ -270,7 +271,7 @@
       .rating {
         font-weight: 600;
         color: #0f172a;
-        
+
         small {
           color: #94a3b8;
           font-weight: 400;
@@ -283,4 +284,12 @@
       }
     }
   }
+}
+
+.rating-note-footer {
+  margin-top: 30px;
+  font-size: 14px;
+  color: #94a3b8;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
 }
