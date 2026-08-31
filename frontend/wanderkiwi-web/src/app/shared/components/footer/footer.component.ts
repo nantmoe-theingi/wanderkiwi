@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 })
 export class FooterComponent {
   email = '';
+  logoPath = 'assets/images/wanderkiwi-logo.png';
 
   // Reusing the NavItem model arrays for dynamic iteration
   quickLinks: NavItem[] = [
