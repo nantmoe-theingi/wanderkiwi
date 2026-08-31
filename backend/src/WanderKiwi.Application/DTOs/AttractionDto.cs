@@ -14,6 +14,9 @@ public class AttractionDto
     public int ReviewCount { get; set; }
 
     public string BestTime { get; set; } = string.Empty;
+
+    public string ActivityLevel { get; set; } = string.Empty; // "Easy", "Moderate", or "Challenging"
+
     public string RecommendedDuration { get; set; } = string.Empty;
 
     public string AvailabilityNote { get; set; } = string.Empty;

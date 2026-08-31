@@ -1,6 +1,8 @@
 using WandarKiwi.Application.Interfaces;
 using WanderKiwi.Application.DTOs;
 using WanderKiwi.Application.Interfaces;
+using WanderKiwi.Domain.DTOs;
+using WanderKiwi.Domain.Entities;
 
 namespace WanderKiwi.Application.Services;
 
@@ -34,8 +36,29 @@ public class DestinationService : IDestinationService
         };
     }
 
-    private DestinationDto MapToDto(
-        Domain.Entities.Destination destination)
+    public async Task<IEnumerable<DestinationLookupDto>> GetDestinationNamesAsync()
+    {
+        return await _destinationRepository.GetDestinationNamesAsync();
+    }
+
+    public async Task<IEnumerable<DestinationLookupDto>> GetPopularDestinationsAsync()
+    {
+        var popularDestinations = await _destinationRepository.GetPopularDestinationsAsync();
+        return popularDestinations.Select(d => new DestinationLookupDto
+        {
+            Id = d.Id,
+            Name = d.Name,
+            RegionName = d.RegionName,
+            IslandId = d.IslandId,
+            IslandName = d.IslandName,
+            Description = d.Description,
+            ImageUrl = d.ImageUrl,
+            Rating = d.Rating,
+            Categories = d.Categories
+        });
+    }
+
+    private DestinationDto MapToDto(Destination destination)
     {
         return new DestinationDto
         {
@@ -60,8 +83,7 @@ public class DestinationService : IDestinationService
         };
     }
 
-    private RegionDto MapRegionToDto(
-        Domain.Entities.Region region)
+    private RegionDto MapRegionToDto(Region region)
     {
         return new RegionDto
         {
@@ -73,8 +95,7 @@ public class DestinationService : IDestinationService
         };
     }
 
-    private AttractionDto MapAttractionToDto(
-        Domain.Entities.Attraction attraction)
+    private AttractionDto MapAttractionToDto(Attraction attraction)
     {
         return new AttractionDto
         {
