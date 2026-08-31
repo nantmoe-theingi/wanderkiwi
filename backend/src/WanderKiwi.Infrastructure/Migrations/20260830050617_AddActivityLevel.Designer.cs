@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WanderKiwi.Infrastructure.Data;
@@ -11,9 +12,11 @@ using WanderKiwi.Infrastructure.Data;
 namespace WanderKiwi.Infrastructure.Migrations
 {
     [DbContext(typeof(WanderKiwiDbContext))]
-    partial class WanderKiwiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260830050617_AddActivityLevel")]
+    partial class AddActivityLevel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
