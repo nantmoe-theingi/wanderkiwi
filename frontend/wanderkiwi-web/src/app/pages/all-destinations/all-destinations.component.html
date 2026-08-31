@@ -27,7 +27,17 @@
       <section class="section-block">
         <h2 class="section-title">📍 Explore by Island</h2>
         <div class="island-grid">
-          <div class="island-card north">
+          <!-- North Island Card -->
+          <div class="island-card">
+            <div class="image-wrapper">
+              <img
+                [src]="northIslandImageUrl"
+                alt="North Island"
+                width="600"
+                height="280"
+              />
+              <div class="banner-overlay"></div>
+            </div>
             <div class="island-info">
               <h3>North Island</h3>
               <p>Culture • Beaches • Geothermal • Adventure</p>
@@ -39,7 +49,18 @@
               </button>
             </div>
           </div>
-          <div class="island-card south">
+
+          <!-- South Island Card -->
+          <div class="island-card">
+            <div class="image-wrapper">
+              <img
+                [src]="southIslandImageUrl"
+                alt="South Island"
+                width="600"
+                height="280"
+              />
+              <div class="banner-overlay"></div>
+            </div>
             <div class="island-info">
               <h3>South Island</h3>
               <p>Mountains • Lakes • Adventure • Nature</p>

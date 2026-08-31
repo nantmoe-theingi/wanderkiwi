@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './cta-banner.component.scss',
 })
 export class CtaBannerComponent {
+  ctaBannerImageUrl: string = '/assets/images/cta-banner.jpg';
   constructor(private router: Router) {}
 
   goToPlanner() {

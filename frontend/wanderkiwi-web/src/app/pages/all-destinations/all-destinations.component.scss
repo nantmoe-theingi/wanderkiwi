@@ -53,8 +53,6 @@
   .island-card {
     height: 280px;
     border-radius: 16px;
-    background-size: cover;
-    background-position: center;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -63,17 +61,36 @@
     padding: 24px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
-    &.north {
-      background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1)), url('/assets/images/north-island.jpg');
-    }
+    /* Image wrapper inside the island card */
+    .image-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
 
-    &.south {
-      background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1)), url('/assets/images/south-island.jpg');
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Dark gradient overlay so text remains readable */
+      .banner-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.15));
+      }
     }
 
     .island-info {
-      color: white;
+      position: relative; // Ensures text stays above the image/overlay
       z-index: 2;
+      color: white;
 
       h3 {
         font-size: 28px;
@@ -129,7 +146,7 @@
   .image-wrapper {
     position: relative;
     height: 200px;
-    
+
     img {
       width: 100%;
       height: 100%;
@@ -228,7 +245,7 @@
       .rating {
         font-weight: 600;
         color: #0f172a;
-        
+
         small {
           color: #94a3b8;
           font-weight: 400;
@@ -304,4 +321,3 @@
     }
   }
 }
-

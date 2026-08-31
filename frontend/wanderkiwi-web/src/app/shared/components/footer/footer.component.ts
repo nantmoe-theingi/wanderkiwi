@@ -12,15 +12,14 @@ import { RouterModule } from '@angular/router';
 })
 export class FooterComponent {
   email = '';
-  logoPath = 'assets/images/wanderkiwi-logo.png';
-
+  logoPath: string = 'assets/images/wanderkiwi-logo.png';
   // Reusing the NavItem model arrays for dynamic iteration
   quickLinks: NavItem[] = [
     { label: 'Home', route: '/' },
     { label: 'Destinations', route: '/destinations' },
     { label: 'Trip Planner', route: '/trip-planner' },
     { label: 'Articles', route: '/articles' },
-    { label: 'About Us', route: '/about' }
+    { label: 'About Us', route: '/about' },
   ];
 
   informationLinks: NavItem[] = [
@@ -28,14 +27,14 @@ export class FooterComponent {
     { label: 'How It Works', route: '/how-it-works' },
     { label: 'Privacy Policy', route: '/privacy' },
     { label: 'Terms of Service', route: '/terms' },
-    { label: 'Contact Us', route: '/contact' }
+    { label: 'Contact Us', route: '/contact' },
   ];
 
   supportLinks: NavItem[] = [
     { label: 'Help Center', route: '/help' },
     { label: 'FAQs', route: '/faqs' },
     { label: 'Travel Tips', route: '/tips' },
-    { label: 'Community', route: '/community' }
+    { label: 'Community', route: '/community' },
   ];
 
   subscribe() {
