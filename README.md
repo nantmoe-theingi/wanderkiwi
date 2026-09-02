@@ -70,7 +70,7 @@ cd wanderkiwi
 
 ### 2. Run the Backend (.NET 8 Web API)
 ```bash
-cd backend/Your.Backend.ProjectFolder
+cd backend/src/WanderKiwi.Infrasturcture
 dotnet restore
 dotnet ef database update
 dotnet run
