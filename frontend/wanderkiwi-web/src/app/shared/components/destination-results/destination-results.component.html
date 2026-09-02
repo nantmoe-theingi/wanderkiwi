@@ -52,7 +52,7 @@
     </div>
 
     <!-- Activity Level Filter -->
-    <div class="filter-group">
+    <div class="filter-group" *ngIf="!isFavoritesMode">
       <label>Activity level</label>
       <select [(ngModel)]="selectedActivityLevel" (change)="onFilterChange()">
         <option *ngFor="let level of activityLevelOptions" [value]="level">
@@ -65,7 +65,8 @@
   <main class="content-area">
     <div class="results-header-wrapper">
       <div class="results-header">
-        <h2>Showing results for "{{ searchQuery }}"</h2>
+        <h2 *ngIf="!isFavoritesMode">Showing results for "{{ searchQuery }}"</h2>
+        <h2 *ngIf="isFavoritesMode">Your Saved Favourites</h2>
         <p>{{ searchResults.length }} destinations found</p>
       </div>
 
@@ -133,7 +134,7 @@
         </div>
       </div>
     </div>
-     <div class="rating-note-footer">
+     <div class="rating-note-footer" *ngIf="searchResults.length > 1">
     * Note: Ratings and review counts are based on curated sample data for demonstration purposes.
   </div>
   </main>

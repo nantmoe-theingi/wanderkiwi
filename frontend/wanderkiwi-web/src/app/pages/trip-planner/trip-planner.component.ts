@@ -7,13 +7,15 @@ import { TripPlanResponse } from '../../models/trip-plan-response';
 import { TripPlanRequest } from '../../models/trip-plan-request.model';
 import { TripResponse } from '../../models/trip-view.model';
 import { TripViewComponent } from '../../shared/components/trip-view/trip-view.component';
+import { TripPlannerHeroComponent } from '../../shared/components/trip-planner-hero/trip-planner-hero.component';
 
 @Component({
   selector: 'app-trip-planner',
   imports: [
     CommonModule,
     TripPlannerFormComponent,
-    TripItineraryComponent,
+   // TripItineraryComponent,
+    TripPlannerHeroComponent,
     TripViewComponent,
   ],
   templateUrl: './trip-planner.component.html',

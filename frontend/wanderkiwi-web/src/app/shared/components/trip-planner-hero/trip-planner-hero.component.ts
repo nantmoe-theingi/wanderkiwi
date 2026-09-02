@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { HeroComponent } from '../hero/hero.component';
 
 @Component({
   selector: 'app-trip-planner-hero',
-  imports: [CommonModule, HeroComponent],
+  imports: [CommonModule],
   templateUrl: './trip-planner-hero.component.html',
-  styleUrl: './trip-planner-hero.component.scss'
+  styleUrl: './trip-planner-hero.component.scss',
 })
-export class TripPlannerHeroComponent {
-
-}
+export class TripPlannerHeroComponent {}

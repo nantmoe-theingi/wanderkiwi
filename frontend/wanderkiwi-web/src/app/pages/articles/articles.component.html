@@ -6,12 +6,16 @@
   <div class="page-container">
     <!-- 2. Left Sidebar Component -->
     <app-article-sidebar
-      [categories]="categories"
-      (categoryChange)="onCategoryFilter($event)"
-    >
-    </app-article-sidebar>
+    [categories]="categories"
+    [popularReads]="popularReads"
+    [selectedCategory]="selectedFilter"
+    (categoryChange)="onCategoryFilter($event)"
+  ></app-article-sidebar>
 
     <!-- 3. Right Content Grid Component -->
-    <app-article-grid [articles]="filteredArticles"></app-article-grid>
+    <app-article-grid 
+    [articles]="filteredArticles"
+    [selectedCategory]="selectedFilter"
+  ></app-article-grid>
   </div>
 </div>

@@ -46,6 +46,8 @@ export class AllDestinationsComponent implements OnInit {
   allSearchResults: DestinationItem[] = [];
   // Filtered / Search results view
   searchResults: DestinationItem[] = [];
+  currentFilters: any = {};
+  allFavorites: DestinationItem[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -134,6 +136,9 @@ export class AllDestinationsComponent implements OnInit {
 
   // Triggered when user searches from Hero component
   onHeroSearch(query: string) {
+    this.isFavoritesView = false;
+    this.searchQuery = query;
+    this.isSearching = !!query;
     if (query.trim()) {
       this.router.navigate(['/all-destinations'], {
         queryParams: { search: query },
@@ -175,8 +180,45 @@ export class AllDestinationsComponent implements OnInit {
     this.selectedBestTime = filters.bestTime;
     this.selectedActivityLevel = filters.activityLevel;
     this.sortBy = filters.sort;
+    this.currentFilters = filters;
+
+    if (this.isFavoritesView) {
+      let filtered = [...this.allFavorites];
+
+      // 1. Filter by Region
+      if (filters.region) {
+        filtered = filtered.filter(item => 
+          item.regionName?.toLowerCase() === filters.region.toLowerCase()
+        );
+      }
+
+      // 2. Filter by Category
+      if (filters.category && filters.category !== 'All') {
+        filtered = filtered.filter(item => 
+          item.categories?.some(cat => cat.toLowerCase() === filters.category.toLowerCase())
+        );
+      }
+
+      // 3. Filter by Best Time to Visit
+      if (filters.bestTime && filters.bestTime !== 'Any time') {
+        filtered = filtered.filter(item => 
+          item.bestTime?.toLowerCase().includes(filters.bestTime.toLowerCase())
+        );
+      }
+
+      // 5. Apply Sorting
+      if (filters.sort === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (filters.sort === 'name') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      this.searchResults = filtered;
+    } else {
 
     let tempResults = [...this.allSearchResults];
+
+
 
     // 1. Region Filter
     if (this.selectedRegion && this.selectedRegion !== 'All Regions') {
@@ -218,6 +260,7 @@ export class AllDestinationsComponent implements OnInit {
 
     this.searchResults = tempResults;
   }
+  }
 
   onParentClearFilters() {
     this.selectedRegion = '';
@@ -235,7 +278,8 @@ export class AllDestinationsComponent implements OnInit {
   }
 
   loadFavoriteDestinations() {
-    const savedIds = this.favoritesService.getStoredBookmarks();
+    this.allFavorites = this.favoritesService.getFavorites();
+    this.searchResults = [...this.allFavorites];
 
     // this.destinationService.searchAttractions().subscribe({
     //   next: (destinations) => {

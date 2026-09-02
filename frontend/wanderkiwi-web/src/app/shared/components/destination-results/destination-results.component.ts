@@ -16,6 +16,7 @@ export class DestinationResultsComponent implements OnInit {
   @Input() searchQuery: string = '';
   @Input() regions: RegionItem[] = [];
   @Input() showRegionFilter: boolean = false;
+  @Input() isFavoritesMode: boolean = false;
 
   // Filter & Sort States
   selectedRegion: string = '';

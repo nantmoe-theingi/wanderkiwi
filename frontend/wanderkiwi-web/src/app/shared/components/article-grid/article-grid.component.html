@@ -2,7 +2,7 @@
   <!-- Sort Header -->
   <div class="results-header">
     <div>
-      <h2>All Articles</h2>
+      <h2>{{ selectedCategory }}</h2>
       <span class="count-label">{{ articles.length }} articles</span>
     </div>
     <div class="sort-box">
@@ -16,7 +16,12 @@
 
   <!-- Article Grid -->
   <div class="article-grid">
-    <div *ngFor="let article of articles" class="article-card">
+    <div
+      *ngFor="let article of paginatedArticles"
+      class="article-card"
+      [routerLink]="['/articles', article.id]"
+      style="cursor: pointer"
+    >
       <div class="card-img-wrapper">
         <img [src]="article.imageUrl" [alt]="article.title" />
         <span class="category-badge">{{ article.category }}</span>
@@ -28,7 +33,12 @@
 
         <div class="card-meta">
           <div class="author">
-            <img [src]="article.authorAvatar" [alt]="article.authorName" />
+            <img
+              [src]="
+                article.authorAvatar || 'assets/images/wanderkiwi-logo.png'
+              "
+              [alt]="article.authorName"
+            />
             <span>{{ article.authorName }}</span>
           </div>
           <div class="date-read">
@@ -41,13 +51,30 @@
   </div>
 
   <!-- Pagination Footer -->
-  <div class="pagination">
-    <button class="page-arrow">←</button>
-    <button class="page-num active">1</button>
-    <button class="page-num">2</button>
-    <button class="page-num">3</button>
-    <button class="page-num">4</button>
-    <button class="page-num">5</button>
-    <button class="page-arrow">→</button>
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button
+      class="page-arrow"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      ←
+    </button>
+
+    <button
+      *ngFor="let page of [].constructor(totalPages); let i = index"
+      class="page-num"
+      [class.active]="currentPage === i + 1"
+      (click)="setPage(i + 1)"
+    >
+      {{ i + 1 }}
+    </button>
+
+    <button
+      class="page-arrow"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
+      →
+    </button>
   </div>
 </div>

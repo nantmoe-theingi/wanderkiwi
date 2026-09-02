@@ -41,14 +41,14 @@
     align-items: center;
 }
 
-
 .socials a { 
   background: #1e293b; 
   color: white; 
   width: 32px; 
   height: 32px; 
-  display: flex; 
-  align-content: center;      /* Centers vertically */
+  line-height: 32px;         /* Matches height to perfectly center text vertically */
+  text-align: center;        /* Centers text horizontally */
+  display: inline-block; 
   border-radius: 50%; 
   text-decoration: none; 
   font-weight: bold; 

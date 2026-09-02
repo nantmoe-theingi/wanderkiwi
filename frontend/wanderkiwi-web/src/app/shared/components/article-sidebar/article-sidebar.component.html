@@ -8,28 +8,25 @@
         [class.active]="selectedCategory === cat.name"
         (click)="selectCategory(cat.name)"
       >
-        <span class="cat-label"
-          ><span class="icon">{{ cat.icon }}</span> {{ cat.name }}</span
-        >
-        <span class="count" *ngIf="cat.name !== 'All Articles'">{{
-          cat.count
-        }}</span>
-        <span class="count total" *ngIf="cat.name === 'All Articles'">56</span>
+        <span class="cat-label">
+          <span class="icon">{{ cat.icon }}</span> {{ cat.name }}
+        </span>
+        <span class="count">{{ cat.count }}</span>
       </li>
     </ul>
   </div>
 
-  <!-- Popular Topics -->
-  <div class="sidebar-section">
-    <h3>Popular Topics</h3>
-    <div class="pill-grid">
-      <button
-        *ngFor="let topic of popularTopics"
-        [class.active]="selectedTopic === topic"
-        (click)="selectTopic(topic)"
-      >
-        {{ topic }}
-      </button>
+  <!-- Popular Reads Section (Optional: Shows on Detail Page if provided) -->
+  <div class="sidebar-section" *ngIf="popularReads && popularReads.length > 0">
+    <h3>Popular Reads</h3>
+    <div class="popular-reads-list">
+      <div *ngFor="let pop of popularReads" class="popular-read-item" [routerLink]="['/articles', pop.id]">
+        <img [src]="pop.imageUrl" [alt]="pop.title" />
+        <div class="pop-info">
+          <h4>{{ pop.title }}</h4>
+          <span>{{ pop.readTime }}</span>
+        </div>
+      </div>
     </div>
   </div>
 

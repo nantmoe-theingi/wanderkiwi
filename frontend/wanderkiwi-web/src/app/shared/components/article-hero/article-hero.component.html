@@ -1,19 +1,19 @@
-<section class="articles-hero">
-  <div class="hero-container">
-    <h1>Travel Articles & Guides</h1>
-    <p>
-      Inspiration, tips, and local insights to help you explore New Zealand like
-      a local.
-    </p>
+<div class="hero-section">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
 
-    <div class="search-box">
-      <span>🔍</span>
-      <input
-        type="text"
-        [(ngModel)]="searchQuery"
-        (ngModelChange)="onSearchChange()"
-        placeholder="Search articles, guides, tips..."
-      />
+      <!-- Search Bar conditionally displayed -->
+      <div class="search-box" *ngIf="showSearch">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery" 
+          (input)="onSearchInput()" 
+          placeholder="Search articles, guides, tips..." 
+        />
+      </div>
     </div>
   </div>
-</section>
+</div>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeroComponent } from '../../shared/components/hero/hero.component';
 import { CategoriesComponent } from '../../shared/components/categories/categories.component';
 import { WhyUsComponent } from '../../shared/components/why-us/why-us.component';
-import { ItinerariesComponent } from '../../shared/components/itineraries/itineraries.component';
+// import { ItinerariesComponent } from '../../shared/components/itineraries/itineraries.component';
 import { DestinationsComponent } from '../../shared/components/destinations/destinations.component';
 
 @Component({
@@ -12,7 +12,7 @@ import { DestinationsComponent } from '../../shared/components/destinations/dest
     HeroComponent,
     DestinationsComponent,
     CategoriesComponent,
-    ItinerariesComponent,
+    // ItinerariesComponent,
     WhyUsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

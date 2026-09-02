@@ -6,25 +6,16 @@
 }
 
 .planner-hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), 
-                url('/assets/images/background-photo.png') center/cover;
-    padding: 40px 20px;
-    color: white;
-    border-bottom: 1px solid #1e293b;
-}
-
-.hero-container {
-    max-width: 1400px;
-    margin: 40px auto;
-    padding: 0 20px;
+    padding: 0; // Remove extra padding so it doesn't inflate the 180px height
+    background: none; // Clear conflicting background gradients
 }
 
 .planner-container {
-    max-width: 1400px;
-    margin: 30px auto;
-    padding: 0 20px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0;
     display: grid;
-    grid-template-columns: 380px 1fr; // Left form card, right itinerary display
+    grid-template-columns: 380px 1fr;
     gap: 30px;
     align-items: start;
     width: 100%;
@@ -33,29 +24,6 @@
 
 .planner-results-area {
     width: 100%;
-}
-
-.pre-title {
-    display: block;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: #22c55e;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-}
-
-.planner-hero h1 {
-    font-size: 38px;
-    font-weight: 800;
-    margin: 0 0 8px 0;
-    color: white;
-}
-
-.planner-hero p {
-    margin: 0;
-    font-size: 16px;
-    color: #e2e8f0;
 }
 
 .planner-error {
