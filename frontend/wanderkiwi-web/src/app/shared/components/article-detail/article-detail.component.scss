@@ -69,10 +69,13 @@
     max-height: 420px;
     background: #cbd5e1;
 
+
+
     img {
       width: 100%;
       height: 420px;
-      object-fit: cover;
+      object-fit: contain;
+      background-color: #0f172a;
       display: block;
     }
 

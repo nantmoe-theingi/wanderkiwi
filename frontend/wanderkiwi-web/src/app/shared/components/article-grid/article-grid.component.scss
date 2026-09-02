@@ -63,7 +63,8 @@
 .card-img-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: #0f172a;
 }
 
 .category-badge {
@@ -138,48 +139,49 @@
 }
 
 .author img {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0; // Prevents flex containers from squishing it to 0px
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0; // Prevents flex containers from squishing it to 0px
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 40px;
-  position: relative;
-  z-index: 10; // Ensures it floats above underlying containers
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 40px;
+    position: relative;
+    z-index: 10; // Ensures it floats above underlying containers
 
-  .page-num, .page-arrow {
-    background: white;
-    border: 1px solid #cbd5e1;
-    color: #334155;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer; // Restores the hand cursor
-    pointer-events: auto; // Ensures clicks register properly
-    transition: all 0.2s;
+    .page-num,
+    .page-arrow {
+        background: white;
+        border: 1px solid #cbd5e1;
+        color: #334155;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer; // Restores the hand cursor
+        pointer-events: auto; // Ensures clicks register properly
+        transition: all 0.2s;
 
-    &:hover {
-      background: #f1f5f9;
-      border-color: #94a3b8;
+        &:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        &.active {
+            background: #16a34a; // Matches your primary theme green
+            color: white;
+            border-color: #16a34a;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     }
-
-    &.active {
-      background: #16a34a; // Matches your primary theme green
-      color: white;
-      border-color: #16a34a;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
 }
