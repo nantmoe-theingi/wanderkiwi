@@ -88,7 +88,7 @@ ng serve
 
 ## 🔌 External Integrations & API Note
 * **OpenRouteService (ORS):** Integrated to compute geospatial mapping, routing logic, and travel distance data between attractions for the trip planner module.
-* **Azure OpenAI & Weather APIs:** Orchestrated via the backend services to deliver intelligent itinerary planning context.
+* **Weather APIs:** Orchestrated via the backend services to deliver intelligent itinerary planning context.
 
 ## 📄 License & Usage
 
