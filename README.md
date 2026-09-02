@@ -1,8 +1,7 @@
 # WanderKiwi 🥝
 
 [![Live Frontend](https://img.shields.io/badge/Frontend-Live_App-0ea5e9?style=for-the-badge&logo=vercel&logoColor=white)](https://wanderkiwi-web-production.up.railway.app/)
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/nant-moe-theingi/workspace/my-workspace/collection/6133721-1a6c8f72-82c3-4ab4-878c-11523af6e64d?action=share&creator=6133721&active-environment=6133721-6cda0072-bd3e-407e-84af-d4bd0b98f6aa)
-[![Live Backend API](https://img.shields.io/badge/Backend-API_Swagger-10b981?style=for-the-badge&logo=dotnet&logoColor=white)](https://www.postman.com/nant-moe-theingi/workspace/my-workspace/collection/6133721-1a6c8f72-82c3-4ab4-878c-11523af6e64d?action=share&creator=6133721&active-environment=6133721-6cda0072-bd3e-407e-84af-d4bd0b98f6aa)
+[![Live Backend API](https://img.shields.io/badge/Backend-API_Postman-10b981?style=for-the-badge&logo=dotnet&logoColor=white)](https://www.postman.com/nant-moe-theingi/workspace/my-workspace/collection/6133721-1a6c8f72-82c3-4ab4-878c-11523af6e64d?action=share&creator=6133721&active-environment=6133721-6cda0072-bd3e-407e-84af-d4bd0b98f6aa)
 [![Tech Stack](https://img.shields.io/badge/.NET_8_%7C_Angular-0f172a?style=for-the-badge&logo=angular&logoColor=white)](https://github.com/nantmoe-theingi/wanderkiwi)
 
 WanderKiwi is a modern, full-stack travel planning web application designed to help users explore New Zealand through AI-powered recommendations, personalized custom itineraries, regional destination grids, and interactive travel guides.
