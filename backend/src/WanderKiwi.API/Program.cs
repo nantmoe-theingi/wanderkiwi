@@ -19,8 +19,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "http://localhost:4200",                                    // Local Angular dev server
-                    "https://nantmoe-theingi.github.io"                         // Your GitHub Pages production domain
+                    "http://localhost:4200",                 
+                    "https://nantmoe-theingi.github.io"  
                   )
                   .AllowAnyHeader()
                   .AllowAnyMethod();
@@ -67,6 +67,8 @@ builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 // builder.Services.AddScoped<ITripGenerationService, TripGenerationService>();
 builder.Services.Configure<OpenRouteServiceOptions>(builder.Configuration.GetSection(OpenRouteServiceOptions.SectionName));
 builder.Services.AddHttpClient<IRouteService, OpenRouteService>(client =>
