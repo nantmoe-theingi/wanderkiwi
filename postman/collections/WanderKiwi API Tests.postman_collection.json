@@ -1,0 +1,220 @@
+{
+  "info": {
+    "_postman_id": "1a6c8f72-82c3-4ab4-878c-11523af6e64d",
+    "name": "WanderKiwi API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Articles",
+      "item": [
+        {
+          "name": "Get All Articles",
+          "id": "bb1c93ee-485f-4ddd-93de-bfa6d0266840",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/articles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "articles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Articles with Filters",
+          "id": "9b9f8a49-a6ff-432a-abcb-71f974d2a92a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/articles?category=Road Trips&search=South Island",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "articles"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Road Trips"
+                },
+                {
+                  "key": "search",
+                  "value": "South Island"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Article by ID",
+          "id": "dc744699-4195-4b24-81ff-3fa6c7e8b4c0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/articles/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "articles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "0feeaeef-0057-4a5b-bfd1-1a6fe48cc227"
+    },
+    {
+      "name": "Attractions",
+      "item": [
+        {
+          "name": "Get All Attractions",
+          "id": "f1fa7077-00c5-470c-a724-73cc50fffd0c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/attractions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "attractions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Attractions",
+          "id": "2f46f0bf-62ab-4fa0-982a-a36e448d6cf8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/attractions/search?query=Auckland",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "attractions",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "Auckland"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Attraction by ID",
+          "id": "9e77efbe-9235-4e3a-b98f-b4c3ee02664b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/attractions/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "attractions",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "67753358-ac06-48d8-906d-0cde01c50695"
+    },
+    {
+      "name": "Destinations",
+      "item": [
+        {
+          "name": "Get Destination Page Data",
+          "id": "6590df7d-2411-4575-a67a-d8119c4ef055",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/destinations/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "destinations",
+                "page"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Destination Names (Lookup)",
+          "id": "8521cb7e-8d48-4675-b6c6-cff181ac8df8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/destinations/names",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "destinations",
+                "names"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Popular Destinations",
+          "id": "49e1f954-737e-41ec-bb0d-23b738b703f0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/destinations/popular",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "destinations",
+                "popular"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "911f364b-2142-4cc6-8d10-ae50a1293a19"
+    }
+  ]
+}
