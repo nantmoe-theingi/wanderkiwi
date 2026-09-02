@@ -49,19 +49,23 @@ export class TripPlannerFormComponent {
   constructor(private destinationService: DestinationService) {}
   
     ngOnInit() {
-      // Get today's date formatted as YYYY-MM-DD for HTML date inputs
-    const today = new Date();
-    this.todayDateString = this.formatDate(today);
-    // Initialize default dates
-    this.request.startDate = this.todayDateString;
-    this.updateMaxEndDate(this.request.startDate);
+      // Get today's date formatted as YYYY-MM-DD (e.g. "2026-09-02")
+      const today = new Date();
+      this.todayDateString = this.formatDate(today);
+      
+      // 1. Set BOTH start date and end date to today initially
+      this.request.startDate = this.todayDateString;
+      this.request.endDate = this.todayDateString;
 
-    this.destinationService.getDestinationNames().subscribe({
-      next: (data) => {
-        this.destinationNames = data as any[]; 
-      },
-      error: (err) => console.error('Error loading destination names', err)
-    });
+      // 2. Set the max boundary limit based on the start date
+      this.updateMaxEndDate(this.request.startDate);
+
+      this.destinationService.getDestinationNames().subscribe({
+        next: (data) => {
+          this.destinationNames = data as any[]; 
+        },
+        error: (err) => console.error('Error loading destination names', err)
+      });
   }
 
   // Triggered when user changes the start date
@@ -69,23 +73,18 @@ export class TripPlannerFormComponent {
     if (this.request.startDate) {
       this.updateMaxEndDate(this.request.startDate);
 
-      // If current end date is before start date or exceeds the 1-week limit, reset it
-      if (this.request.endDate < this.request.startDate || this.request.endDate > maxDateString(this.request.startDate)) {
+      // If the current end date is older than the new start date, reset end date to match the start date
+      if (this.request.endDate < this.request.startDate || this.request.endDate > this.maxEndDateString) {
         this.request.endDate = this.request.startDate;
       }
     }
   }
 
-  // Calculates exactly 5 days after the selected start date
+  // Calculates the maximum allowed end date range (e.g., 7 days limit)
   updateMaxEndDate(start: string) {
     const startDt = new Date(start);
-    startDt.setDate(startDt.getDate() + 4); // Add 1 week limit
+    startDt.setDate(startDt.getDate() + 6); // Max 1 week limit
     this.maxEndDateString = this.formatDate(startDt);
-    
-    // If end date is empty, default it to start date
-    if (!this.request.endDate) {
-      this.request.endDate = this.request.startDate;
-    }
   }
 
   // Helper to format Date object to YYYY-MM-DD string

@@ -1,11 +1,15 @@
 <section class="hero">
   <div class="hero-content">
-    <h1>Discover New Zealand</h1>
-    <p class="subtitle">
+    <h1 *ngIf="!isFavoritesView">Discover New Zealand</h1>
+    <h1 *ngIf="isFavoritesView">Favourite Attractions</h1>
+    <p class="subtitle" *ngIf="!isFavoritesView">
       Your next adventure starts here. AI-powered trip planning made easy.
     </p>
+    <p class="subtitle" *ngIf="isFavoritesView">
+      Here are all the amazing places you have saved for your journey.
+    </p>
 
-    <div class="search-box">
+    <div class="search-box" *ngIf="!isFavoritesView">
       <input
         type="text"
         [(ngModel)]="searchQuery"
@@ -15,7 +19,7 @@
       <button (click)="onSearch()">🔍 Search</button>
     </div>
 
-    <div class="popular-searches">
+    <div class="popular-searches" *ngIf="!isFavoritesView">
       <span>Popular Searches:</span>
       <button *ngFor="let tag of popularTags" (click)="selectTag(tag)">
         {{ tag }}

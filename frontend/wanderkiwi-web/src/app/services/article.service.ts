@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Article, ArticleCategory } from '../models/article.model';
+import { environment } from '../../environments/environment.development';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
+  private baseUrl = `${environment.apiUrl}`;
+
+  constructor(private http: HttpClient) {}
+
   private categories: ArticleCategory[] = [
     { name: 'All Articles', count: 56, icon: '🗂️' },
     { name: 'Travel Tips', count: 12, icon: '💡' },
@@ -90,7 +96,22 @@ export class ArticleService {
     return of(this.categories);
   }
 
-  getArticles(): Observable<Article[]> {
-    return of(this.articles);
+  // getArticles(): Observable<Article[]> {
+  //   return of(this.articles);
+  // }
+
+  getArticleById(id: number): Observable<Article> {
+  return this.http.get<Article>(`${this.baseUrl}/articles/${id}`);
+}
+
+getArticles(category?: string, search?: string): Observable<Article[]> {
+    let params = new HttpParams();
+    if (category && category !== 'All Articles') {
+      params = params.set('category', category);
+    }
+    if (search) {
+      params = params.set('search', search);
+    }
+    return this.http.get<Article[]>(`${this.baseUrl}/articles`, { params });
   }
 }

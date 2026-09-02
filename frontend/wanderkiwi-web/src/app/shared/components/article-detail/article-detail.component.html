@@ -1,0 +1,113 @@
+<div class="article-detail-page" *ngIf="article; else loadingTpl">
+  <app-article-hero [showSearch]="false" title="Explore New Zealand"></app-article-hero>
+
+  <div class="page-container">
+    <!-- Side SIDEBAR -->
+    <app-article-sidebar
+      [categories]="categories"
+      [popularReads]="popularReads"
+      [selectedCategory]="article.category"
+      (categoryChange)="onCategorySelected($event)"
+    ></app-article-sidebar>
+
+    <!-- RIGHT MAIN CONTENT AREA -->
+    <main class="main-content">
+      <div class="top-nav-row">
+        <a routerLink="/articles" class="back-link">← Back to all articles</a>
+        <!-- <button class="edit-btn">✏️ Edit Article</button> -->
+      </div>
+
+      <!-- Hero Banner Image with Badge -->
+      <div class="hero-banner" *ngIf="article.imageUrl">
+        <img [src]="article.imageUrl" [alt]="article.title" />
+        <span class="category-badge">{{ article.category }}</span>
+      </div>
+
+      <!-- Title & Description Header -->
+      <div class="article-header">
+        <h1>{{ article.title }}</h1>
+        <p class="subtitle" *ngIf="article.description">
+          {{ article.description }}
+        </p>
+
+        <div class="meta-share-row">
+          <div class="meta-info">
+            <span>📅 {{ article.date }}</span> •
+            <span>⏱️ {{ article.readTime }}</span>
+          </div>
+          <div class="share-links">
+            <span>Share:</span>
+            <a href="https://facebook.com" aria-label="Facebook">f</a>
+            <a href="https://twitter.com" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="Copy Link">🔗</a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Structured JSON Content Sections -->
+      <div class="article-body" *ngIf="parsedContent">
+        <p class="lead" *ngIf="parsedContent.intro">
+          {{ parsedContent.intro }}
+        </p>
+
+        <!-- Sections Grid (Multi-column layout) -->
+        <div class="sections-grid">
+          <div
+            class="content-section"
+            *ngFor="let section of parsedContent.sections"
+          >
+            <h3>
+              <span class="section-icon" *ngIf="section.icon">{{
+                section.icon
+              }}</span>
+              {{ section.title }}
+            </h3>
+            <p *ngIf="section.introText">{{ section.introText }}</p>
+
+            <ul *ngIf="section.items && section.items.length > 0">
+              <li *ngFor="let item of section.items">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Final Tip Box -->
+        <div class="final-tip-box" *ngIf="parsedContent.finalTip">
+          <div class="tip-icon">✅</div>
+          <div class="tip-content">
+            <strong>Final Tip</strong>
+            <p>{{ parsedContent.finalTip }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Previous / Next Article Footer Navigation -->
+      <div class="article-pagination-nav">
+        <a
+          *ngIf="prevArticle"
+          [routerLink]="['/articles', prevArticle.id]"
+          class="nav-prev"
+        >
+          <span class="nav-label">← Previous Article</span>
+          <span class="nav-title">{{ prevArticle.title }}</span>
+        </a>
+        <div class="spacer" *ngIf="!prevArticle"></div>
+
+        <a
+          *ngIf="nextArticle"
+          [routerLink]="['/articles', nextArticle.id]"
+          class="nav-next"
+        >
+          <span class="nav-label">Next Article →</span>
+          <span class="nav-title">{{ nextArticle.title }}</span>
+        </a>
+      </div>
+    </main>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading-state" *ngIf="loading">Loading article...</div>
+  <div class="loading-state" *ngIf="!loading">Article not found.</div>
+</ng-template>

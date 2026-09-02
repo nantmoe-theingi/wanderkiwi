@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,10 +9,14 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './article-hero.component.scss',
 })
 export class ArticleHeroComponent {
-  searchQuery = '';
+  @Input() showSearch: boolean = true; // Defaults to showing search
+  @Input() title: string = 'Travel Articles & Guides';
+  @Input() subtitle: string = 'Inspiration, tips, and local insights to help you explore New Zealand like a local.';
+  
+  searchQuery: string = '';
   @Output() searchChange = new EventEmitter<string>();
 
-  onSearchChange() {
+  onSearchInput() {
     this.searchChange.emit(this.searchQuery);
   }
 }

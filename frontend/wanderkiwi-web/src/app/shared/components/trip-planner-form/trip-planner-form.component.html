@@ -28,7 +28,10 @@
     </div>
     <!-- Dropdown Suggestions Box -->
     <ul class="suggestions-dropdown" *ngIf="isDropdownOpen">
-      <li *ngFor="let dest of filteredDestinations" (click)="selectDestination(dest)">
+      <li
+        *ngFor="let dest of filteredDestinations"
+        (click)="selectDestination(dest)"
+      >
         {{ dest.name }} <small>({{ dest.regionName }})</small>
       </li>
     </ul>
@@ -59,7 +62,7 @@
           type="date"
           name="endDate"
           [(ngModel)]="request.endDate"
-          [min]="request.startDate || todayDateString" 
+          [min]="request.startDate || todayDateString"
           [max]="maxEndDateString"
           required
         />

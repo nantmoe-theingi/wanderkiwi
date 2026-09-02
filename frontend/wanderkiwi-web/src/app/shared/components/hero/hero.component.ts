@@ -21,6 +21,7 @@ export class HeroComponent implements OnInit {
   @Input() showPopularTags: boolean = true;
   @Input() searchQuery: string = '';
   destinations: any[] = [];
+  isFavoritesView: boolean = false;
 
   @Output() searchSubmitted = new EventEmitter<string>();
 
@@ -36,6 +37,7 @@ export class HeroComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['search'] || '';
+      this.isFavoritesView = params['mode'] === 'favorites';
       this.fetchFilteredDestinations(this.searchQuery);
     });
   }

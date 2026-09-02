@@ -5,6 +5,7 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { ArticlesComponent } from './pages/articles/articles.component';
 import { AllDestinationsComponent } from './pages/all-destinations/all-destinations.component';
+import { ArticleDetailComponent } from './shared/components/article-detail/article-detail.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
       {
         path: 'articles',
         component: ArticlesComponent,
+      },
+      { 
+        path: 'articles/:id', 
+        component: ArticleDetailComponent
       },
       {
         path: 'about-us',

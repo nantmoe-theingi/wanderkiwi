@@ -1,7 +1,7 @@
 <header class="header">
  
 
-  <div class="logo-container" style="position: relative; height: 40px;">
+  <div class="logo-container" style="position: relative; height: 60px;">
   <img src="assets/images/wanderkiwi-logo.png" alt="WanderKiwi Logo" width="40" height="40" class="logo-icon" />
   <span class="logo-text">WanderKiwi</span>
 </div>
@@ -23,7 +23,7 @@
       </div> -->
 
   <div class="header-actions">
-    <button class="cta-btn">Start Planning</button>
+    <button class="cta-btn" (click)="goToPlanner()">Start Planning</button>
     <button (click)="onClickBookmark()" class="wishlist-btn" title="Saved Destinations">
       <!-- Bookmark Icon using SVG for a clean, modern look -->
       <!-- Wishlist count connected via the async pipe from WishlistService -->

@@ -5,6 +5,7 @@ import { ArticleHeroComponent } from '../../shared/components/article-hero/artic
 import { ArticleSidebarComponent } from '../../shared/components/article-sidebar/article-sidebar.component';
 import { Article, ArticleCategory } from '../../models/article.model';
 import { ArticleService } from '../../services/article.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-articles',
@@ -20,22 +21,58 @@ import { ArticleService } from '../../services/article.service';
 export class ArticlesComponent implements OnInit {
   articles: Article[] = [];
   categories: ArticleCategory[] = [];
-  searchQuery = '';
-  selectedFilter = 'All Articles';
+  searchQuery: string = '';
+  selectedFilter: string = 'All Articles';
+  popularReads: Article[] = [];
 
-  constructor(private articleService: ArticleService) {}
+  constructor(private articleService: ArticleService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+  this.route.queryParams.subscribe(params => {
+    if (params['category']) {
+      this.selectedFilter = params['category'];
+    }
+    this.loadAllArticles();
+  });
+}
+
+  loadAllArticles() {
     this.articleService
-      .getCategories()
-      .subscribe((cats) => (this.categories = cats));
-    this.articleService
-      .getArticles()
-      .subscribe((arts) => (this.articles = arts));
+      .getArticles('', '')
+      .subscribe({
+        next: (data) => {
+          this.articles = data;
+          this.popularReads = this.articles.slice(0, 3);
+
+          // 1. Build category counts dynamically from the raw data
+          const countsMap: { [key: string]: number } = {};
+          data.forEach((article) => {
+            const cat = article.category || 'Uncategorized';
+            countsMap[cat] = (countsMap[cat] || 0) + 1;
+          });
+
+          // 2. Build the category array with dynamic counts
+          const dynamicCategories: ArticleCategory[] = Object.keys(
+            countsMap,
+          ).map((catName) => ({
+            name: catName,
+            count: countsMap[catName],
+            icon: this.getCategoryIcon(catName),
+          }));
+
+          // 3. Prepend "All Articles" with the total count matching data.length
+          this.categories = [
+            { name: 'All Articles', count: data.length, icon: '📁' },
+            ...dynamicCategories,
+          ];
+        },
+        error: (err) =>
+          console.error('Error fetching articles from database', err),
+      });
   }
 
   onSearch(query: string) {
-    this.searchQuery = query.toLowerCase();
+    this.searchQuery = query ? query.toLowerCase().trim() : '';
   }
 
   onCategoryFilter(filter: string) {
@@ -43,20 +80,36 @@ export class ArticlesComponent implements OnInit {
   }
 
   get filteredArticles(): Article[] {
-    return this.articles.filter((article) => {
-      const matchesSearch =
-        !this.searchQuery ||
-        article.title.toLowerCase().includes(this.searchQuery) ||
-        article.description.toLowerCase().includes(this.searchQuery);
+  return this.articles.filter((article) => {
+    const matchesSearch =
+      !this.searchQuery ||
+      article.title.toLowerCase().includes(this.searchQuery) ||
+      article.description.toLowerCase().includes(this.searchQuery);
 
-      const matchesCategory =
-        this.selectedFilter === 'All Articles' ||
-        article.category === this.selectedFilter ||
-        article.category
-          .toLowerCase()
-          .includes(this.selectedFilter.toLowerCase());
+    const matchesCategory =
+      this.selectedFilter === 'All Articles' ||
+      article.category?.trim().toLowerCase() === this.selectedFilter.trim().toLowerCase();
 
-      return matchesSearch && matchesCategory;
-    });
+    return matchesSearch && matchesCategory;
+  });
+}
+
+  private getCategoryIcon(category: string): string {
+    switch (category.toLowerCase()) {
+      case 'destinations':
+        return '🏔️';
+      case 'travel tips':
+        return '💡';
+      case 'road trips':
+        return '🚗';
+      case 'adventure':
+        return '⚡';
+      case 'off the beaten path':
+        return '🌿';
+      case 'food & wine':
+        return '🍷';
+      default:
+        return '📁';
+    }
   }
 }

@@ -31,6 +31,10 @@ export class HeaderComponent implements OnInit {
     this.wishlistCount$ = this.wishlistService.favoritesCount$;
   }
 
+  goToPlanner() {
+    this.router.navigate(['/trip-planner']);
+  }
+
   onClickBookmark() {
     // Navigate to the wishlist page when the bookmark button is clicked  
   this.router.navigate(['/all-destinations'], { queryParams: { mode: 'favorites' } });
